@@ -410,6 +410,57 @@
       );
   }
 
+
+  function reportsCommandSummaryHtml() {
+    const m =
+      typeof commandCenterMetrics === 'function'
+        ? commandCenterMetrics(new Date())
+        : { mtdSales: 0, mtdProfit: 0, mtdCount: 0, salesDeltaPct: 0, profitDeltaPct: 0, jd: 0, priorSales: 0 };
+    const g = typeof globalTotals === 'function' ? globalTotals() : {};
+    const invVal = typeof inventoryValue === 'function' ? inventoryValue() : 0;
+
+    function deltaBadge(pct) {
+      if (pct > 0.05) return '<span class="rp-delta up">+' + pct.toLocaleString('fa-IR') + '٪</span>';
+      if (pct < -0.05) return '<span class="rp-delta down">' + pct.toLocaleString('fa-IR') + '٪</span>';
+      return '<span class="rp-delta flat">۰٪</span>';
+    }
+
+    return (
+      '<div class="rp-summary">' +
+      '<div class="rp-summary-title">خلاصه ماه جاری</div>' +
+      '<div class="rp-summary-grid">' +
+      '<div class="rp-kpi">' +
+      '<div class="rp-kpi-label">فروش ماه</div>' +
+      '<div class="rp-kpi-value">' +
+      toman(m.mtdSales) +
+      ' ت</div>' +
+      '<div class="rp-kpi-sub">' +
+      deltaBadge(m.salesDeltaPct) +
+      ' بازه مشابه ماه قبل</div></div>' +
+      '<div class="rp-kpi">' +
+      '<div class="rp-kpi-label">سود ماه</div>' +
+      '<div class="rp-kpi-value accent-amber">' +
+      toman(m.mtdProfit) +
+      ' ت</div>' +
+      '<div class="rp-kpi-sub">' +
+      deltaBadge(m.profitDeltaPct) +
+      ' بازه مشابه ماه قبل</div></div>' +
+      '<div class="rp-kpi">' +
+      '<div class="rp-kpi-label">بدهی مشتریان</div>' +
+      '<div class="rp-kpi-value accent-rust">' +
+      toman(g.customerDebt || 0) +
+      ' ت</div></div>' +
+      '<div class="rp-kpi">' +
+      '<div class="rp-kpi-label">ارزش انبار</div>' +
+      '<div class="rp-kpi-value">' +
+      toman(invVal) +
+      ' ت</div></div>' +
+      '</div>' +
+      '<div class="rp-summary-note">مقایسه فروش/سود با همان تعداد روز از ماه قبل است (نه کل ماه قبل).</div>' +
+      '</div>'
+    );
+  }
+
   function drawReportsPage(root) {
     const chip = function (id, label) {
       return (
@@ -424,6 +475,7 @@
     };
     root.innerHTML =
       '<h2 class="section-title">گزارش‌ها</h2>' +
+      reportsCommandSummaryHtml() +
       '<div class="field"><label>بازه زمانی (برای فروش و فاکتور)</label>' +
       '<div class="chip-row" id="report-period-chips">' +
       chip('today', 'امروز') +
