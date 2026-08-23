@@ -15,7 +15,9 @@
     chart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
     gear: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21h-4v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1-2.8-2.8.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H3v-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1 2.8-2.8.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6V3h4v.1a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1 2.8 2.8-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.1v4h-.1a1.7 1.7 0 0 0-1.6.9Z"/></svg>',
     warehouse: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V9l7-4 7 4v12"/><path d="M9 21v-6h6v6"/></svg>',
-    target: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1.2"/><path d="m16.5 7.5 4-4M17 3.5h3.5V7"/></svg>'
+    target: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1.2"/><path d="m16.5 7.5 4-4M17 3.5h3.5V7"/></svg>',
+    moneyBag: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"><path d="M8 11c0-2.2 1.8-4 4-4s4 1.8 4 4"/><path d="M6.5 11h11a2 2 0 0 1 2 2v1.2c0 2.4-2.2 4.3-5 4.8l-1.2.2a6 6 0 0 1-1.6 0l-1.2-.2c-2.8-.5-5-2.4-5-4.8V13a2 2 0 0 1 2-2z"/><path d="M9.5 8.5 8 6.5h8L14.5 8.5"/><path d="M12 13v3"/><path d="M10.5 14.5h3"/></svg>',
+    shop: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 5 4h14l2 5.5"/><path d="M4 9.5V20h16V9.5"/><path d="M9 20v-6h6v6"/><path d="M3 9.5h18"/></svg>'
   };
 
   function normalizeDigits(v) {
@@ -68,17 +70,27 @@
     const pct = target > 0 ? Math.round((sales / target) * 100) : 0;
     const capped = Math.min(100, Math.max(0, pct));
     const done = target > 0 && sales >= target;
-    const title = target > 0 ? 'هدف فروش ماهانه' : 'هدف فروش ماهانه تنظیم نشده';
     const current = target > 0 ? money(sales) : '—';
-    const targetText = target > 0 ? money(target) : 'برای شروع هدف را تنظیم کنید';
-    return '<div class="dash-monthly-target ' + (done ? 'is-done' : '') + '">' +
-      '<div class="dmt-head"><div class="dmt-title"><span class="dmt-icon">' + ICO.target + '</span><span>' + title + '</span></div>' +
-      '<button type="button" class="dmt-edit" data-monthly-target>تنظیم هدف</button></div>' +
-      '<div class="dmt-main"><div><div class="dmt-current">' + current + (target > 0 ? '<small>فروش فعلی</small>' : '') + '</div></div>' +
-      '<div class="dmt-pct">' + (target > 0 ? pct + '٪' : '—') + '<small>تحقق هدف</small></div></div>' +
-      '<div class="dmt-bar"><span style="width:' + capped + '%"></span></div>' +
-      '<div class="dmt-foot"><span class="dmt-status">' + (target > 0 ? (done ? 'هدف ماه تکمیل شده' : 'هدف: ' + targetText) : 'هدف ماهانه هنوز تنظیم نشده') + '</span><span>' + (target > 0 ? 'تا امروز' : 'با آیکون بالا تنظیم کنید') + '</span></div>' +
-      '</div>';
+    const targetLine = target > 0 ? money(target) : 'تنظیم نشده';
+    return (
+      '<div class="dash-monthly-target ' + (done ? 'is-done' : '') + '">' +
+        '<button type="button" class="dmt-target-btn" data-monthly-target aria-label="تنظیم هدف فروش">' +
+          ICO.target +
+        '</button>' +
+        '<div class="dmt-compact">' +
+          '<span class="dmt-icon dmt-money">' + ICO.moneyBag + '</span>' +
+          '<div class="dmt-nums">' +
+            '<div class="dmt-current">' + current + '</div>' +
+            '<div class="dmt-pct">' + (target > 0 ? pct + '٪' : '—') + '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="dmt-bar"><span style="width:' + capped + '%"></span></div>' +
+        '<div class="dmt-foot">' +
+          '<span>' + (target > 0 ? 'هدف: ' + targetLine : 'هدف ماهانه تنظیم نشده') + '</span>' +
+          '<span>' + (done ? 'تکمیل شد' : 'تا امروز') + '</span>' +
+        '</div>' +
+      '</div>'
+    );
   }
 
   function bindMonthlyTarget(root, refresh) {
@@ -122,6 +134,10 @@
       '</div></div>' +
       '<div class="dashboard-block"><div class="dashboard-block-head"><div class="dash-section-label">دسترسی سریع</div></div>' +
       '<div class="dash-grid">' +
+      dashTile('#/prospects', ICO.shop, 'ارزیابی مغازه‌ها', '') +
+      dashTile('#/visits', ICO.map, 'ویزیت مشتریان', '') +
+      dashTile('#/reports', ICO.chart, 'گزارش‌ها', '') +
+      dashTile('#/settings', ICO.gear, 'تنظیمات و بکاپ', '') +
       dashTile('#/invoices', ICO.invoice, 'فاکتورها', invN + ' فاکتور') +
       dashTile('#/customers', ICO.users, 'مشتریان', custN + ' نفر') +
       dashTile('#/payments', ICO.card, 'پرداخت‌ها', payN + ' مورد') +
@@ -129,10 +145,6 @@
       dashTile('#/suppliers', ICO.truck, 'تامین‌کنندگان', (data.suppliers || []).length + ' نفر') +
       dashTile('#/checks', ICO.bank, 'چک‌ها', chkN + ' فقره') +
       dashTile('#/inventory', ICO.warehouse, 'انبار', money(invVal)) +
-      dashTile('#/visits', ICO.map, 'ویزیت مشتریان', '') +
-      dashTile('#/prospects', ICO.map, 'ارزیابی مغازه‌ها', '') +
-      dashTile('#/reports', ICO.chart, 'گزارش‌ها', '') +
-      dashTile('#/settings', ICO.gear, 'تنظیمات و بکاپ', '') +
       '</div></div>' +
       recentInvoicesHtml() + recentVisitsHtml() +
       '</div>';
