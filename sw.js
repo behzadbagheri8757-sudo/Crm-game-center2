@@ -7,7 +7,7 @@
  */
 'use strict';
 
-const CACHE_NAME = 'baqeri-shell-v16';
+const CACHE_NAME = 'baqeri-shell-v17';
 
 /** App Shell — paths relative to this SW (same directory as index.html). */
 const PRECACHE_URLS = [
@@ -64,7 +64,10 @@ const CRITICAL_SHELLS = [
   './js/nav.js',
   './js/app.js',
   './js/models.js',
-  './js/ui.js'
+  './js/ui.js',
+  './js/router.js',
+  './js/view.host.js',
+  './js/views/dashboard.js'
 ];
 
 /**
@@ -139,6 +142,40 @@ self.addEventListener('activate', function (event) {
   );
 });
 
+/** Last path segment of a URL (for fallback cache lookup). */
+function fileNameFromUrl(url) {
+  var path = (url && url.pathname) ? url.pathname : '';
+  var i = path.lastIndexOf('/');
+  return i >= 0 ? path.slice(i + 1) : path;
+}
+
+/**
+ * Fallback when cache.match(request) misses due to absolute vs relative key differences.
+ * Prefer a key whose pathname equals the request pathname; otherwise first same file name.
+ */
+function matchByFileName(cache, fileName, requestUrl) {
+  if (!fileName) return Promise.resolve(undefined);
+  var reqPath = '';
+  try {
+    if (requestUrl) reqPath = new URL(requestUrl).pathname;
+  } catch (e) {}
+  return cache.keys().then(function (keys) {
+    var fallback = null;
+    for (var i = 0; i < keys.length; i++) {
+      var key = keys[i];
+      try {
+        var u = new URL(key.url);
+        if (fileNameFromUrl(u) !== fileName) continue;
+        if (reqPath && u.pathname === reqPath) {
+          return cache.match(key);
+        }
+        if (!fallback) fallback = key;
+      } catch (e) { /* ignore bad key */ }
+    }
+    return fallback ? cache.match(fallback) : undefined;
+  });
+}
+
 /** Resolve every document navigation to the SPA shell. Hash routes are client-side. */
 function respondNavigate(request) {
   return caches.open(CACHE_NAME).then(function (cache) {
@@ -168,21 +205,26 @@ function respondStatic(request) {
     return cache.match(request, { ignoreSearch: true }).then(function (cached) {
       if (cached) return cached;
 
-      return matchByFileName(cache, name).then(function (byName) {
-        if (byName) return byName;
+      // Try pathname key (covers some absolute/relative storage differences)
+      return cache.match(url.pathname, { ignoreSearch: true }).then(function (byPath) {
+        if (byPath) return byPath;
 
-        return fetch(request)
-          .then(function (response) {
-            if (response && response.ok) {
-              try {
-                cache.put(request, response.clone());
-              } catch (e) { /* ignore */ }
-            }
-            return response;
-          })
-          .catch(function () {
-            return new Response('', { status: 503, statusText: 'Offline' });
-          });
+        return matchByFileName(cache, name, request.url).then(function (byName) {
+          if (byName) return byName;
+
+          return fetch(request)
+            .then(function (response) {
+              if (response && response.ok) {
+                try {
+                  cache.put(request, response.clone());
+                } catch (e) { /* ignore */ }
+              }
+              return response;
+            })
+            .catch(function () {
+              return new Response('', { status: 503, statusText: 'Offline' });
+            });
+        });
       });
     });
   });
