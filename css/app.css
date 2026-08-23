@@ -696,7 +696,7 @@ body[data-page="dashboard"] #nav{
 
 /* ===================== SETTINGS / REPORTS ===================== */
 /* .settings-warn removed here on 2026-08-20: fully and permanently shadowed
-   by the local <style> block in settings.html (loads after this file, sets
+   by the settings view styles (loads after this file, sets
    every property this rule set). Verified zero live usage elsewhere. */
 .settings-section{margin-bottom:22px;}
 .settings-section h3{
