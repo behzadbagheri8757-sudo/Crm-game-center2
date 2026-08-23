@@ -15,8 +15,8 @@
     chart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
     gear: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21h-4v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1-2.8-2.8.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H3v-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1 2.8-2.8.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6V3h4v.1a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1 2.8 2.8-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.1v4h-.1a1.7 1.7 0 0 0-1.6.9Z"/></svg>',
     warehouse: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V9l7-4 7 4v12"/><path d="M9 21v-6h6v6"/></svg>',
-    target: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1.2"/><path d="m16.5 7.5 4-4M17 3.5h3.5V7"/></svg>',
-    moneyBag: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"><path d="M8 11c0-2.2 1.8-4 4-4s4 1.8 4 4"/><path d="M6.5 11h11a2 2 0 0 1 2 2v1.2c0 2.4-2.2 4.3-5 4.8l-1.2.2a6 6 0 0 1-1.6 0l-1.2-.2c-2.8-.5-5-2.4-5-4.8V13a2 2 0 0 1 2-2z"/><path d="M9.5 8.5 8 6.5h8L14.5 8.5"/><path d="M12 13v3"/><path d="M10.5 14.5h3"/></svg>',
+    target: '<svg viewBox="0 0 24 24" width="28" height="28" fill="none"><defs><linearGradient id="dmtTargetGrad" x1="2" y1="2" x2="22" y2="23" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#F3D98B"/><stop offset="1" stop-color="#B3812E"/></linearGradient></defs><circle cx="11" cy="13.2" r="8.3" stroke="url(#dmtTargetGrad)" stroke-width="1.6"/><circle cx="11" cy="13.2" r="5.1" stroke="url(#dmtTargetGrad)" stroke-width="1.6"/><circle cx="11" cy="13.2" r="1.6" fill="url(#dmtTargetGrad)"/><path d="M15.6 8.6 21 3.2M16.8 2.6h4.6v4.6" stroke="url(#dmtTargetGrad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    moneyBag: '<svg viewBox="0 0 24 24" width="40" height="40" fill="none"><defs><linearGradient id="dmtBagGrad" x1="4" y1="3" x2="20" y2="22" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#F3D98B"/><stop offset=".55" stop-color="#DFA84D"/><stop offset="1" stop-color="#B3812E"/></linearGradient></defs><path d="M9.2 4.7 7.5 2.3h9l-1.7 2.4" stroke="url(#dmtBagGrad)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.2 4.7c-3.5 1-6 4.7-6 8.9 0 5.1 3.9 8.6 8.8 8.6s8.8-3.5 8.8-8.6c0-4.2-2.5-7.9-6-8.9" fill="url(#dmtBagGrad)"/><path d="M12 9.3v6.9M10 14.9c0 1.05.95 1.85 2 1.85s2-.7 2-1.75c0-1.15-.95-1.5-2-1.8-1.05-.3-2-.65-2-1.8 0-1 .95-1.75 2-1.75s2 .65 2 1.75" stroke="#7A4E17" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     shop: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 5 4h14l2 5.5"/><path d="M4 9.5V20h16V9.5"/><path d="M9 20v-6h6v6"/><path d="M3 9.5h18"/></svg>'
   };
 
@@ -70,24 +70,17 @@
     const pct = target > 0 ? Math.round((sales / target) * 100) : 0;
     const capped = Math.min(100, Math.max(0, pct));
     const done = target > 0 && sales >= target;
-    const current = target > 0 ? money(sales) : '—';
-    const targetLine = target > 0 ? money(target) : 'تنظیم نشده';
     return (
-      '<div class="dash-monthly-target ' + (done ? 'is-done' : '') + '">' +
-        '<button type="button" class="dmt-target-btn" data-monthly-target aria-label="تنظیم هدف فروش">' +
+      '<div class="dash-target-head">' +
+        '<button type="button" class="dash-target-fab" data-monthly-target aria-label="تنظیم هدف فروش">' +
           ICO.target +
         '</button>' +
-        '<div class="dmt-compact">' +
-          '<span class="dmt-icon dmt-money">' + ICO.moneyBag + '</span>' +
-          '<div class="dmt-nums">' +
-            '<div class="dmt-current">' + current + '</div>' +
-            '<div class="dmt-pct">' + (target > 0 ? pct + '٪' : '—') + '</div>' +
-          '</div>' +
-        '</div>' +
-        '<div class="dmt-bar"><span style="width:' + capped + '%"></span></div>' +
-        '<div class="dmt-foot">' +
-          '<span>' + (target > 0 ? 'هدف: ' + targetLine : 'هدف ماهانه تنظیم نشده') + '</span>' +
-          '<span>' + (done ? 'تکمیل شد' : 'تا امروز') + '</span>' +
+      '</div>' +
+      '<div class="dash-monthly-target ' + (done ? 'is-done' : '') + '">' +
+        '<div class="dmt-row">' +
+          '<span class="dmt-icon-plain">' + ICO.moneyBag + '</span>' +
+          '<div class="dmt-progress"><div class="dmt-bar"><span style="width:' + capped + '%"></span></div></div>' +
+          '<span class="dmt-pct">' + (target > 0 ? pct + '٪' : '—') + '</span>' +
         '</div>' +
       '</div>'
     );
@@ -123,7 +116,7 @@
     root.innerHTML =
       '<div class="dashboard-shell">' +
       '<h2 class="section-title">داشبورد</h2>' +
-      '<div class="dashboard-eyebrow">مرکز فرماندهی روزانه — فروش، سود، وصول و عملیات</div>' +
+      '<div class="dashboard-eyebrow">مرکز فرماندهی روزانه</div>' +
       targetHtml(metrics) +
       '<div class="dashboard-block"><div class="dashboard-block-head"><div class="dash-section-label">خلاصه وضعیت</div></div>' +
       '<div class="dash-kpis">' +
