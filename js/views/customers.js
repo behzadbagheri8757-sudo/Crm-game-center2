@@ -16,7 +16,7 @@
   function customerHref(cid) {
     return typeof isSpaShell === 'function' && isSpaShell()
       ? '#/customer?id=' + encodeURIComponent(cid)
-      : './customer.html?id=' + encodeURIComponent(cid);
+      : '#/customer?id=' + encodeURIComponent(cid);
   }
 
   function navigateToCustomer(cid) {
@@ -28,7 +28,7 @@
     ) {
       AppRouter.navigate('/customer', { id: cid });
     } else {
-      location.href = './customer.html?id=' + encodeURIComponent(cid);
+      location.href = '#/customer?id=' + encodeURIComponent(cid);
     }
   }
 
@@ -173,7 +173,7 @@
         e.preventDefault();
         navigateToCustomer(row.getAttribute('data-open-customer'));
       }
-      // else: plain MPA <a href="./customer.html?id=..."> navigates normally
+      // else: plain MPA <a href="#/customer?id=..."> navigates normally
     };
     list.addEventListener('click', listClickHandler);
 

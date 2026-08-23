@@ -24,7 +24,7 @@
     ) {
       AppRouter.navigate('/prospects');
     } else {
-      location.href = './prospects.html';
+      location.href = '#/prospects';
     }
   }
 
@@ -37,7 +37,7 @@
     ) {
       AppRouter.navigate('/evaluation', { shopId: shopId });
     } else {
-      location.href = './evaluation.html?shopId=' + encodeURIComponent(shopId);
+      location.href = '#/evaluation?shopId=' + encodeURIComponent(shopId);
     }
   }
 
@@ -50,7 +50,7 @@
     ) {
       AppRouter.navigate('/customer', { id: cid });
     } else {
-      location.href = './customer.html?id=' + encodeURIComponent(cid);
+      location.href = '#/customer?id=' + encodeURIComponent(cid);
     }
   }
 

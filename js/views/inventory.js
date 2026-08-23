@@ -118,7 +118,7 @@
           .join('')
       : '<div class="empty">هنوز گردش موجودی ثبت نشده</div>';
 
-    const prodHref = typeof isSpaShell === 'function' && isSpaShell() ? '#/products' : './products.html';
+    const prodHref = '#/products';
 
     root.innerHTML =
       '<h2 class="section-title">موجودی انبار</h2>' +

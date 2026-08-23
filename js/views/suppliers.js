@@ -22,7 +22,7 @@
     ) {
       AppRouter.navigate('/supplier', { id: sid });
     } else {
-      location.href = './supplier.html?id=' + encodeURIComponent(sid);
+      location.href = '#/supplier?id=' + encodeURIComponent(sid);
     }
   }
 

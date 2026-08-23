@@ -31,7 +31,7 @@
     ) {
       AppRouter.navigate('/prospect', { id: id });
     } else {
-      location.href = './prospect.html?id=' + encodeURIComponent(id);
+      location.href = '#/prospect?id=' + encodeURIComponent(id);
     }
   }
 
@@ -45,7 +45,7 @@
       const params = shopId ? { shopId: shopId } : {};
       AppRouter.navigate('/evaluation', params);
     } else {
-      const url = shopId ? './evaluation.html?shopId=' + encodeURIComponent(shopId) : './evaluation.html';
+      const url = shopId ? '#/evaluation?shopId=' + encodeURIComponent(shopId) : '#/evaluation';
       location.href = url;
     }
   }
@@ -196,7 +196,7 @@
       ) {
         AppRouter.navigate('/prospect-routes');
       } else {
-        location.href = './prospect-routes.html';
+        location.href = '#/prospect-routes';
       }
     });
 

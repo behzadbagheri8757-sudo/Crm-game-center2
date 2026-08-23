@@ -127,7 +127,7 @@
   }
 
   function drawProductsPage(root) {
-    const invHref = typeof isSpaShell === 'function' && isSpaShell() ? '#/inventory' : './inventory.html';
+    const invHref = '#/inventory';
     const chip = function (id, label) {
       return (
         '<button type="button" class="chip ' +

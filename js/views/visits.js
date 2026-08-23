@@ -23,7 +23,7 @@
     ) {
       AppRouter.navigate('/customer', { id: cid });
     } else {
-      location.href = './customer.html?id=' + encodeURIComponent(cid);
+      location.href = '#/customer?id=' + encodeURIComponent(cid);
     }
   }
 
@@ -104,7 +104,7 @@
       if (Array.isArray(v.tags) && v.tags.length) extraBits.push('برچسب: ' + v.tags.join('، '));
       if (v.note) extraBits.push(v.note);
       const extraHtml = extraBits.map(x => `<span class="sub">${esc(x)}</span>`).join('');
-      return `<a class="ledger-row" href="./customer.html?id=${encodeURIComponent(r.customerId)}" style="text-decoration:none;color:inherit;">
+      return `<a class="ledger-row" href="#/customer?id=${encodeURIComponent(r.customerId)}" style="text-decoration:none;color:inherit;">
         <span class="name">${esc(r.customerName)}
           <span class="sub">${faDate(v.date)}${v.time ? ' — ' + esc(v.time) : ''}${r.region ? ' — ' + esc(r.region) : ''}</span>
           <span class="sub ${cls}">${esc(v.result || 'ویزیت')}</span>
@@ -120,7 +120,7 @@
   function openNewVisitPicker() {
     if (!data.customers.length) {
       openSheet(`<h3>مشتری ندارید</h3><div class="empty">اول از بخش مشتریان، یک مشتری ثبت کنید.</div>
-        <div class="btn-row"><a class="btn secondary" href="./customers.html">رفتن به مشتریان</a></div>`);
+        <div class="btn-row"><a class="btn secondary" href="#/customers">رفتن به مشتریان</a></div>`);
       return;
     }
     const opts = data.customers.slice().sort((a,b)=>(a.name||'').localeCompare(b.name||'','fa'))

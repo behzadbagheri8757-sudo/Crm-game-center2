@@ -9,7 +9,7 @@
   let currentCustomerId = null;
   let rootEl = null;
   function customersHref() {
-    return typeof isSpaShell === 'function' && isSpaShell() ? '#/customers' : './customers.html';
+    return '#/customers';
   }
 
   function navigateToCustomer(cid) {
@@ -21,7 +21,7 @@
     ) {
       AppRouter.navigate('/customer', { id: cid });
     } else {
-      location.href = './customer.html?id=' + encodeURIComponent(cid);
+      location.href = '#/customer?id=' + encodeURIComponent(cid);
     }
   }
 
@@ -150,7 +150,7 @@
           .map(function (inv) {
             const st = invoicePayStatus(inv);
             return (
-              '<a class="ledger-row" href="./invoice.html?id=' +
+              '<a class="ledger-row" href="#/invoice?id=' +
               encodeURIComponent(inv.id) +
               '" style="text-decoration:none;color:inherit;">' +
               '<span class="name">#' +
@@ -504,7 +504,7 @@
       ')</h3>' +
       '<div class="btn-row" style="margin-bottom:8px;">' +
       '<button type="button" class="btn small" id="act-visit-section">ثبت ویزیت برای این مشتری</button>' +
-      '<a class="btn small secondary" href="./visits.html">همه ویزیت‌ها</a>' +
+      '<a class="btn small secondary" href="#/visits">همه ویزیت‌ها</a>' +
       '</div>' +
       visitRows;
 

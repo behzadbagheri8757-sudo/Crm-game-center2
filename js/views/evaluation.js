@@ -31,7 +31,7 @@
     ) {
       AppRouter.navigate('/prospects');
     } else {
-      location.href = './prospects.html';
+      location.href = '#/prospects';
     }
   }
 
@@ -44,7 +44,7 @@
     ) {
       AppRouter.navigate('/prospect', { id: id });
     } else {
-      location.href = './prospect.html?id=' + encodeURIComponent(id);
+      location.href = '#/prospect?id=' + encodeURIComponent(id);
     }
   }
 

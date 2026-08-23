@@ -20,7 +20,7 @@
     ) {
       AppRouter.navigate('/invoices');
     } else {
-      location.href = './invoices.html';
+      location.href = '#/invoices';
     }
   }
 
@@ -33,7 +33,7 @@
     ) {
       AppRouter.navigate('/customer', { id: cid });
     } else {
-      location.href = './customer.html?id=' + encodeURIComponent(cid);
+      location.href = '#/customer?id=' + encodeURIComponent(cid);
     }
   }
 
@@ -46,7 +46,7 @@
     ) {
       AppRouter.navigate('/invoice', { id: invId });
     } else {
-      location.href = './invoice.html?id=' + encodeURIComponent(invId);
+      location.href = '#/invoice?id=' + encodeURIComponent(invId);
     }
   }
 

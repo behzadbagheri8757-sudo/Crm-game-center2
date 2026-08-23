@@ -24,7 +24,7 @@
     ) {
       AppRouter.navigate('/customer', { id: cid });
     } else {
-      location.href = './customer.html?id=' + encodeURIComponent(cid);
+      location.href = '#/customer?id=' + encodeURIComponent(cid);
     }
   }
 
@@ -77,7 +77,7 @@
       listEl.innerHTML = `<div class="empty">${(data.invoices||[]).length?'موردی پیدا نشد':'هنوز فاکتوری ثبت نشده. با + فاکتور جدید بزنید.'}</div>`;
     } else {
       listEl.innerHTML = rows.map(({inv, st, paid, remain, custName}) => `
-        <a class="ledger-row" href="./invoice.html?id=${encodeURIComponent(inv.id)}" style="text-decoration:none;color:inherit;">
+        <a class="ledger-row" href="#/invoice?id=${encodeURIComponent(inv.id)}" style="text-decoration:none;color:inherit;">
           <span class="name">#${esc(String(inv.number||''))}
             <span class="sub">${esc(custName)} — ${faDate(inv.date)} — <span class="${st.cls}">${st.label}</span></span>
             <span class="sub">پرداخت‌شده: ${toman(paid)} ت — مانده فاکتور: ${toman(Math.max(0, remain))} ت</span>
@@ -92,7 +92,7 @@
   function openNewInvoicePicker() {
     if (!data.customers.length) {
       openSheet(`<h3>مشتری ندارید</h3><div class="empty">اول از بخش مشتریان، یک مشتری ثبت کنید.</div>
-        <div class="btn-row"><a class="btn secondary" href="./customers.html">رفتن به مشتریان</a></div>`);
+        <div class="btn-row"><a class="btn secondary" href="#/customers">رفتن به مشتریان</a></div>`);
       return;
     }
     const opts = data.customers.slice().sort((a,b)=>(a.name||'').localeCompare(b.name||'','fa'))

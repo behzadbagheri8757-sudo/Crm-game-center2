@@ -22,7 +22,7 @@
     ) {
       AppRouter.navigate('/customer', { id: cid });
     } else {
-      location.href = './customer.html?id=' + encodeURIComponent(cid);
+      location.href = '#/customer?id=' + encodeURIComponent(cid);
     }
   }
 
@@ -35,7 +35,7 @@
     ) {
       AppRouter.navigate('/invoice', { id: invId });
     } else {
-      location.href = './invoice.html?id=' + encodeURIComponent(invId);
+      location.href = '#/invoice?id=' + encodeURIComponent(invId);
     }
   }
 
@@ -107,9 +107,9 @@
 
     listEl.innerHTML = rows.map(r => {
       const ch = r.ch;
-      const partyHref = './customer.html?id=' + encodeURIComponent(ch.customerId);
+      const partyHref = '#/customer?id=' + encodeURIComponent(ch.customerId);
       const invLink = ch.invoiceId
-        ? ` <a href="./invoice.html?id=${encodeURIComponent(ch.invoiceId)}" style="color:var(--olive-dark);">فاکتور #${esc(String(r.inv ? r.inv.number : '—'))}</a>`
+        ? ` <a href="#/invoice?id=${encodeURIComponent(ch.invoiceId)}" style="color:var(--olive-dark);">فاکتور #${esc(String(r.inv ? r.inv.number : '—'))}</a>`
         : '';
       const dueCls = r.dueSoon ? 'accent-rust' : '';
       return `<div class="ledger-row" style="cursor:default;align-items:flex-start;">
@@ -132,7 +132,7 @@
   function openNewCheckPicker() {
     if (!data.customers.length) {
       openSheet(`<h3>مشتری ندارید</h3><div class="empty">اول از بخش مشتریان، یک مشتری ثبت کنید.</div>
-        <div class="btn-row"><a class="btn secondary" href="./customers.html">رفتن به مشتریان</a></div>`);
+        <div class="btn-row"><a class="btn secondary" href="#/customers">رفتن به مشتریان</a></div>`);
       return;
     }
     const opts = data.customers.slice().sort((a,b) => (a.name || '').localeCompare(b.name || '', 'fa'))

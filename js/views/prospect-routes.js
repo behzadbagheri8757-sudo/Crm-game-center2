@@ -16,7 +16,7 @@
     ) {
       AppRouter.navigate('/prospects');
     } else {
-      location.href = './prospects.html';
+      location.href = '#/prospects';
     }
   }
 

@@ -22,7 +22,7 @@
     ) {
       AppRouter.navigate('/customer', { id: cid });
     } else {
-      location.href = './customer.html?id=' + encodeURIComponent(cid);
+      location.href = '#/customer?id=' + encodeURIComponent(cid);
     }
   }
 
@@ -150,12 +150,12 @@
       .map(r => {
         const href =
           r.kind === 'supplier'
-            ? './supplier.html?id=' +
+            ? '#/supplier?id=' +
               encodeURIComponent(r.partyId)
             : r.invoiceId
-            ? './invoice.html?id=' +
+            ? '#/invoice?id=' +
               encodeURIComponent(r.invoiceId)
-            : './customer.html?id=' +
+            : '#/customer?id=' +
               encodeURIComponent(r.partyId);
 
         const subParts = [r.methodLabel, faDate(r.date)];
@@ -200,7 +200,7 @@
           اول از بخش مشتریان، یک مشتری ثبت کنید.
         </div>
         <div class="btn-row">
-          <a class="btn secondary" href="./customers.html">
+          <a class="btn secondary" href="#/customers">
             رفتن به مشتریان
           </a>
         </div>

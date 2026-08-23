@@ -162,8 +162,8 @@
 
     const periodLabel = { today: 'امروز', week: 'این هفته', month: 'این ماه', all: 'همه زمان‌ها' }[reportPeriod];
 
-    const invLink = typeof isSpaShell === 'function' && isSpaShell() ? '#/inventory' : './inventory.html';
-    const prodLink = typeof isSpaShell === 'function' && isSpaShell() ? '#/products' : './products.html';
+    const invLink = '#/inventory';
+    const prodLink = '#/products';
 
     body.innerHTML =
       '<div class="report-section">' +
@@ -284,7 +284,7 @@
               topDebtors
                 .map(function (x) {
                   return (
-                    '<a class="ledger-row debt-row" href="./customer.html?id=' +
+                    '<a class="ledger-row debt-row" href="#/customer?id=' +
                     encodeURIComponent(x.c.id) +
                     '"><span class="name">' +
                     esc(x.c.name) +
@@ -316,7 +316,7 @@
             ? topSuppliers
                 .map(function (x) {
                   return (
-                    '<a class="ledger-row debt-row" href="./supplier.html?id=' +
+                    '<a class="ledger-row debt-row" href="#/supplier?id=' +
                     encodeURIComponent(x.s.id) +
                     '"><span class="name">' +
                     esc(x.s.name) +
@@ -406,7 +406,7 @@
           toman(periodSales) +
           ' ت</div></div></div>' +
           '<div class="btn-row" style="margin-top:10px;">' +
-          '<a class="btn small secondary" href="./invoices.html">همه فاکتورها</a></div>'
+          '<a class="btn small secondary" href="#/invoices">همه فاکتورها</a></div>'
       );
   }
 

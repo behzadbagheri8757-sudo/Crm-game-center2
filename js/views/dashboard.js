@@ -52,7 +52,7 @@
         });
         const name = cust ? cust.name : '—';
         return (
-          '<a class="ledger-row" href="./invoice.html?id=' +
+          '<a class="ledger-row" href="#/invoice?id=' +
           encodeURIComponent(inv.id) +
           '">' +
           '<span class="name">فاکتور #' +
@@ -101,7 +101,7 @@
     const rows = top
       .map(function (v) {
         return (
-          '<a class="ledger-row" href="./customer.html?id=' +
+          '<a class="ledger-row" href="#/customer?id=' +
           encodeURIComponent(v.customerId) +
           '">' +
           '<span class="name">' +
@@ -125,13 +125,13 @@
     );
   }
 
-  /** Read-only UI for existing ProspectScout dailyTarget — same as original index.html. */
+  /** Read-only UI for existing ProspectScout dailyTarget — same as original dashboard shell. */
   function renderDashboardTargetBar(dt) {
     const target = dt ? Number(dt.target) || 0 : 0;
     const count = dt ? Number(dt.count) || 0 : 0;
     if (!dt || target <= 0 || count < 1) {
       return (
-        '<a class="dash-target dash-target-compact" href="./prospects.html">' +
+        '<a class="dash-target dash-target-compact" href="#/prospects">' +
         '<span class="dash-target-title">تارگت امروز تنظیم نشده</span>' +
         '<span class="dash-target-link">تنظیم ←</span>' +
         '</a>'
@@ -146,7 +146,7 @@
     return (
       '<a class="dash-target' +
       (done ? ' is-done' : '') +
-      '" href="./prospects.html">' +
+      '" href="#/prospects">' +
       '<div class="dash-target-top">' +
       '<span class="dash-target-title">تارگت امروز</span>' +
       '<span class="dash-target-pct">' +
@@ -239,22 +239,22 @@
       '</div>' +
       '<div class="dash-section-label">دسترسی سریع</div>' +
       '<div class="dash-grid">' +
-      dashTile('./invoices.html', ICO.invoice, 'فاکتورها', invN + ' فاکتور') +
+      dashTile('#/invoices', ICO.invoice, 'فاکتورها', invN + ' فاکتور') +
       dashTile(
-        typeof isSpaShell === 'function' && isSpaShell() ? '#/customers' : './customers.html',
+        '#/customers',
         ICO.users,
         'مشتریان',
         custN + ' نفر'
       ) +
-      dashTile('./payments.html', ICO.card, 'پرداخت‌ها', payN + ' مورد') +
-      dashTile('./products.html', ICO.box, 'اجناس', prodN + ' قلم') +
-      dashTile('./suppliers.html', ICO.truck, 'تامین‌کنندگان', supN + ' نفر') +
-      dashTile('./checks.html', ICO.bank, 'چک‌ها', chkN + ' فقره') +
-      dashTile('./inventory.html', ICO.warehouse, 'انبار', toman(invVal) + ' ت') +
-      dashTile('./visits.html', ICO.map, 'ویزیت مشتریان', '') +
-      dashTile('./prospects.html', ICO.map, 'ارزیابی مغازه‌ها', '') +
-      dashTile('./reports.html', ICO.chart, 'گزارش‌ها', '') +
-      dashTile('./settings.html', ICO.gear, 'تنظیمات و بکاپ', '') +
+      dashTile('#/payments', ICO.card, 'پرداخت‌ها', payN + ' مورد') +
+      dashTile('#/products', ICO.box, 'اجناس', prodN + ' قلم') +
+      dashTile('#/suppliers', ICO.truck, 'تامین‌کنندگان', supN + ' نفر') +
+      dashTile('#/checks', ICO.bank, 'چک‌ها', chkN + ' فقره') +
+      dashTile('#/inventory', ICO.warehouse, 'انبار', toman(invVal) + ' ت') +
+      dashTile('#/visits', ICO.map, 'ویزیت مشتریان', '') +
+      dashTile('#/prospects', ICO.map, 'ارزیابی مغازه‌ها', '') +
+      dashTile('#/reports', ICO.chart, 'گزارش‌ها', '') +
+      dashTile('#/settings', ICO.gear, 'تنظیمات و بکاپ', '') +
       '</div>' +
       recentInvoicesHtml() +
       recentVisitsHtml();
