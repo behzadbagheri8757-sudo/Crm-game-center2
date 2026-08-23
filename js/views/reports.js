@@ -411,54 +411,26 @@
   }
 
 
-  function reportsCommandSummaryHtml() {
-    const m =
-      typeof commandCenterMetrics === 'function'
-        ? commandCenterMetrics(new Date())
-        : { mtdSales: 0, mtdProfit: 0, mtdCount: 0, salesDeltaPct: 0, profitDeltaPct: 0, jd: 0, priorSales: 0 };
-    const g = typeof globalTotals === 'function' ? globalTotals() : {};
-    const invVal = typeof inventoryValue === 'function' ? inventoryValue() : 0;
-
-    function deltaBadge(pct) {
-      if (pct > 0.05) return '<span class="rp-delta up">+' + pct.toLocaleString('fa-IR') + '٪</span>';
-      if (pct < -0.05) return '<span class="rp-delta down">' + pct.toLocaleString('fa-IR') + '٪</span>';
-      return '<span class="rp-delta flat">۰٪</span>';
+  function renderReportsSummary() {
+    const el = document.getElementById('reports-summary');
+    if (!el) return;
+    const m = typeof commandCenterMetrics === 'function' ? commandCenterMetrics(new Date()) : {mtdSales:globalTotals().monthSales,mtdProfit:globalTotals().totalProfit,salesDeltaPct:null,profitDeltaPct:null};
+    const g = globalTotals();
+    const invVal = inventoryValue();
+    function delta(pct){
+      if(pct===null || pct===undefined || !isFinite(pct)) return 'بدون مقایسه';
+      const n=Math.round(pct*10)/10;
+      return n>0 ? '↑ '+n+'٪ نسبت به بازه مشابه' : n<0 ? '↓ '+Math.abs(n)+'٪ نسبت به بازه مشابه' : '۰٪ بدون تغییر';
     }
-
-    return (
-      '<div class="rp-summary">' +
-      '<div class="rp-summary-title">خلاصه ماه جاری</div>' +
-      '<div class="rp-summary-grid">' +
-      '<div class="rp-kpi">' +
-      '<div class="rp-kpi-label">فروش ماه</div>' +
-      '<div class="rp-kpi-value">' +
-      toman(m.mtdSales) +
-      ' ت</div>' +
-      '<div class="rp-kpi-sub">' +
-      deltaBadge(m.salesDeltaPct) +
-      ' بازه مشابه ماه قبل</div></div>' +
-      '<div class="rp-kpi">' +
-      '<div class="rp-kpi-label">سود ماه</div>' +
-      '<div class="rp-kpi-value accent-amber">' +
-      toman(m.mtdProfit) +
-      ' ت</div>' +
-      '<div class="rp-kpi-sub">' +
-      deltaBadge(m.profitDeltaPct) +
-      ' بازه مشابه ماه قبل</div></div>' +
-      '<div class="rp-kpi">' +
-      '<div class="rp-kpi-label">بدهی مشتریان</div>' +
-      '<div class="rp-kpi-value accent-rust">' +
-      toman(g.customerDebt || 0) +
-      ' ت</div></div>' +
-      '<div class="rp-kpi">' +
-      '<div class="rp-kpi-label">ارزش انبار</div>' +
-      '<div class="rp-kpi-value">' +
-      toman(invVal) +
-      ' ت</div></div>' +
-      '</div>' +
-      '<div class="rp-summary-note">مقایسه فروش/سود با همان تعداد روز از ماه قبل است (نه کل ماه قبل).</div>' +
-      '</div>'
-    );
+    function cls(pct){ return pct>0 ? 'up' : pct<0 ? 'down' : ''; }
+    el.innerHTML =
+      '<div class="report-summary-title">خلاصه مدیریتی — ماه جاری تا امروز</div>' +
+      '<div class="report-summary">' +
+      '<div class="report-summary-card sales"><div class="report-summary-label">فروش ماه</div><div class="report-summary-value sales">'+toman(m.mtdSales)+' ت</div><div class="report-summary-meta '+cls(m.salesDeltaPct)+'">'+delta(m.salesDeltaPct)+'</div></div>' +
+      '<div class="report-summary-card profit"><div class="report-summary-label">سود ماه</div><div class="report-summary-value profit">'+toman(m.mtdProfit)+' ت</div><div class="report-summary-meta '+cls(m.profitDeltaPct)+'">'+delta(m.profitDeltaPct)+'</div></div>' +
+      '<div class="report-summary-card debt"><div class="report-summary-label">مطالبات مشتریان</div><div class="report-summary-value debt">'+toman(g.customerDebt)+' ت</div><div class="report-summary-meta">'+debtorList(9999).length+' بدهکار فعال</div></div>' +
+      '<div class="report-summary-card inventory"><div class="report-summary-label">ارزش موجودی</div><div class="report-summary-value">'+toman(invVal)+' ت</div><div class="report-summary-meta">وضعیت فعلی انبار</div></div>' +
+      '</div>';
   }
 
   function drawReportsPage(root) {
@@ -475,7 +447,7 @@
     };
     root.innerHTML =
       '<h2 class="section-title">گزارش‌ها</h2>' +
-      reportsCommandSummaryHtml() +
+      '<div id="reports-summary"></div>' +
       '<div class="field"><label>بازه زمانی (برای فروش و فاکتور)</label>' +
       '<div class="chip-row" id="report-period-chips">' +
       chip('today', 'امروز') +
@@ -508,6 +480,7 @@
     bodyEl.addEventListener('click', bodyClickHandler);
 
     renderReportsBodyOnly();
+    renderReportsSummary();
   }
 
   function mount(root, params) {
@@ -527,7 +500,7 @@
 
     // Mutation → render() → ViewHost.refreshCurrent() refreshes report body while still on Reports
     if (typeof ViewHost !== 'undefined' && ViewHost.setRefresh) {
-      refreshToken = ViewHost.setRefresh(renderReportsBodyOnly);
+      refreshToken = ViewHost.setRefresh(function(){ renderReportsBodyOnly(); renderReportsSummary(); });
     }
 
     return function unmount() {

@@ -1,316 +1,165 @@
-/* js/views/dashboard.js — SPA Dashboard: Daily Command Center
-   Warm Commerce visual + operational hierarchy.
-   Reuses commandCenterMetrics / globalTotals / actionableDebtors (read-only).
-   No FIFO/payment/invoice mutation logic.
+/* js/views/dashboard.js — Daily Command Center
+   UI/derived metrics only. Existing accounting logic remains authoritative.
 */
 'use strict';
 
 (function (global) {
   const ICO = {
-    target:
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/></svg>',
-    trendUp:
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/></svg>',
-    trendDown:
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 7 9 13 13 9 21 17"/><polyline points="14 17 21 17 21 10"/></svg>',
-    cash:
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 12h.01M18 12h.01"/></svg>',
-    invoice:
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
-    users:
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
-    pay:
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>',
-    alert:
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
-    chart:
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>'
+    invoice: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h6"/></svg>',
+    users: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+    box: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/></svg>',
+    card: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>',
+    truck: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="4" width="13" height="12" rx="1.5"/><path d="M14.5 8H19l3.5 3.5V16h-8"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>',
+    bank: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V10l7-5 7 5v11M9 21v-6h6v6"/><path d="M4 10h16"/></svg>',
+    map: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6.5-8 12-8 12S4 16.5 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>',
+    chart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
+    gear: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21h-4v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1-2.8-2.8.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H3v-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1 2.8-2.8.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6V3h4v.1a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1 2.8 2.8-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.1v4h-.1a1.7 1.7 0 0 0-1.6.9Z"/></svg>',
+    warehouse: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V9l7-4 7 4v12"/><path d="M9 21v-6h6v6"/></svg>',
+    target: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1.2"/><path d="m16.5 7.5 4-4M17 3.5h3.5V7"/></svg>'
   };
 
+  function normalizeDigits(v) {
+    return String(v || '').replace(/[۰-۹]/g, function (d) { return String('۰۱۲۳۴۵۶۷۸۹'.indexOf(d)); }).replace(/[٠-٩]/g, function (d) { return String('٠١٢٣٤٥٦٧٨٩'.indexOf(d)); });
+  }
+
+  function money(v) { return toman(Math.round(Number(v) || 0)) + ' ت'; }
+
   function deltaHtml(pct) {
-    if (pct > 0.05) {
-      return (
-        '<span class="cc-delta cc-delta-up">' +
-        ICO.trendUp +
-        ' ' +
-        pct.toLocaleString('fa-IR') +
-        '٪ نسبت به بازه مشابه ماه قبل</span>'
-      );
-    }
-    if (pct < -0.05) {
-      return (
-        '<span class="cc-delta cc-delta-down">' +
-        ICO.trendDown +
-        ' ' +
-        Math.abs(pct).toLocaleString('fa-IR') +
-        '٪ نسبت به بازه مشابه ماه قبل</span>'
-      );
-    }
-    return '<span class="cc-delta cc-delta-flat">بدون تغییر معنادار نسبت به بازه مشابه ماه قبل</span>';
+    if (pct === null || pct === undefined || !isFinite(pct)) return '<span class="kpi-delta flat">بدون مقایسه</span>';
+    const n = Math.round(pct * 10) / 10;
+    if (n > 0) return '<span class="kpi-delta up">↑ ' + esc(String(n).replace('-', '')) + '٪</span> <span>نسبت به بازه مشابه</span>';
+    if (n < 0) return '<span class="kpi-delta down">↓ ' + esc(String(Math.abs(n))) + '٪</span> <span>نسبت به بازه مشابه</span>';
+    return '<span class="kpi-delta flat">۰٪</span> <span>بدون تغییر</span>';
   }
 
-  function navigate(path, params) {
-    if (typeof AppRouter !== 'undefined' && AppRouter.navigate) {
-      AppRouter.navigate(path, params || {});
-    } else {
-      location.hash = '#' + path;
-    }
+  function dashTile(href, ico, title, sub) {
+    return '<a class="dash-tile" href="' + href + '"><span class="dash-ico">' + ico + '</span><span class="dash-title">' + title + '</span>' + (sub ? '<span class="dash-sub">' + sub + '</span>' : '') + '</a>';
   }
 
-  function targetCardHtml(mtdSales, target) {
-    const hasTarget = target > 0;
-    const pct = hasTarget ? Math.round((mtdSales / target) * 1000) / 10 : 0;
-    const barPct = hasTarget ? Math.min(100, Math.max(0, (mtdSales / target) * 100)) : 0;
-    const over = hasTarget && mtdSales >= target;
-    const remain = hasTarget ? Math.max(0, target - mtdSales) : 0;
-
-    let statusLine = '';
-    if (!hasTarget) {
-      statusLine = '<div class="cc-target-hint">هدف ماهانه تنظیم نشده — برای انگیزه روزانه یک هدف تعیین کنید</div>';
-    } else if (over) {
-      statusLine =
-        '<div class="cc-target-hint cc-target-over">هدف محقق شد ✓ — ' +
-        toman(mtdSales - target) +
-        ' ت بالاتر از هدف</div>';
-    } else {
-      statusLine =
-        '<div class="cc-target-hint">' + toman(remain) + ' ت تا رسیدن به هدف</div>';
-    }
-
-    return (
-      '<div class="cc-card cc-target-card' +
-      (over ? ' is-complete' : '') +
-      '">' +
-      '<div class="cc-target-top">' +
-      '<div class="cc-target-title">هدف فروش ماهانه</div>' +
-      '<button type="button" class="cc-target-icon-btn" id="cc-edit-target" title="تنظیم هدف" aria-label="تنظیم هدف فروش">' +
-      ICO.target +
-      '</button></div>' +
-      '<div class="cc-target-pct' +
-      (over ? ' is-over' : '') +
-      '">' +
-      (hasTarget ? pct.toLocaleString('fa-IR') + '٪' : '—') +
-      '</div>' +
-      '<div class="cc-progress" role="progressbar" aria-valuenow="' +
-      Math.round(barPct) +
-      '" aria-valuemin="0" aria-valuemax="100">' +
-      '<div class="cc-progress-fill' +
-      (over ? ' is-over' : '') +
-      '" style="width:' +
-      barPct +
-      '%"></div></div>' +
-      statusLine +
-      '</div>'
-    );
+  function recentInvoicesHtml() {
+    const invs = (data.invoices || []).slice().sort(function (a, b) {
+      return (b.date || '').localeCompare(a.date || '') || String(b.number || '').localeCompare(String(a.number || ''));
+    }).slice(0, 5);
+    if (!invs.length) return '';
+    const rows = invs.map(function (inv) {
+      const cust = (data.customers || []).find(function (c) { return c.id === inv.customerId; });
+      return '<a class="ledger-row" href="#/invoice?id=' + encodeURIComponent(inv.id) + '"><span class="name">فاکتور #' + esc(String(inv.number || '')) + '<span class="sub">' + esc(cust ? cust.name : '—') + ' — ' + faDate(inv.date) + '</span></span><span class="filler"></span><span class="amount">' + money(inv.total) + '</span></a>';
+    }).join('');
+    return '<div class="dashboard-block"><div class="dashboard-block-head"><div class="dash-section-label">آخرین فاکتورها</div><a class="section-action" href="#/invoices">همه ←</a></div><div class="dash-activity">' + rows + '</div></div>';
   }
 
-  function salesCardHtml(m) {
-    return (
-      '<div class="cc-card cc-sales-card">' +
-      '<div class="cc-card-label">فروش ماه جاری</div>' +
-      '<div class="cc-card-value">' +
-      toman(m.mtdSales) +
-      ' <span class="cc-unit">ت</span></div>' +
-      '<div class="cc-card-sub">' +
-      (m.mtdCount || 0).toLocaleString('fa-IR') +
-      ' فاکتور · ' +
-      (m.jd || 0).toLocaleString('fa-IR') +
-      ' روز از ماه</div>' +
-      deltaHtml(m.salesDeltaPct) +
-      '</div>'
-    );
+  function recentVisitsHtml() {
+    const items = [];
+    (data.customers || []).forEach(function (c) {
+      (c.visits || []).forEach(function (v) { items.push({ customerId: c.id, name: c.name, date: v.date, time: v.time, result: v.result }); });
+    });
+    items.sort(function (a, b) { return (b.date || '').localeCompare(a.date || '') || (b.time || '').localeCompare(a.time || ''); });
+    const top = items.slice(0, 5);
+    if (!top.length) return '';
+    const rows = top.map(function (v) {
+      return '<a class="ledger-row" href="#/customer?id=' + encodeURIComponent(v.customerId) + '"><span class="name">' + esc(v.name) + '<span class="sub">' + faDate(v.date) + (v.time ? ' ' + esc(v.time) : '') + (v.result ? ' — ' + esc(v.result) : '') + '</span></span><span class="filler"></span><span class="amount">ویزیت</span></a>';
+    }).join('');
+    return '<div class="dashboard-block"><div class="dashboard-block-head"><div class="dash-section-label">آخرین ویزیت‌ها</div><a class="section-action" href="#/visits">همه ←</a></div><div class="dash-activity">' + rows + '</div></div>';
   }
 
-  function profitCardHtml(m) {
-    return (
-      '<div class="cc-card cc-profit-card">' +
-      '<div class="cc-card-label">سود ماه جاری</div>' +
-      '<div class="cc-card-value cc-value-sm">' +
-      toman(m.mtdProfit) +
-      ' <span class="cc-unit">ت</span></div>' +
-      deltaHtml(m.profitDeltaPct) +
-      '</div>'
-    );
+  function targetHtml(metrics) {
+    const target = typeof getMonthlySalesTarget === 'function' ? getMonthlySalesTarget() : 0;
+    const sales = Number(metrics.mtdSales) || 0;
+    const pct = target > 0 ? Math.round((sales / target) * 100) : 0;
+    const capped = Math.min(100, Math.max(0, pct));
+    const done = target > 0 && sales >= target;
+    const title = target > 0 ? 'هدف فروش ماهانه' : 'هدف فروش ماهانه تنظیم نشده';
+    const current = target > 0 ? money(sales) : '—';
+    const targetText = target > 0 ? money(target) : 'برای شروع هدف را تنظیم کنید';
+    return '<div class="dash-monthly-target ' + (done ? 'is-done' : '') + '">' +
+      '<div class="dmt-head"><div class="dmt-title"><span class="dmt-icon">' + ICO.target + '</span><span>' + title + '</span></div>' +
+      '<button type="button" class="dmt-edit" data-monthly-target>تنظیم هدف</button></div>' +
+      '<div class="dmt-main"><div><div class="dmt-current">' + current + (target > 0 ? '<small>فروش فعلی</small>' : '') + '</div></div>' +
+      '<div class="dmt-pct">' + (target > 0 ? pct + '٪' : '—') + '<small>تحقق هدف</small></div></div>' +
+      '<div class="dmt-bar"><span style="width:' + capped + '%"></span></div>' +
+      '<div class="dmt-foot"><span class="dmt-status">' + (target > 0 ? (done ? 'هدف ماه تکمیل شده' : 'هدف: ' + targetText) : 'هدف ماهانه هنوز تنظیم نشده') + '</span><span>' + (target > 0 ? 'تا امروز' : 'با آیکون بالا تنظیم کنید') + '</span></div>' +
+      '</div>';
   }
 
-  function receivablesCardHtml() {
-    const list = typeof actionableDebtors === 'function' ? actionableDebtors(3) : [];
-    const totalDebt =
-      typeof globalTotals === 'function' ? globalTotals().customerDebt : 0;
-    const rows = list
-      .map(function (x) {
-        return (
-          '<a class="cc-debt-row" href="#/customer?id=' +
-          encodeURIComponent(x.c.id) +
-          '">' +
-          '<span class="cc-debt-name">' +
-          esc(x.c.name || '—') +
-          '</span>' +
-          '<span class="cc-debt-amt">' +
-          toman(x.t.balance) +
-          ' ت</span></a>'
-        );
-      })
-      .join('');
-
-    return (
-      '<div class="cc-card cc-recv-card">' +
-      '<div class="cc-recv-head">' +
-      '<span class="cc-card-label">مطالبات نیازمند اقدام</span>' +
-      '<span class="cc-recv-ico">' +
-      ICO.alert +
-      '</span></div>' +
-      (list.length
-        ? '<div class="cc-recv-sum">بیشترین مانده‌ها برای پیگیری</div>' +
-          '<div class="cc-debt-list">' +
-          rows +
-          '</div>' +
-          '<a class="cc-link" href="#/reports">مشاهده گزارش مطالبات ←</a>'
-        : '<div class="cc-recv-empty">مانده قابل پیگیری ثبت نشده</div>') +
-      (totalDebt > 0 && !list.length
-        ? ''
-        : totalDebt > 0
-          ? '<div class="cc-recv-foot">جمع بدهی مشتریان: ' + toman(totalDebt) + ' ت</div>'
-          : '') +
-      '</div>'
-    );
-  }
-
-  function quickActionsHtml() {
-    return (
-      '<div class="cc-section-label">اقدام سریع</div>' +
-      '<div class="cc-actions">' +
-      '<button type="button" class="cc-action" data-cc-act="invoice">' +
-      '<span class="cc-action-ico">' +
-      ICO.invoice +
-      '</span><span>ثبت فاکتور</span></button>' +
-      '<button type="button" class="cc-action" data-cc-act="payments">' +
-      '<span class="cc-action-ico">' +
-      ICO.cash +
-      '</span><span>وصول</span></button>' +
-      '<button type="button" class="cc-action" data-cc-act="pay">' +
-      '<span class="cc-action-ico">' +
-      ICO.pay +
-      '</span><span>پرداخت‌ها</span></button>' +
-      '<button type="button" class="cc-action" data-cc-act="customers">' +
-      '<span class="cc-action-ico">' +
-      ICO.users +
-      '</span><span>مشتریان</span></button>' +
-      '</div>'
-    );
-  }
-
-  function bindDashboardEvents(root) {
-    const targetBtn = root.querySelector('#cc-edit-target');
-    if (targetBtn) {
-      targetBtn.onclick = function () {
-        const cur = typeof getMonthlySalesTarget === 'function' ? getMonthlySalesTarget() : 0;
-        const v = prompt(
-          'هدف فروش ماهانه (تومان):',
-          cur > 0 ? String(Math.round(cur)) : '500000000'
-        );
-        if (v == null) return;
-        const n = Number(String(v).replace(/[^\d.]/g, ''));
-        if (!isFinite(n) || n < 0) {
-          if (typeof showToast === 'function') showToast('عدد معتبر وارد کنید');
-          return;
-        }
-        if (typeof setMonthlySalesTarget === 'function') setMonthlySalesTarget(n);
-        if (typeof ViewHost !== 'undefined' && ViewHost.refreshCurrent) ViewHost.refreshCurrent();
-        else refreshInto(root, function () { return false; });
-      };
-    }
-    root.querySelectorAll('[data-cc-act]').forEach(function (btn) {
-      btn.onclick = function () {
-        const act = btn.getAttribute('data-cc-act');
-        if (act === 'invoice') navigate('/invoices');
-        else if (act === 'payments') navigate('/payments');
-        else if (act === 'pay') navigate('/payments');
-        else if (act === 'customers') navigate('/customers');
-      };
+  function bindMonthlyTarget(root, refresh) {
+    const btn = root.querySelector('[data-monthly-target]');
+    if (!btn) return;
+    btn.addEventListener('click', function (e) {
+      e.preventDefault(); e.stopPropagation();
+      const current = typeof getMonthlySalesTarget === 'function' ? getMonthlySalesTarget() : 0;
+      const raw = prompt('هدف فروش ماهانه را به تومان وارد کنید:', current ? String(current) : '');
+      if (raw === null) return;
+      const normalized = normalizeDigits(raw).replace(/[,_\s]/g, '');
+      const value = Number(normalized);
+      if (!(value > 0)) { if (typeof showToast === 'function') showToast('هدف باید بیشتر از صفر باشد'); return; }
+      if (typeof setMonthlySalesTarget === 'function') setMonthlySalesTarget(value);
+      refresh();
     });
   }
 
-  function refreshInto(root, isStale) {
-    const m =
-      typeof commandCenterMetrics === 'function'
-        ? commandCenterMetrics(new Date())
-        : {
-            mtdSales: 0,
-            mtdProfit: 0,
-            mtdCount: 0,
-            salesDeltaPct: 0,
-            profitDeltaPct: 0,
-            jd: 0
-          };
-    const target = typeof getMonthlySalesTarget === 'function' ? getMonthlySalesTarget() : 0;
-
+  async function renderInto(root, isStale) {
+    const metrics = typeof commandCenterMetrics === 'function' ? commandCenterMetrics(new Date()) : { mtdSales: globalTotals().monthSales, mtdProfit: 0, salesDeltaPct: null, profitDeltaPct: null };
+    const g = globalTotals();
+    const invVal = inventoryValue();
+    const custN = (data.customers || []).length;
+    const prodN = (data.products || []).length;
+    const invN = (data.invoices || []).length;
+    const payN = (data.payments || []).length;
+    const chkN = (data.checks || []).length;
     if (typeof isStale === 'function' && isStale()) return;
 
     root.innerHTML =
-      '<h2 class="section-title cc-page-title">داشبورد</h2>' +
-      targetCardHtml(m.mtdSales, target) +
-      '<div class="cc-row-2">' +
-      salesCardHtml(m) +
-      profitCardHtml(m) +
-      '</div>' +
-      receivablesCardHtml() +
-      quickActionsHtml() +
-      '<div class="cc-foot-links">' +
-      '<a class="cc-link" href="#/reports">' +
-      ICO.chart +
-      ' گزارش‌های کامل</a>' +
-      '<a class="cc-link" href="#/settings">تنظیمات و بکاپ</a>' +
+      '<div class="dashboard-shell">' +
+      '<h2 class="section-title">داشبورد</h2>' +
+      '<div class="dashboard-eyebrow">مرکز فرماندهی روزانه — فروش، سود، وصول و عملیات</div>' +
+      targetHtml(metrics) +
+      '<div class="dashboard-block"><div class="dashboard-block-head"><div class="dash-section-label">خلاصه وضعیت</div></div>' +
+      '<div class="dash-kpis">' +
+      '<div class="dash-kpi sales"><div class="dash-kpi-label">فروش این ماه</div><div class="dash-kpi-value sales">' + money(metrics.mtdSales) + '</div><div class="dash-kpi-sub">' + deltaHtml(metrics.salesDeltaPct) + '</div></div>' +
+      '<div class="dash-kpi profit"><div class="dash-kpi-label">سود این ماه</div><div class="dash-kpi-value profit">' + money(metrics.mtdProfit) + '</div><div class="dash-kpi-sub">' + deltaHtml(metrics.profitDeltaPct) + '</div></div>' +
+      '<div class="dash-kpi inventory"><div class="dash-kpi-label">ارزش موجودی انبار</div><div class="dash-kpi-value">' + money(invVal) + '</div><div class="dash-kpi-sub">ارزش فعلی موجودی</div></div>' +
+      '<div class="dash-kpi debt"><div class="dash-kpi-label">بدهی مشتریان</div><div class="dash-kpi-value debt">' + money(g.customerDebt) + '</div><div class="dash-kpi-sub">' + debtorList(9999).length + ' بدهکار فعال</div></div>' +
+      '</div></div>' +
+      '<div class="dashboard-block"><div class="dashboard-block-head"><div class="dash-section-label">دسترسی سریع</div></div>' +
+      '<div class="dash-grid">' +
+      dashTile('#/invoices', ICO.invoice, 'فاکتورها', invN + ' فاکتور') +
+      dashTile('#/customers', ICO.users, 'مشتریان', custN + ' نفر') +
+      dashTile('#/payments', ICO.card, 'پرداخت‌ها', payN + ' مورد') +
+      dashTile('#/products', ICO.box, 'اجناس', prodN + ' قلم') +
+      dashTile('#/suppliers', ICO.truck, 'تامین‌کنندگان', (data.suppliers || []).length + ' نفر') +
+      dashTile('#/checks', ICO.bank, 'چک‌ها', chkN + ' فقره') +
+      dashTile('#/inventory', ICO.warehouse, 'انبار', money(invVal)) +
+      dashTile('#/visits', ICO.map, 'ویزیت مشتریان', '') +
+      dashTile('#/prospects', ICO.map, 'ارزیابی مغازه‌ها', '') +
+      dashTile('#/reports', ICO.chart, 'گزارش‌ها', '') +
+      dashTile('#/settings', ICO.gear, 'تنظیمات و بکاپ', '') +
+      '</div></div>' +
+      recentInvoicesHtml() + recentVisitsHtml() +
       '</div>';
 
-    bindDashboardEvents(root);
+    bindMonthlyTarget(root, function () { renderInto(root, isStale); });
   }
 
   function mount(root, params) {
     if (!root) return function () {};
     const nav = document.getElementById('nav');
     if (nav) nav.style.display = 'none';
-    const fab = document.getElementById('fab');
-    if (fab) {
-      fab.style.display = 'none';
-      fab.onclick = null;
-    }
-
     let cancelled = false;
     let refreshToken = null;
-    const isStale = function () {
-      return cancelled;
-    };
+    const isStale = function () { return cancelled; };
     function refreshDashboard() {
-      try {
-        refreshInto(root, isStale);
-      } catch (e) {
-        if (!cancelled) {
-          console.error('DashboardView refresh failed', e);
-          root.innerHTML =
-            '<div class="empty">خطا در بارگذاری داشبورد. صفحه را دوباره باز کنید.</div>';
-        }
-      }
+      renderInto(root, isStale).catch(function (e) { if (!cancelled) console.error('DashboardView refresh failed', e); });
     }
     refreshDashboard();
-
-    if (typeof ViewHost !== 'undefined' && ViewHost.setRefresh) {
-      refreshToken = ViewHost.setRefresh(refreshDashboard);
-    }
-
+    if (typeof ViewHost !== 'undefined' && ViewHost.setRefresh) refreshToken = ViewHost.setRefresh(refreshDashboard);
     return function unmount() {
       cancelled = true;
-      if (typeof ViewHost !== 'undefined' && ViewHost.clearRefresh) {
-        ViewHost.clearRefresh(refreshToken);
-      }
+      if (typeof ViewHost !== 'undefined' && ViewHost.clearRefresh) ViewHost.clearRefresh(refreshToken);
       refreshToken = null;
       if (nav) nav.style.display = '';
       root.innerHTML = '';
     };
   }
 
-  global.DashboardView = {
-    mount: mount,
-    unmount: function () {}
-  };
+  global.DashboardView = { mount: mount, unmount: function () {} };
 })(typeof window !== 'undefined' ? window : this);
