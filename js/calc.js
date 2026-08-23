@@ -593,3 +593,179 @@ function customerBehavior(cid){
   };
 }
 
+
+/* ============================================================
+   Command Center metrics — pure derived (READ-ONLY).
+   MTD sales + date-scoped profit using the SAME rules as
+   customerProfit (invoice margins − return margins − discount
+   payments), filtered to a Jalali day range. No new COGS/FIFO.
+   Does not mutate data, IndexedDB, or existing finance functions.
+   ============================================================ */
+
+/** @returns {{jy,jm,jd}|null} */
+function _ccJalaliParts(ref){
+  if(typeof ref === 'string'){
+    if(typeof isoToJalali === 'function'){
+      const j = isoToJalali(ref);
+      if(j) return { jy:j[0], jm:j[1], jd:j[2] };
+    }
+    const d = new Date(ref);
+    if(isNaN(d.getTime())) return null;
+    ref = d;
+  }
+  if(!(ref instanceof Date) || isNaN(ref.getTime())) ref = new Date();
+  if(typeof gregorianToJalali === 'function'){
+    const j = gregorianToJalali(ref.getFullYear(), ref.getMonth()+1, ref.getDate());
+    return { jy:j[0], jm:j[1], jd:j[2] };
+  }
+  return { jy: ref.getFullYear(), jm: ref.getMonth()+1, jd: ref.getDate() };
+}
+
+function _ccIsoInJalaliRange(iso, jy, jm, jdMin, jdMax){
+  const p = _ccJalaliParts(iso);
+  if(!p) return false;
+  if(p.jy !== jy || p.jm !== jm) return false;
+  return p.jd >= jdMin && p.jd <= jdMax;
+}
+
+/**
+ * Profit for one customer over invoices/returns/discounts whose dates
+ * fall in Jalali [jy, jm, jdMin..jdMax] — same arithmetic as customerProfit,
+ * only date-scoped. Does not call or modify customerProfit.
+ */
+function _ccCustomerProfitInJalaliRange(cid, jy, jm, jdMin, jdMax){
+  let s = 0;
+
+  // Invoice line + invoice-level discounts (same as customerProfit)
+  (data.invoices||[]).forEach(function(inv){
+    if(inv.customerId !== cid) return;
+    if(!_ccIsoInJalaliRange(inv.date, jy, jm, jdMin, jdMax)) return;
+    const itemsProfit = (inv.items||[]).reduce(function(a, it){
+      return a + ((Number(it.price)||0) - (Number(it.buyPrice)||0)) * (Number(it.qty)||0) - (Number(it.discount)||0);
+    }, 0);
+    s += itemsProfit - (typeof invoiceDiscountAmount === 'function' ? invoiceDiscountAmount(inv) : 0);
+  });
+
+  // Return margins (same basis rules as customerProfit H-1)
+  (data.payments||[]).forEach(function(p){
+    if(p.customerId !== cid || p.method !== 'return') return;
+    if(!_ccIsoInJalaliRange(p.date, jy, jm, jdMin, jdMax)) return;
+    (p.returnItems||[]).forEach(function(ri){
+      if(!(ri.qty > 0)) return;
+      const prod = (data.products||[]).find(function(x){ return x.id === ri.productId; });
+      let sourceItem = null;
+      if(p.invoiceId){
+        const srcInv = (data.invoices||[]).find(function(i){ return i.id === p.invoiceId; });
+        if(srcInv){
+          sourceItem = (srcInv.items||[]).find(function(it){ return it.productId === ri.productId; }) || null;
+        }
+      }
+      if(!sourceItem){
+        const sold = (data.invoices||[])
+          .filter(function(inv){ return inv.customerId === cid; })
+          .flatMap(function(inv){ return (inv.items||[]).filter(function(it){ return it.productId === ri.productId; }); });
+        sourceItem = sold.length ? sold[sold.length - 1] : null;
+      }
+      const buy = (sourceItem && sourceItem.buyPrice !== undefined) ? (sourceItem.buyPrice || 0) : (prod ? (prod.buy || 0) : 0);
+      const sell = (ri.price > 0) ? ri.price : (sourceItem ? (sourceItem.price || 0) : 0);
+      s -= (sell - buy) * ri.qty;
+    });
+  });
+
+  // Transactional discount payments
+  (data.payments||[]).forEach(function(p){
+    if(p.customerId !== cid || p.method !== 'discount') return;
+    if(!_ccIsoInJalaliRange(p.date, jy, jm, jdMin, jdMax)) return;
+    s -= Number(p.amount) || 0;
+  });
+
+  return s;
+}
+
+/** Sum of date-scoped canonical profit for all customers in range. */
+function _ccProfitInJalaliRange(jy, jm, jdMin, jdMax){
+  let total = 0;
+  (data.customers||[]).forEach(function(c){
+    total += _ccCustomerProfitInJalaliRange(c.id, jy, jm, jdMin, jdMax);
+  });
+  return total;
+}
+
+/**
+ * Month-to-date (Jalali) sales + canonical profit, vs same day-count prior month.
+ * Sales = sum invoice.total in range.
+ * Profit = same rules as customerProfit, date-scoped (not lifetime totalProfit).
+ */
+function commandCenterMetrics(refDate){
+  const now = (refDate instanceof Date && !isNaN(refDate.getTime())) ? refDate : new Date();
+  const cur = _ccJalaliParts(now) || { jy: 1403, jm: 1, jd: 1 };
+  const jy = cur.jy, jm = cur.jm, jd = cur.jd;
+
+  let mtdSales = 0, mtdCount = 0;
+  (data.invoices||[]).forEach(function(inv){
+    if(!_ccIsoInJalaliRange(inv.date, jy, jm, 1, jd)) return;
+    mtdSales += Number(inv.total) || 0;
+    mtdCount += 1;
+  });
+  const mtdProfit = _ccProfitInJalaliRange(jy, jm, 1, jd);
+
+  let prevJm = jm - 1, prevJy = jy;
+  if(prevJm < 1){ prevJm = 12; prevJy -= 1; }
+  const prevLen = (typeof jalaliMonthLength === 'function') ? jalaliMonthLength(prevJy, prevJm) : 30;
+  const prevJdMax = Math.min(jd, prevLen);
+
+  let priorSales = 0, priorCount = 0;
+  (data.invoices||[]).forEach(function(inv){
+    if(!_ccIsoInJalaliRange(inv.date, prevJy, prevJm, 1, prevJdMax)) return;
+    priorSales += Number(inv.total) || 0;
+    priorCount += 1;
+  });
+  const priorProfit = _ccProfitInJalaliRange(prevJy, prevJm, 1, prevJdMax);
+
+  function deltaPct(curV, priorV){
+    if(!priorV && !curV) return 0;
+    if(!priorV) return curV > 0 ? 100 : (curV < 0 ? -100 : 0);
+    return Math.round(((curV - priorV) / Math.abs(priorV)) * 1000) / 10;
+  }
+
+  return {
+    jy: jy,
+    jm: jm,
+    jd: jd,
+    mtdSales: mtdSales,
+    mtdProfit: mtdProfit,
+    mtdCount: mtdCount,
+    priorSales: priorSales,
+    priorProfit: priorProfit,
+    priorCount: priorCount,
+    priorDayCount: prevJdMax,
+    salesDeltaPct: deltaPct(mtdSales, priorSales),
+    profitDeltaPct: deltaPct(mtdProfit, priorProfit)
+  };
+}
+
+/** Top debtors for quick follow-up (balance > 0). Pure read via existing debtorList. */
+function actionableDebtors(limit){
+  return (typeof debtorList === 'function' ? debtorList(limit || 3) : []);
+}
+
+/** Monthly sales target (tomans) — localStorage only; no schema change. */
+var SALES_TARGET_KEY = 'baqeri_sales_target_v1';
+function getMonthlySalesTarget(){
+  try{
+    var v = localStorage.getItem(SALES_TARGET_KEY);
+    if(v == null || v === '') return 0;
+    var n = Number(v);
+    return (isFinite(n) && n > 0) ? n : 0;
+  }catch(e){ return 0; }
+}
+function setMonthlySalesTarget(n){
+  n = Number(n);
+  if(!isFinite(n) || n < 0) n = 0;
+  try{
+    if(n > 0) localStorage.setItem(SALES_TARGET_KEY, String(Math.round(n)));
+    else localStorage.removeItem(SALES_TARGET_KEY);
+  }catch(e){}
+  return n;
+}
+
