@@ -1,7 +1,7 @@
 /* sw.js — App Shell only. Never touches IndexedDB or CRM business data.
  *
  * Goal: one successful online visit → full shell in Cache Storage →
- * entire CRM usable offline, including customer.html?id=… never opened before.
+ * entire CRM usable offline through the SPA shell.
  *
  * CACHE_NAME: bump on every deploy that changes static assets.
  */
@@ -12,23 +12,6 @@ const CACHE_NAME = 'baqeri-shell-v16';
 /** App Shell — paths relative to this SW (same directory as index.html). */
 const PRECACHE_URLS = [
   './index.html',
-  './customers.html',
-  './customer.html',
-  './products.html',
-  './inventory.html',
-  './suppliers.html',
-  './supplier.html',
-  './invoices.html',
-  './invoice.html',
-  './payments.html',
-  './checks.html',
-  './visits.html',
-  './reports.html',
-  './settings.html',
-  './prospects.html',
-  './prospect.html',
-  './evaluation.html',
-  './prospect-routes.html',
   './css/app.css',
   './js/models.js',
   './js/ui.js',
@@ -73,13 +56,9 @@ const PRECACHE_URLS = [
   './logo-export.png'
 ];
 
-/** HTML shells that must exist for install to be considered successful. */
+/** Critical SPA shell/assets that must exist for install to be considered successful. */
 const CRITICAL_SHELLS = [
   './index.html',
-  './customers.html',
-  './customer.html',
-  './invoices.html',
-  './invoice.html',
   './css/app.css',
   './js/db.js',
   './js/nav.js',
@@ -160,77 +139,21 @@ self.addEventListener('activate', function (event) {
   );
 });
 
-/** Last path segment, e.g. /repo/customer.html → customer.html */
-function fileNameFromUrl(url) {
-  var path = url.pathname || '';
-  if (!path || path.charAt(path.length - 1) === '/') {
-    return 'index.html';
-  }
-  var parts = path.split('/');
-  var last = parts[parts.length - 1] || '';
-  if (!last || last.indexOf('.') === -1) {
-    return 'index.html';
-  }
-  return last;
-}
-
-/** Find a cached response whose URL ends with /filename or equals filename. */
-function matchByFileName(cache, filename) {
-  return cache.keys().then(function (keys) {
-    for (var i = 0; i < keys.length; i++) {
-      try {
-        var u = new URL(keys[i].url);
-        var name = u.pathname.split('/').pop();
-        if (name === filename) {
-          return cache.match(keys[i]);
-        }
-      } catch (e) { /* continue */ }
-    }
-    return undefined;
-  });
-}
-
-/**
- * Resolve HTML shell for a navigation request.
- * Query string is ignored: customer.html?id=1 and ?id=999 → customer.html
- */
+/** Resolve every document navigation to the SPA shell. Hash routes are client-side. */
 function respondNavigate(request) {
-  var url = new URL(request.url);
-  var shellName = fileNameFromUrl(url);
-
   return caches.open(CACHE_NAME).then(function (cache) {
-    // 1) Standard match ignoring ?id= / ?shopId=
-    return cache.match(request, { ignoreSearch: true }).then(function (hit) {
-      if (hit) return hit;
-
-      // 2) Match by filename (handles base-path / relative key differences)
-      return matchByFileName(cache, shellName).then(function (byName) {
-        if (byName) return byName;
-
-        // 3) Online: fetch shell, put in cache, return (helps first nav after claim)
-        return fetch(request)
-          .then(function (networkResponse) {
-            if (networkResponse && networkResponse.ok) {
-              try {
-                cache.put('./' + shellName, networkResponse.clone());
-              } catch (e2) { /* ignore */ }
-            }
-            return networkResponse;
-          })
-          .catch(function () {
-            // 4) Offline miss: prefer index shell over blank
-            return matchByFileName(cache, 'index.html').then(function (idx) {
-              if (idx) return idx;
-              return new Response(
-                'آفلاین — App Shell هنوز روی این دستگاه آماده نشده. یک‌بار با اینترنت برنامه را باز کنید، چند ثانیه صبر کنید، ببندید و دوباره آفلاین باز کنید.',
-                {
-                  status: 503,
-                  statusText: 'Offline',
-                  headers: { 'Content-Type': 'text/plain; charset=utf-8' }
-                }
-              );
-            });
-          });
+    return cache.match('./index.html', { ignoreSearch: true }).then(function (cached) {
+      if (cached) return cached;
+      return fetch(request).then(function (response) {
+        if (response && response.ok) {
+          try { cache.put('./index.html', response.clone()); } catch (e) {}
+        }
+        return response;
+      }).catch(function () {
+        return new Response(
+          'آفلاین — App Shell هنوز روی این دستگاه آماده نشده. یک‌بار با اینترنت برنامه را باز کنید و دوباره تلاش کنید.',
+          { status: 503, statusText: 'Offline', headers: { 'Content-Type': 'text/plain; charset=utf-8' } }
+        );
       });
     });
   });
