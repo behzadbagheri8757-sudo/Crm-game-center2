@@ -270,19 +270,30 @@
     if (nav) nav.style.display = 'none';
 
     let cancelled = false;
+    let refreshToken = null;
     const isStale = function () {
       return cancelled;
     };
-    renderInto(root, isStale).catch(function (e) {
-      if (!cancelled) {
-        console.error('DashboardView mount failed', e);
-        root.innerHTML =
-          '<div class="empty">خطا در بارگذاری داشبورد. صفحه را دوباره باز کنید.</div>';
-      }
-    });
+    function refreshDashboard() {
+      renderInto(root, isStale).catch(function (e) {
+        if (!cancelled) {
+          console.error('DashboardView refresh failed', e);
+        }
+      });
+    }
+    refreshDashboard();
+
+    // Mutation → render() → ViewHost.refreshCurrent() updates summary while still on Dashboard
+    if (typeof ViewHost !== 'undefined' && ViewHost.setRefresh) {
+      refreshToken = ViewHost.setRefresh(refreshDashboard);
+    }
 
     return function unmount() {
       cancelled = true;
+      if (typeof ViewHost !== 'undefined' && ViewHost.clearRefresh) {
+        ViewHost.clearRefresh(refreshToken);
+      }
+      refreshToken = null;
       if (nav) nav.style.display = '';
       root.innerHTML = '';
     };

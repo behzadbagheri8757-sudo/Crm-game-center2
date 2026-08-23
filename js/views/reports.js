@@ -460,6 +460,7 @@
 
   function mount(root, params) {
     if (!root) return function () {};
+    let refreshToken = null;
     const fab = document.getElementById('fab');
     if (fab) {
       fab.style.display = 'none';
@@ -472,7 +473,16 @@
     reportAccordionState = { customers: false, suppliers: false, inventory: false, invoices: false };
     drawReportsPage(root);
 
+    // Mutation → render() → ViewHost.refreshCurrent() refreshes report body while still on Reports
+    if (typeof ViewHost !== 'undefined' && ViewHost.setRefresh) {
+      refreshToken = ViewHost.setRefresh(renderReportsBodyOnly);
+    }
+
     return function unmount() {
+      if (typeof ViewHost !== 'undefined' && ViewHost.clearRefresh) {
+        ViewHost.clearRefresh(refreshToken);
+      }
+      refreshToken = null;
       chipHandlers.forEach(function (h) {
         try {
           h.el.removeEventListener('click', h.fn);

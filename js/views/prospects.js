@@ -15,6 +15,7 @@
   let searchHandler = null;
   let chipHandlers = [];
   let sortHandler = null;
+  let listClickHandler = null;
   let fabHandler = null;
   let targetBtnHandler = null;
   function rankPill(rank) {
@@ -111,15 +112,7 @@
         <span class="filler"></span>
         <span class="amount">${s.latestScore} ${rankPill(s.latestRank)}</span>
       </a>`).join('');
-
-    // Delegated click for row navigation
-    list.addEventListener('click', function (e) {
-      const row = e.target.closest('[data-open-prospect]');
-      if (row) {
-        e.preventDefault();
-        navigateToProspect(row.getAttribute('data-open-prospect'));
-      }
-    });
+    // Click listener is bound once in drawProspectsPage (not on every list re-render).
   }
 
   function drawProspectsPage(root) {
@@ -200,6 +193,16 @@
       }
     });
 
+    // Delegated list click — once per draw (same pattern as Customers/Checks)
+    const listEl = document.getElementById('prospect-list');
+    listClickHandler = function (e) {
+      const row = e.target.closest('[data-open-prospect]');
+      if (!row) return;
+      e.preventDefault();
+      navigateToProspect(row.getAttribute('data-open-prospect'));
+    };
+    if (listEl) listEl.addEventListener('click', listClickHandler);
+
     renderTargetCard();
     renderProspectListOnly();
   }
@@ -246,6 +249,12 @@
         if (so) so.removeEventListener('change', sortHandler);
       }
       sortHandler = null;
+
+      if (listClickHandler) {
+        const list = document.getElementById('prospect-list');
+        if (list) list.removeEventListener('click', listClickHandler);
+      }
+      listClickHandler = null;
 
       if (fab) {
         fab.style.display = 'none';
