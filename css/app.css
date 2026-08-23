@@ -1,31 +1,32 @@
 /* ============================================================
    حبوبات و خشکبار باقری — Design System
-   Navy + Green + White | Mobile-First | CSS only
+   Concept 4: Cream + Forest Green + Caramel Gold | Mobile-First | CSS only
    Compatible with all existing HTML class names
+   Palette sampled directly from the approved Concept 4 reference screenshot.
    ============================================================ */
 
 :root{
-  /* Core palette (Option 3 reference) */
-  --color-primary:#0B1F3A;
-  --color-primary-dark:#071628;
-  --color-primary-soft:#132A4A;
-  --color-accent:#20A879;
-  --color-accent-dark:#178A63;
-  --color-accent-soft:#E7F6F0;
-  --color-bg:#F5F7F9;
-  --color-surface:#FFFFFF;
-  --color-surface-2:#EEF1F5;
-  --color-border:#E2E7EE;
-  --color-text:#1A2332;
-  --color-text-muted:#6A7383;
-  --color-success:#20A879;
-  --color-danger:#E04545;
-  --color-warning:#D9980B;
-  --color-info:#2F6FED;
+  /* Core palette (Concept 4 reference) */
+  --color-primary:#1B3C2B;
+  --color-primary-dark:#12281D;
+  --color-primary-soft:#24503A;
+  --color-accent:#B9722E;
+  --color-accent-dark:#96591F;
+  --color-accent-soft:#F5E6D3;
+  --color-bg:#FBF6EC;
+  --color-surface:#FFFBF2;
+  --color-surface-2:#F3E9D8;
+  --color-border:#E9DCC3;
+  --color-text:#2B2118;
+  --color-text-muted:#8A7B67;
+  --color-success:#4F8054;
+  --color-danger:#C1503A;
+  --color-warning:#D3913D;
+  --color-info:#5B7FA6;
 
-  --shadow-xs:0 1px 2px rgba(11,31,58,.04);
-  --shadow-sm:0 2px 8px rgba(11,31,58,.06);
-  --shadow-md:0 6px 20px rgba(11,31,58,.08);
+  --shadow-xs:0 1px 2px rgba(27,60,43,.05);
+  --shadow-sm:0 2px 8px rgba(27,60,43,.07);
+  --shadow-md:0 6px 20px rgba(27,60,43,.10);
   --radius-xs:8px;
   --radius-sm:12px;
   --radius-md:16px;
@@ -59,7 +60,7 @@
   --warning:var(--color-warning);
   --border:var(--color-border);
   --shadow:var(--shadow-sm);
-  --shadow-sm:0 2px 8px rgba(11,31,58,.06);
+  --shadow-sm:0 2px 8px rgba(27,60,43,.07);
   --radius:var(--radius-md);
   --radius-sm:12px;
   --paper:var(--color-bg);
@@ -301,7 +302,7 @@ a.ledger-row:active{
   font-size:.88rem;
   cursor:pointer;
   text-decoration:none;
-  box-shadow:0 3px 10px rgba(32,168,121,.22);
+  box-shadow:0 3px 10px rgba(185,114,46,.24);
   transition:transform .1s, opacity .1s;
 }
 .btn:active{opacity:.9;transform:scale(.98);}
@@ -313,7 +314,7 @@ a.ledger-row:active{
 }
 .btn.danger{
   background:var(--color-danger);
-  box-shadow:0 3px 10px rgba(224,69,69,.2);
+  box-shadow:0 3px 10px rgba(193,80,58,.2);
 }
 .btn.small{
   padding:8px 12px;
@@ -372,7 +373,7 @@ a.ledger-row:active{
   color:#fff;
   font-size:1.75rem;
   border:none;
-  box-shadow:0 8px 22px rgba(32,168,121,.38);
+  box-shadow:0 8px 22px rgba(185,114,46,.36);
   cursor:pointer;
   z-index:20;
   display:flex;
@@ -386,7 +387,7 @@ a.ledger-row:active{
 .overlay{
   position:fixed;
   inset:0;
-  background:rgba(11,31,58,.5);
+  background:rgba(18,40,29,.52);
   display:flex;
   align-items:flex-end;
   justify-content:center;
@@ -404,7 +405,7 @@ a.ledger-row:active{
   padding:18px 16px calc(28px + var(--safe-bottom));
   border-top:none;
   -webkit-overflow-scrolling:touch;
-  box-shadow:0 -10px 40px rgba(11,31,58,.15);
+  box-shadow:0 -10px 40px rgba(18,40,29,.16);
 }
 .sheet h3{
   margin:0 0 14px;
@@ -478,9 +479,9 @@ a.ledger-row:active{
   font-size:.68rem;
   font-weight:700;
 }
-.badge.pending{background:#FFF5DF;color:#9A7000;}
+.badge.pending{background:#F7ECD3;color:#8A6A1E;}
 .badge.cleared{background:var(--color-accent-soft);color:var(--color-accent-dark);}
-.badge.low{background:#FDECEC;color:var(--color-danger);}
+.badge.low{background:#F5E0D8;color:var(--color-danger);}
 
 .toast{
   position:fixed;
@@ -1145,15 +1146,15 @@ a.dash-target{
   display:block;
   text-decoration:none;
   color:inherit;
-  background:linear-gradient(135deg, #0B1F3A 0%, #143056 100%);
+  background:linear-gradient(135deg, #96591F 0%, #B9722E 100%);
   color:#fff;
   border-radius:16px;
   padding:14px 16px;
   margin:0 0 14px;
-  box-shadow:0 6px 18px rgba(11,31,58,.18);
+  box-shadow:0 6px 18px rgba(150,89,31,.22);
 }
 a.dash-target.is-done{
-  background:linear-gradient(135deg, #178A63 0%, #20A879 100%);
+  background:linear-gradient(135deg, #3A6640 0%, #4F8054 100%);
 }
 .dash-target-top{
   display:flex;
@@ -1379,7 +1380,7 @@ a.dash-target.is-done{
   background:transparent;
   font-family:inherit;
   font-size:16px;
-  color:var(--color-primary, #1a3a5c);
+  color:var(--color-primary, #1B3C2B);
   padding:6px 10px;
   cursor:pointer;
   min-height:36px;
