@@ -1,8 +1,8 @@
-/* nav.js — multi-page navigation & boot
+/* nav.js — SPA navigation & boot
    UI/Navigation only. Does not change accounting logic.
-   Phase 2: dual-mode SPA shell (index.html) + legacy MPA pages.
+   Production Freeze: SPA-only navigation.
 */
-/** True when index.html is running as SPA shell. */
+/** SPA shell is the only supported application shell. */
 function isSpaShell() {
   try {
     return !!(document.documentElement && document.documentElement.getAttribute('data-spa-shell') === '1');
@@ -12,51 +12,49 @@ function isSpaShell() {
 }
 
 /** Dashboard href: hash on SPA shell, classic page elsewhere. */
-function spaDashboardHref() {
-  return isSpaShell() ? '#/dashboard' : './index.html';
-}
+function spaDashboardHref() { return '#/dashboard'; }
 
 const NAV_ITEMS = [
-  { id: 'dashboard', href: './index.html',     label: 'داشبورد', spaPath: '/dashboard' },
-  { id: 'customers', href: './customers.html', label: 'مشتریان', spaPath: '/customers' },
-  { id: 'products',  href: './products.html',  label: 'اجناس', spaPath: '/products' },
-  { id: 'inventory', href: './inventory.html', label: 'انبار', spaPath: '/inventory' },
-  { id: 'suppliers', href: './suppliers.html', label: 'تامین‌کننده‌ها', spaPath: '/suppliers' },
-  { id: 'invoices',  href: './invoices.html',  label: 'فاکتورها', spaPath: '/invoices' },
-  { id: 'payments',  href: './payments.html',  label: 'پرداخت‌ها', spaPath: '/payments' },
-  { id: 'checks',    href: './checks.html',    label: 'چک‌ها', spaPath: '/checks' },
-  { id: 'visits',    href: './visits.html',    label: 'ویزیت', spaPath: '/visits' },
-  { id: 'prospects', href: './prospects.html', label: 'ارزیابی مغازه', spaPath: '/prospects' },
-  { id: 'reports',   href: './reports.html',   label: 'گزارش‌ها', spaPath: '/reports' },
-  { id: 'settings',  href: './settings.html',  label: 'تنظیمات', spaPath: '/settings' },
+  { id: 'dashboard', href: '#/dashboard',     label: 'داشبورد', spaPath: '/dashboard' },
+  { id: 'customers', href: '#/customers', label: 'مشتریان', spaPath: '/customers' },
+  { id: 'products',  href: '#/products',  label: 'اجناس', spaPath: '/products' },
+  { id: 'inventory', href: '#/inventory', label: 'انبار', spaPath: '/inventory' },
+  { id: 'suppliers', href: '#/suppliers', label: 'تامین‌کننده‌ها', spaPath: '/suppliers' },
+  { id: 'invoices',  href: '#/invoices',  label: 'فاکتورها', spaPath: '/invoices' },
+  { id: 'payments',  href: '#/payments',  label: 'پرداخت‌ها', spaPath: '/payments' },
+  { id: 'checks',    href: '#/checks',    label: 'چک‌ها', spaPath: '/checks' },
+  { id: 'visits',    href: '#/visits',    label: 'ویزیت', spaPath: '/visits' },
+  { id: 'prospects', href: '#/prospects', label: 'ارزیابی مغازه', spaPath: '/prospects' },
+  { id: 'reports',   href: '#/reports',   label: 'گزارش‌ها', spaPath: '/reports' },
+  { id: 'settings',  href: '#/settings',  label: 'تنظیمات', spaPath: '/settings' },
 ];
 
 /** Primary mobile bottom bar (5 items). */
 const BOTTOM_NAV_ITEMS = [
   {
     id: 'dashboard',
-    href: './index.html',
+    href: '#/dashboard',
     spaPath: '/dashboard',
     label: 'داشبورد',
     icon: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 10v10h14V10"/></svg>'
   },
   {
     id: 'customers',
-    href: './customers.html',
+    href: '#/customers',
     spaPath: '/customers',
     label: 'مشتریان',
     icon: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>'
   },
   {
     id: 'products',
-    href: './products.html',
+    href: '#/products',
     spaPath: '/products',
     label: 'اجناس',
     icon: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.3 7L12 12l8.7-5"/><path d="M12 22V12"/></svg>'
   },
   {
     id: 'invoices',
-    href: './invoices.html',
+    href: '#/invoices',
     spaPath: '/invoices',
     label: 'فاکتورها',
     icon: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h6"/></svg>'
@@ -71,14 +69,14 @@ const BOTTOM_NAV_ITEMS = [
 
 /** Secondary destinations opened from «بیشتر». */
 const MORE_NAV_ITEMS = [
-  { id: 'inventory', href: './inventory.html', label: 'انبار', spaPath: '/inventory' },
-  { id: 'suppliers', href: './suppliers.html', label: 'تأمین‌کنندگان', spaPath: '/suppliers' },
-  { id: 'payments',  href: './payments.html',  label: 'پرداخت‌ها', spaPath: '/payments' },
-  { id: 'checks',    href: './checks.html',    label: 'چک‌ها', spaPath: '/checks' },
-  { id: 'visits',    href: './visits.html',    label: 'ویزیت مشتریان', spaPath: '/visits' },
-  { id: 'prospects', href: './prospects.html', label: 'ارزیابی مغازه‌ها', spaPath: '/prospects' },
-  { id: 'reports',   href: './reports.html',   label: 'گزارش‌ها', spaPath: '/reports' },
-  { id: 'settings',  href: './settings.html',  label: 'تنظیمات و Backup', spaPath: '/settings' },
+  { id: 'inventory', href: '#/inventory', label: 'انبار', spaPath: '/inventory' },
+  { id: 'suppliers', href: '#/suppliers', label: 'تأمین‌کنندگان', spaPath: '/suppliers' },
+  { id: 'payments',  href: '#/payments',  label: 'پرداخت‌ها', spaPath: '/payments' },
+  { id: 'checks',    href: '#/checks',    label: 'چک‌ها', spaPath: '/checks' },
+  { id: 'visits',    href: '#/visits',    label: 'ویزیت مشتریان', spaPath: '/visits' },
+  { id: 'prospects', href: '#/prospects', label: 'ارزیابی مغازه‌ها', spaPath: '/prospects' },
+  { id: 'reports',   href: '#/reports',   label: 'گزارش‌ها', spaPath: '/reports' },
+  { id: 'settings',  href: '#/settings',  label: 'تنظیمات و Backup', spaPath: '/settings' },
 ];
 
 function renderSharedNav(activeId){
@@ -87,27 +85,19 @@ function renderSharedNav(activeId){
   const spa = isSpaShell();
   nav.innerHTML = NAV_ITEMS.map(t => {
     const active = t.id === activeId ? ' active' : '';
-    let href = t.href;
-    if (spa && t.spaPath && typeof AppRouter !== 'undefined') {
-      href = '#' + t.spaPath;
-    }
+    let href = t.spaPath ? '#' + t.spaPath : t.href;
     return `<a class="nav-link${active}" href="${href}" data-spa-path="${t.spaPath || ''}">${t.label}</a>`;
   }).join('');
   nav.setAttribute('aria-label', 'منوی بالای صفحه');
-  if (spa) {
-    nav.querySelectorAll('a[data-spa-path]').forEach(function (a) {
+  nav.querySelectorAll('a[data-spa-path]').forEach(function (a) {
       const path = a.getAttribute('data-spa-path');
       if (!path) return;
       a.addEventListener('click', function (e) {
         e.preventDefault();
-        if (typeof AppRouter !== 'undefined' && AppRouter.navigate) {
-          AppRouter.navigate(path);
-        } else {
-          location.hash = path;
-        }
+        if (typeof AppRouter !== 'undefined' && AppRouter.navigate) AppRouter.navigate(path);
+        else location.hash = path;
       });
-    });
-  }
+  });
 }
 
 function ensureBottomNavDOM(){
@@ -219,11 +209,8 @@ function renderBottomNav(activeId){
       if (!path) return;
       a.addEventListener('click', function (e) {
         e.preventDefault();
-        if (typeof AppRouter !== 'undefined' && AppRouter.navigate) {
-          AppRouter.navigate(path);
-        } else {
-          location.hash = path;
-        }
+        if (typeof AppRouter !== 'undefined' && AppRouter.navigate) AppRouter.navigate(path);
+        else location.hash = path;
       });
     });
   }
@@ -260,11 +247,8 @@ function fillMoreSheetList(activeId){
       a.addEventListener('click', function (e) {
         e.preventDefault();
         closeMoreSheet();
-        if (typeof AppRouter !== 'undefined' && AppRouter.navigate) {
-          AppRouter.navigate(path);
-        } else {
-          location.hash = path;
-        }
+        if (typeof AppRouter !== 'undefined' && AppRouter.navigate) AppRouter.navigate(path);
+        else location.hash = path;
       });
     });
   }
@@ -317,7 +301,8 @@ function goAppBack(e){
     window.history.back();
     return;
   }
-  location.href = './index.html';
+  if (typeof AppRouter !== 'undefined' && AppRouter.navigate) AppRouter.navigate('/dashboard');
+  else location.hash = '#/dashboard';
 }
 
 /**

@@ -133,11 +133,36 @@
   function start() {
     if (started) return;
     started = true;
-    window.addEventListener('hashchange', resolve);
+    // FIX 2 (audit P2): when we set the default hash ourselves below, some
+    // browsers fire a hashchange for it in addition to the synchronous
+    // resolve() we call right after — causing the initial route (Dashboard)
+    // to mount, unmount, and mount again on cold start. This flag makes the
+    // router skip exactly one upcoming hashchange (the redundant one caused
+    // by our own `location.hash = '/'` assignment below), while leaving every
+    // other hashchange — including one that never arrives in browsers that
+    // don't fire it for this case — completely unaffected. It is a one-shot
+    // flag consumed by the very first hashchange event after start(), so it
+    // can never suppress a later, real user navigation.
+    let suppressNextHashchangeOnce = false;
+    window.addEventListener('hashchange', function () {
+      if (suppressNextHashchangeOnce) {
+        suppressNextHashchangeOnce = false;
+        return;
+      }
+      resolve();
+    });
     // Initial: if no hash, set default without firing duplicate if possible
     if (!location.hash || location.hash === '#') {
+      suppressNextHashchangeOnce = true;
       location.hash = '/';
-      // hashchange may or may not fire; ensure resolve runs
+      // Safety net: if this browser never fires hashchange for the
+      // assignment above, the flag must not linger and wrongly swallow the
+      // user's first *real* navigation later. Any hashchange task queued by
+      // the assignment above is queued before this setTimeout(0) task, so by
+      // the time this runs the flag has already been consumed if it was
+      // going to be; otherwise this safely resets it to false.
+      setTimeout(function () { suppressNextHashchangeOnce = false; }, 0);
+      // Covers browsers where the hashchange above never fires at all.
       resolve();
     } else {
       resolve();

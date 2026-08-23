@@ -100,26 +100,65 @@ async function exportProspectScoutBundle(){
   }
 }
 
+/**
+ * FIX 1 (audit P1): تمام delete/put مربوط به restore ProspectScout را در یک
+ * IndexedDB readwrite transaction واحد (روی هر سه store: shops/routes/meta)
+ * انجام می‌دهد. shops/routes با clear()+put() جایگزین کامل می‌شوند (همان اثر
+ * نهایی delete-all-then-put-all قبلی، اما atomic)؛ meta فقط با یک put هدفمند
+ * روی کلید dailyTarget دست می‌خورد و سایر کلیدهای meta دست‌نخورده می‌مانند —
+ * دقیقاً همان رفتار قبلی. اگر هر request داخل این تراکنش خطا بدهد، خود
+ * IndexedDB کل تراکنش را abort می‌کند و هیچ تغییری commit نمی‌شود، پس داده‌ی
+ * قبلی Prospect دست‌نخورده باقی می‌ماند (all-or-nothing).
+ */
+function runProspectRestoreTx(db, bundle){
+  return new Promise((resolve, reject)=>{
+    let settled = false;
+    const finish = (ok, err)=>{
+      if(settled) return;
+      settled = true;
+      if(ok) resolve(true); else reject(err || new Error('prospect restore transaction failed'));
+    };
+    try{
+      const tx = db.transaction(['shops','routes','meta'], 'readwrite');
+      tx.oncomplete = ()=> finish(true);
+      tx.onerror = (e)=> finish(false, (e && e.target && e.target.error) || tx.error);
+      tx.onabort = ()=> finish(false, tx.error);
+
+      const shopsStore = tx.objectStore('shops');
+      const routesStore = tx.objectStore('routes');
+      const metaStore = tx.objectStore('meta');
+
+      shopsStore.clear();
+      (bundle.shops||[]).forEach(s=> shopsStore.put(s));
+
+      routesStore.clear();
+      (bundle.routes||[]).forEach(r=> routesStore.put(r));
+
+      if(bundle.dailyTarget != null){
+        metaStore.put({key:'dailyTarget', value: bundle.dailyTarget});
+      }
+      // یک request ناموفق در این تراکنش (preventDefault نشده) به‌صورت خودکار
+      // کل تراکنش را abort می‌کند؛ finish از طریق onerror/onabort صدا زده می‌شود.
+    }catch(e){
+      finish(false, e);
+    }
+  });
+}
+
 /** جایگزینی کامل داده‌ی Prospect از bundle بکاپ — فقط وقتی bundle معتبر است */
 async function restoreProspectScoutBundle(bundle){
   if(!bundle || typeof bundle !== 'object') return false;
   if(!Array.isArray(bundle.shops) && !Array.isArray(bundle.routes) && bundle.dailyTarget == null) return false;
+  let db = null;
   try{
-    const db = await openProspectScoutDbForBackup();
-    const oldShops = await prospectBackupGetAll(db, 'shops');
-    const oldRoutes = await prospectBackupGetAll(db, 'routes');
-    for(const s of (oldShops||[])) await prospectBackupDelete(db, 'shops', s.id);
-    for(const r of (oldRoutes||[])) await prospectBackupDelete(db, 'routes', r.id);
-    for(const s of (bundle.shops||[])) await prospectBackupPut(db, 'shops', s);
-    for(const r of (bundle.routes||[])) await prospectBackupPut(db, 'routes', r);
-    if(bundle.dailyTarget != null){
-      await prospectBackupPut(db, 'meta', {key:'dailyTarget', value: bundle.dailyTarget});
-    }
-    try{ db.close(); }catch(e){}
+    db = await openProspectScoutDbForBackup();
+    await runProspectRestoreTx(db, bundle);
     return true;
   }catch(e){
     console.error('restoreProspectScoutBundle failed', e);
     return false;
+  }finally{
+    if(db){ try{ db.close(); }catch(e){} }
   }
 }
 
