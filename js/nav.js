@@ -36,7 +36,7 @@ const BOTTOM_NAV_ITEMS = [
     href: '#/dashboard',
     spaPath: '/dashboard',
     label: 'داشبورد',
-    icon: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 12 3.8l8 6.7"/><path d="M6.2 9.8V20h11.6V9.8"/><path d="M10 20v-5.2h4V20"/></svg>'
+    icon: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7.3A2.1 2.1 0 0 0 5.2 5.1v13.8A2.1 2.1 0 0 0 7.3 21h9.4a2.1 2.1 0 0 0 2.1-2.1V8.2L14 3z"/><path d="M14 3v5.2h5.2"/><path d="M8.6 12.2h6.8"/><path d="M8.6 15.6h4.8"/></svg>'
   },
   {
     id: 'customers',
@@ -63,7 +63,7 @@ const BOTTOM_NAV_ITEMS = [
     id: 'more',
     href: '#more',
     label: 'بیشتر',
-    icon: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="12" r="1.35"/><circle cx="12" cy="12" r="1.35"/><circle cx="18.5" cy="12" r="1.35"/></svg>'
+    icon: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="18.5" cy="12" r="1.4"/></svg>'
   },
 ];
 
