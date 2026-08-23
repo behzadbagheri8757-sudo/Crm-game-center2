@@ -473,7 +473,9 @@ async function loadData(){
     }
   }catch(e){
     console.error('loadData failed', e);
-    showToast('خطا در بارگذاری اطلاعات');
+    // Rethrow so bootSpaShell / bootPage can stop and show Load Error + Retry
+    // instead of mounting CRM on leftover emptyData(). Empty DB (no record) is still success.
+    throw e;
   }
 }
 

@@ -397,9 +397,56 @@ function pageShellNote(title, detail){
 }
 
 /**
+ * Load-error gate for SPA shell: blocks CRM mount until loadData succeeds.
+ * Empty IndexedDB (no record) is NOT an error — only thrown failures from loadData.
+ * Does not write emptyData to IndexedDB. Retry only re-runs loadData.
+ */
+function waitForCrmDataLoad() {
+  return new Promise(function (resolve) {
+    var retrying = false;
+    function paint() {
+      var main = document.getElementById('main');
+      if (!main) {
+        resolve();
+        return;
+      }
+      main.innerHTML =
+        '<div class="empty" style="padding:28px 16px;text-align:center;direction:rtl;">' +
+        '<div style="font-size:1.05rem;font-weight:600;margin-bottom:8px;">خطا در بارگذاری اطلاعات</div>' +
+        '<div style="opacity:.85;margin-bottom:16px;line-height:1.6;">داده‌های CRM خوانده نشد. برنامه با حالت خالی باز نمی‌شود تا از نمایش نادرست جلوگیری شود.</div>' +
+        '<button type="button" class="btn" id="crm-load-retry">تلاش مجدد</button>' +
+        '</div>';
+      var btn = document.getElementById('crm-load-retry');
+      if (!btn) return;
+      btn.addEventListener('click', function onRetry() {
+        if (retrying) return;
+        retrying = true;
+        btn.disabled = true;
+        btn.textContent = 'در حال تلاش…';
+        Promise.resolve()
+          .then(function () {
+            return loadData();
+          })
+          .then(function () {
+            retrying = false;
+            resolve();
+          })
+          .catch(function (err) {
+            console.error('loadData retry failed', err);
+            retrying = false;
+            paint();
+          });
+      });
+    }
+    paint();
+  });
+}
+
+/**
  * SPA shell boot (Phase 2). PIN → loadData once → nav → router.start().
  * Does not replace bootPage for MPA pages.
- * loadData is called exactly once here; SPA route changes must not call it again.
+ * loadData is called exactly once here on success path; SPA route changes must not call it again.
+ * On loadData failure: CRM is NOT started with emptyData; Load Error + Retry is shown instead.
  */
 async function bootSpaShell() {
   try {
@@ -425,11 +472,20 @@ async function bootSpaShell() {
       return;
     }
 
-    await loadData();
+    try {
+      await loadData();
+    } catch (loadErr) {
+      console.error('bootSpaShell loadData failed', loadErr);
+      await waitForCrmDataLoad();
+    }
 
-    // Load ProspectScout data once
+    // Load ProspectScout data once (soft-fail: does not block CRM shell)
     if (typeof loadProspectData === 'function') {
-      await loadProspectData();
+      try {
+        await loadProspectData();
+      } catch (pe) {
+        console.warn('loadProspectData failed (CRM continues)', pe);
+      }
     }
 
     renderSharedNav('dashboard');
