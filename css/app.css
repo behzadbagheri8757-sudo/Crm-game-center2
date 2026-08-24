@@ -1646,33 +1646,38 @@ h2.section-title::after{border-color:#E8E6E1;}
 
 /* Monthly target: bullseye OUTSIDE on page bg (left, above box); growth with title on RIGHT */
 .dash-target-head{display:none;}
-/* Fab row sits between header/eyebrow and the navy Target Box — responsive gap */
+/* Do NOT push Target Box down. Bullseye floats in the existing gap under eyebrow. */
 .dash-target-block{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  margin:6px 0 14px;
   position:relative;
+  margin:0 0 12px;
+  /* no padding-top, no extra gap — box stays tight under eyebrow */
 }
 .dash-target-fab-row{
+  position:absolute;
+  left:4px;
+  right:auto;
+  /* center of the natural gap between eyebrow and box (~ half of typical 10–14px margin) */
+  top:-22px;
+  height:0;
+  width:auto;
   display:flex;
-  /* physical left in RTL */
-  justify-content:flex-end;
+  justify-content:flex-start;
   align-items:center;
-  min-height:42px;
-  padding:0 4px;
+  z-index:5;
+  pointer-events:none; /* row itself */
 }
 .dash-target-fab{
   position:relative;
   left:auto;right:auto;top:auto;
   display:inline-flex;align-items:center;justify-content:center;
-  width:44px;height:44px;padding:0;border:none;
+  width:40px;height:40px;padding:0;border:none;
   background:transparent;
   cursor:pointer;-webkit-tap-highlight-color:transparent;
-  filter:drop-shadow(0 3px 8px rgba(179,129,46,.4));
+  filter:drop-shadow(0 2px 6px rgba(179,129,46,.35));
   transition:transform .12s ease;
+  pointer-events:auto;
 }
-.dash-target-fab svg{width:42px;height:42px;display:block;}
+.dash-target-fab svg{width:38px;height:38px;display:block;}
 .dash-target-fab:active{transform:scale(.92);}
 .dash-monthly-target{
   display:block;position:relative;overflow:hidden;text-decoration:none;color:#fff;
@@ -1711,7 +1716,7 @@ h2.section-title::after{border-color:#E8E6E1;}
 .dmt-bar{height:8px;border-radius:999px;background:rgba(255,255,255,.14);overflow:hidden;position:relative;}
 .dmt-bar>span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#C89B3C,#E8C56A);min-width:0;}
 .dmt-head,.dmt-edit,.dmt-main,.dmt-status,.dmt-compact,.dmt-current,.dmt-nums,.dmt-foot,.dmt-target-btn{display:none;}
-.dashboard-eyebrow{margin:2px 0 10px;font-size:.7rem;color:#6F767C;font-weight:700;}
+.dashboard-eyebrow{margin:2px 0 14px;font-size:.7rem;color:#6F767C;font-weight:700;}
 .dashboard-shell > .section-title{margin:2px 0 6px;}
 
 /* KPI cards */
@@ -1883,10 +1888,9 @@ a.dash-tile:active{background:#FBF8F3;transform:scale(.96);box-shadow:0 2px 6px 
   .dmt-pct{font-size:1.02rem;}
   .dmt-title{font-size:.84rem;}
   .dmt-growth svg{width:30px;height:30px;}
-  .dash-target-fab{width:40px;height:40px;}
-  .dash-target-fab svg{width:38px;height:38px;}
-  .dash-target-block{gap:8px;margin:4px 0 12px;}
-  .dash-target-fab-row{min-height:38px;}
+  .dash-target-fab{width:36px;height:36px;}
+  .dash-target-fab svg{width:34px;height:34px;}
+  .dash-target-fab-row{top:-20px;left:2px;}
   .dmt-growth svg{width:28px;height:28px;}
 }
 
