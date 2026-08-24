@@ -6,13 +6,13 @@
 
 :root{
   /* Core palette (Option 3 reference) */
-  --color-primary:#1A2634;
-  --color-primary-dark:#0F171E;
-  --color-primary-soft:#2C3D4F;
+  --color-primary:#172331;
+  --color-primary-dark:#0D151D;
+  --color-primary-soft:#293847;
   --color-accent:#C89B3C;
   --color-accent-dark:#A77A24;
   --color-accent-soft:#F0EDE8;
-  --color-bg:#FAFAF8;
+  --color-bg:#FCFCFA;
   --color-surface:#FFFFFF;
   --color-surface-2:#F3F1ED;
   --color-border:#E6E4DF;
@@ -1628,13 +1628,13 @@ button.app-back .app-back-txt{
    BAQERI VISUAL REFRESH — Dashboard / Reports / Navigation
    UI-only overrides. Business logic remains in JS.
    ============================================================ */
-body{background:#FAFAF8;color:#1F2429;}
+body{background:#FCFCFA;color:#1F2429;}
 main{padding-top:16px;}
-header{background:#1A2634;color:#fff;border-bottom-color:rgba(255,255,255,.08);}
+header{background:#172331;color:#fff;border-bottom-color:rgba(255,255,255,.10);}
 header h1{font-size:1.12rem;letter-spacing:-.15px;}
 header p{color:rgba(255,255,255,.68);}
-h2.section-title{color:#1A2634;font-size:1.12rem;margin:2px 0 16px;}
-h2.section-title::after{border-color:#E8E6E1;}
+h2.section-title{color:#172331;font-size:1.12rem;margin:2px 0 16px;}
+h2.section-title::after{border-color:#E4E4E0;}
 
 /* Dashboard shell */
 .dashboard-shell{display:flex;flex-direction:column;gap:0;}
@@ -1657,7 +1657,7 @@ h2.section-title::after{border-color:#E8E6E1;}
   left:4px;
   right:auto;
   /* center of the natural gap between eyebrow and box (~ half of typical 10–14px margin) */
-  top:-22px;
+  top:-30px;
   height:0;
   width:auto;
   display:flex;
@@ -1670,22 +1670,22 @@ h2.section-title::after{border-color:#E8E6E1;}
   position:relative;
   left:auto;right:auto;top:auto;
   display:inline-flex;align-items:center;justify-content:center;
-  width:40px;height:40px;padding:0;border:none;
+  width:42px;height:42px;padding:0;border:none;
   background:transparent;
   cursor:pointer;-webkit-tap-highlight-color:transparent;
-  filter:drop-shadow(0 2px 6px rgba(179,129,46,.35));
+  filter:drop-shadow(0 3px 7px rgba(23,35,49,.18));
   transition:transform .12s ease;
   pointer-events:auto;
 }
-.dash-target-fab svg{width:38px;height:38px;display:block;}
+.dash-target-fab svg{width:42px;height:42px;display:block;}
 .dash-target-fab:active{transform:scale(.92);}
 .dash-monthly-target{
   display:block;position:relative;overflow:hidden;text-decoration:none;color:#fff;
-  background:linear-gradient(145deg,#1A2634 0%,#243447 55%,#2C3D4F 100%);
+  background:linear-gradient(145deg,#172331 0%,#233342 55%,#2A3A49 100%);
   border-radius:16px;
   padding:12px 14px 13px;
   margin:0;
-  box-shadow:0 8px 22px rgba(26,38,52,.14);
+  box-shadow:0 8px 22px rgba(23,35,49,.16);
   border:1px solid rgba(255,255,255,.06);
 }
 .dash-monthly-target.is-done{background:linear-gradient(145deg,#2A5A38 0%,#2F6B45 100%);}
@@ -1701,14 +1701,15 @@ h2.section-title::after{border-color:#E8E6E1;}
   max-width:100%;
 }
 .dmt-title{
-  font-size:.92rem;font-weight:800;color:#F5E6B8;letter-spacing:-.2px;
+  font-size:.92rem;font-weight:800;color:#F7EBCB;letter-spacing:-.2px;
   line-height:1.25;text-align:right;min-width:0;
 }
 .dmt-growth{
   flex:none;display:flex;align-items:center;justify-content:center;
-  filter:drop-shadow(0 2px 5px rgba(0,0,0,.25));
+  width:56px;height:62px;
+  filter:drop-shadow(0 4px 8px rgba(184,134,44,.24));
 }
-.dmt-growth svg{width:32px;height:32px;display:block;}
+.dmt-growth svg{width:56px;height:62px;display:block;}
 .dmt-row{display:flex;align-items:center;gap:12px;position:relative;z-index:1;}
 .dmt-icon-plain{display:none;}
 .dmt-progress{flex:1;min-width:0;}
@@ -1722,7 +1723,7 @@ h2.section-title::after{border-color:#E8E6E1;}
 /* KPI cards */
 .dash-kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;}
 .dash-kpi{position:relative;background:#fff;border:1px solid #E8E6E1;border-radius:16px;padding:13px 13px 12px;box-shadow:0 4px 12px rgba(26,38,52,.05);min-width:0;}
-.dash-kpi::before{content:"";position:absolute;right:0;top:12px;bottom:12px;width:3px;border-radius:3px 0 0 3px;background:#1A2634;}
+.dash-kpi::before{content:"";position:absolute;right:0;top:12px;bottom:12px;width:3px;border-radius:3px 0 0 3px;background:#172331;}
 .dash-kpi.sales::before{background:#C89B3C;}.dash-kpi.profit::before{background:#2F6B45;}.dash-kpi.inventory::before{background:#1A2634;}.dash-kpi.debt::before{background:#A13131;}
 .dash-kpi-label{font-size:.68rem;color:#6F767C;font-weight:700;margin-bottom:7px;}
 .dash-kpi-value{font-size:1.13rem;font-weight:900;line-height:1.15;color:#1F2429;letter-spacing:-.35px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -1887,11 +1888,11 @@ a.dash-tile:active{background:#FBF8F3;transform:scale(.96);box-shadow:0 2px 6px 
   .dash-kpi-value{font-size:.95rem;}
   .dmt-pct{font-size:1.02rem;}
   .dmt-title{font-size:.84rem;}
-  .dmt-growth svg{width:30px;height:30px;}
+  .dmt-growth{width:42px;height:48px;}
+  .dmt-growth svg{width:42px;height:48px;}
   .dash-target-fab{width:36px;height:36px;}
   .dash-target-fab svg{width:34px;height:34px;}
-  .dash-target-fab-row{top:-20px;left:2px;}
-  .dmt-growth svg{width:28px;height:28px;}
+  .dash-target-fab-row{top:-26px;left:2px;}
 }
 
 /* Short viewports: keep first quick-access row fully above bottom nav */
@@ -1910,7 +1911,8 @@ a.dash-tile:active{background:#FBF8F3;transform:scale(.96);box-shadow:0 2px 6px 
   .dash-kpi-sub{display:none;}
   a.dash-tile .dash-sub{display:none;}
   a.dash-tile{min-height:76px;}
-  .dmt-growth svg{width:28px;height:28px;}
+  .dmt-growth{width:40px;height:44px;}
+  .dmt-growth svg{width:40px;height:44px;}
 }
 
 /* ===================== PROSPECT DAILY TARGET (compact progress strip) ===================== */
