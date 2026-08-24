@@ -1648,15 +1648,15 @@ h2.section-title::after{border-color:#E8E6E1;}
 .dash-target-head{display:none;}
 .dash-target-block{
   position:relative;
-  margin:0 0 14px;
-  /* space above the navy box so the bullseye sits on the cream page background */
-  padding-top:36px;
+  margin:4px 0 14px;
+  /* clear gap: bullseye between header area and navy box — no overlap */
+  padding-top:48px;
 }
 .dash-target-fab{
   position:absolute;
-  left:6px;
+  left:8px;
   right:auto;
-  top:0;
+  top:2px;
   z-index:4;
   display:inline-flex;align-items:center;justify-content:center;
   width:44px;height:44px;padding:0;border:none;
@@ -1664,8 +1664,10 @@ h2.section-title::after{border-color:#E8E6E1;}
   cursor:pointer;-webkit-tap-highlight-color:transparent;
   filter:drop-shadow(0 3px 8px rgba(179,129,46,.4));
   transition:transform .12s ease;
+  /* sit fully above the navy card on page background */
+  pointer-events:auto;
 }
-.dash-target-fab svg{width:40px;height:40px;display:block;}
+.dash-target-fab svg{width:42px;height:42px;display:block;}
 .dash-target-fab:active{transform:scale(.92);}
 .dash-monthly-target{
   display:block;position:relative;overflow:hidden;text-decoration:none;color:#fff;
@@ -1847,9 +1849,9 @@ a.dash-tile:active{background:#FBF8F3;transform:scale(.96);box-shadow:0 2px 6px 
   .dmt-pct{font-size:1.02rem;}
   .dmt-title{font-size:.84rem;}
   .dmt-growth svg{width:30px;height:30px;}
-  .dash-target-fab{width:40px;height:40px;top:0;left:4px;}
-  .dash-target-fab svg{width:36px;height:36px;}
-  .dash-target-block{padding-top:32px;}
+  .dash-target-fab{width:40px;height:40px;top:2px;left:6px;}
+  .dash-target-fab svg{width:38px;height:38px;}
+  .dash-target-block{padding-top:44px;}
   .dmt-growth svg{width:28px;height:28px;}
 }
 
@@ -1884,10 +1886,10 @@ a.dash-tile:active{background:#FBF8F3;transform:scale(.96);box-shadow:0 2px 6px 
   box-shadow:0 4px 14px rgba(26,38,52,.12);
   color:#fff;
 }
-/* Visits = 0: collapsed, muted, thin line only */
+/* Visits = 0: thin closed track, muted/dead */
 .prospect-daily-target.is-idle{
-  opacity:.7;
-  background:linear-gradient(135deg,rgba(26,38,52,.42) 0%,rgba(44,61,79,.38) 100%);
+  opacity:.65;
+  background:linear-gradient(135deg,rgba(26,38,52,.40) 0%,rgba(44,61,79,.34) 100%);
   border-color:rgba(255,255,255,.05);
   box-shadow:none;
   padding-top:8px;padding-bottom:8px;
@@ -1899,8 +1901,8 @@ a.dash-tile:active{background:#FBF8F3;transform:scale(.96);box-shadow:0 2px 6px 
   font-size:.72rem;font-weight:700;color:rgba(245,230,184,.95);
   white-space:nowrap;flex:none;
 }
-.prospect-daily-target .pdt-bar-wrap{flex:1;min-width:0;}
-/* Full track always same length when active; only fill width changes */
+.prospect-daily-target .pdt-bar-wrap{flex:1;min-width:0;align-self:center;}
+/* Active: full fixed-length track; only fill grows with visits */
 .prospect-daily-target .pdt-bar{
   height:8px;border-radius:999px;
   background:rgba(255,255,255,.20);
@@ -1917,11 +1919,11 @@ a.dash-tile:active{background:#FBF8F3;transform:scale(.96);box-shadow:0 2px 6px 
 }
 .prospect-daily-target.is-idle .pdt-bar{
   height:3px;
-  background:rgba(255,255,255,.10);
+  background:rgba(255,255,255,.09);
   box-shadow:none;
 }
 .prospect-daily-target.is-idle .pdt-bar>span{width:0 !important;opacity:0;box-shadow:none;}
-.prospect-daily-target.is-active .pdt-bar>span{filter:saturate(1.05);}
+.prospect-daily-target.is-active .pdt-bar>span{filter:saturate(1.08);}
 .prospect-daily-target .pdt-meta{
   font-size:.75rem;font-weight:800;color:#E8C56A;white-space:nowrap;flex:none;
   font-variant-numeric:tabular-nums;
