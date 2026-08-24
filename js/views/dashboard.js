@@ -124,6 +124,12 @@
 
     root.innerHTML =
       '<div class="dashboard-shell">' +
+      '<style>' +
+        '.dashboard-shell .dmt-heading { display: flex; align-items: flex-start; justify-content: space-between; }' +
+        '.dashboard-shell .dmt-growth { display: inline-block; width: 80px; height: 80px; max-width: 100%; max-height: 100%; flex-shrink: 0; margin: 0; padding: 0; }' +
+        '.dashboard-shell .dmt-growth svg { width: 100% !important; height: 100% !important; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.08)) drop-shadow(0 4px 12px rgba(0,0,0,0.04)); display: block; margin: 0; padding: 0; }' +
+        '.dashboard-shell .dmt-title { margin-top: -6px; padding-top: 0; align-self: flex-start; }' +
+      '</style>' +
       '<h2 class="section-title">داشبورد</h2>' +
       '<div class="dashboard-eyebrow">مرکز فرماندهی روزانه</div>' +
       targetHtml(metrics) +
