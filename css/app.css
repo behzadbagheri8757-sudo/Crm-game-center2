@@ -1976,3 +1976,54 @@ a.dash-tile:active{background:#FBF8F3;transform:scale(.96);box-shadow:0 2px 6px 
 .prospect-daily-target.is-unset{
   justify-content:space-between;
 }
+
+/* ============================================================
+   iOS / iPhone 13 Pro Max polish — presentation only
+   ============================================================ */
+html,body{
+  overflow-x:hidden;
+  max-width:100vw;
+  overscroll-behavior-y:contain;
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+}
+body{
+  -webkit-overflow-scrolling:touch;
+  touch-action:manipulation;
+}
+/* Prevent accidental text selection on chrome UI */
+header,nav#nav,.bottom-nav,.dash-tile,.dash-kpi,.dash-monthly-target,
+.dash-target-fab,.chip,.btn,.fab,.bn-label,.bn-ico,.section-title,
+.dash-section-label,.ledger-row .name,.ledger-row .amount{
+  -webkit-user-select:none;
+  user-select:none;
+  -webkit-touch-callout:none;
+}
+/* Inputs keep selectable text */
+input,textarea,select{ -webkit-user-select:text; user-select:text; }
+
+/* Touch targets ≥44px where practical */
+.bottom-nav-item{ min-height:48px; }
+.chip{ min-height:34px; padding:7px 12px; }
+a.dash-tile{ -webkit-tap-highlight-color:transparent; }
+
+/* Main content clearance above home indicator + tab bar */
+main{
+  padding-bottom:calc(92px + var(--safe-bottom));
+}
+
+/* Bottom nav: ensure padding respects home indicator on all iPhones */
+.bottom-nav{
+  padding-bottom:calc(8px + var(--safe-bottom));
+  min-height:calc(58px + var(--safe-bottom));
+}
+
+/* Soft overscroll + no rubber-band sideways */
+.dashboard-shell,.dash-grid,.dash-kpis{
+  overflow-x:hidden;
+}
+
+/* Slightly stronger active feedback on glass tiles */
+a.dash-tile:active .dash-ico{
+  transform:scale(.96);
+}
