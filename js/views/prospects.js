@@ -55,28 +55,15 @@
     const el = document.getElementById('prospect-target');
     if (!el) return;
     const dt = prospectState.dailyTarget || { target: 0, count: 0 };
-    /* UI only: compact progress strip. Logic (target/count) unchanged.
-       Progress bar stays idle until at least 1 visit is recorded. */
     if (!dt.target) {
-      el.innerHTML = `<div class="prospect-daily-target is-unset">
-        <span class="pdt-label">تارگت ویزیت امروز</span>
-        <span class="pdt-meta" style="opacity:.75;">تنظیم نشده</span>
-        <button type="button" class="pdt-edit" id="set-target-btn">تنظیم</button>
-      </div>`;
+      el.innerHTML = `<div class="card wide"><div class="label">تارگت ویزیت امروز</div>
+        <div class="value" style="font-size:.95rem;">تنظیم نشده</div>
+        <div class="btn-row" style="margin-top:8px;"><button type="button" class="btn small" id="set-target-btn">تنظیم تارگت</button></div></div>`;
     } else {
-      const count = Number(dt.count) || 0;
-      const target = Number(dt.target) || 0;
-      const pctRaw = target > 0 ? (count / target) * 100 : 0;
-      const pct = Math.min(100, Math.round(pctRaw * 10) / 10);
-      const pctLabel = Math.min(100, Math.round(pctRaw));
-      const idle = count <= 0;
-      const barW = idle ? 0 : Math.min(100, Math.max(0, pct));
-      el.innerHTML = `<div class="prospect-daily-target${idle ? ' is-idle' : ' is-active'}">
-        <span class="pdt-label">تارگت امروز</span>
-        <div class="pdt-bar-wrap"><div class="pdt-bar" role="progressbar" aria-valuenow="${count}" aria-valuemin="0" aria-valuemax="${target}"><span style="width:${barW}%"></span></div></div>
-        <span class="pdt-meta">${count} / ${target}${idle ? '' : ' · ' + pctLabel + '٪'}</span>
-        <button type="button" class="pdt-edit" id="set-target-btn">ویرایش</button>
-      </div>`;
+      const pct = Math.min(100, Math.round((dt.count / dt.target) * 100));
+      el.innerHTML = `<div class="card wide"><div class="label">تارگت ویزیت امروز</div>
+        <div class="value">${dt.count} / ${dt.target} <span class="sub">(${pct}٪)</span></div>
+        <div class="btn-row" style="margin-top:8px;"><button type="button" class="btn small secondary" id="set-target-btn">ویرایش تارگت</button></div></div>`;
     }
     const b = document.getElementById('set-target-btn');
     if (b) {

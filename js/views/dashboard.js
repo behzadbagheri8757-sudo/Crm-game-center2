@@ -15,8 +15,8 @@
     chart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
     gear: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21h-4v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1-2.8-2.8.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H3v-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1 2.8-2.8.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6V3h4v.1a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1 2.8 2.8-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.1v4h-.1a1.7 1.7 0 0 0-1.6.9Z"/></svg>',
     warehouse: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V9l7-4 7 4v12"/><path d="M9 21v-6h6v6"/></svg>',
-    target: '<svg viewBox="0 0 48 48" width="38" height="38" fill="none"><defs><linearGradient id="dmtTargetGrad" x1="6" y1="6" x2="42" y2="42" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#F6E4A8"/><stop offset="1" stop-color="#A67A1F"/></linearGradient><filter id="dmtTSh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#6B4A10" flood-opacity=".4"/></filter></defs><g filter="url(#dmtTSh)"><circle cx="18.5" cy="27" r="13.5" stroke="url(#dmtTargetGrad)" stroke-width="2.3" fill="rgba(243,217,139,.08)"/><circle cx="18.5" cy="27" r="8.2" stroke="url(#dmtTargetGrad)" stroke-width="2.2" fill="none"/><circle cx="18.5" cy="27" r="3" fill="url(#dmtTargetGrad)"/><path d="M41 7.5 L24.5 20.2" stroke="url(#dmtTargetGrad)" stroke-width="2.5" stroke-linecap="round"/><path d="M24.5 20.2 L29.8 19.2 L26.2 24.1 Z" fill="url(#dmtTargetGrad)"/><path d="M41 7.5 L41 13.2 M41 7.5 L35.3 7.5" stroke="url(#dmtTargetGrad)" stroke-width="2.1" stroke-linecap="round"/></g></svg>',
-    growth: '<svg viewBox="0 0 48 48" width="40" height="40" fill="none"><defs><linearGradient id="dmtGrowBar" x1="0" y1="40" x2="0" y2="8" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#B3812E"/><stop offset="1" stop-color="#F3D98B"/></linearGradient><linearGradient id="dmtGrowLine" x1="6" y1="36" x2="42" y2="8" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#E8C56A"/><stop offset="1" stop-color="#FFF1C2"/></linearGradient><filter id="dmtGSh" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.5" stdDeviation="1.2" flood-color="#5C3A0E" flood-opacity=".3"/></filter></defs><g filter="url(#dmtGSh)"><rect x="6" y="28" width="8" height="12" rx="2" fill="url(#dmtGrowBar)" opacity=".85"/><rect x="18" y="20" width="8" height="20" rx="2" fill="url(#dmtGrowBar)" opacity=".95"/><rect x="30" y="12" width="8" height="28" rx="2" fill="url(#dmtGrowBar)"/><path d="M8 34 L16 26 L24 28 L34 14" stroke="url(#dmtGrowLine)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M34 14 L34 20 M34 14 L28 14" stroke="url(#dmtGrowLine)" stroke-width="2.2" stroke-linecap="round"/></g></svg>',
+    target: '<svg viewBox="0 0 24 24" width="26" height="26" fill="none"><circle cx="13" cy="13" r="8.2" stroke="#C89B3C" stroke-width="1.6"/><circle cx="13" cy="13" r="5.1" stroke="#C89B3C" stroke-width="1.6"/><circle cx="13" cy="13" r="1.7" fill="#C89B3C"/><path d="M3 4 11.6 11.4" stroke="#C89B3C" stroke-width="1.7" stroke-linecap="round"/><path d="M2.1 5.4 3.9 2.6" stroke="#C89B3C" stroke-width="1.5" stroke-linecap="round"/><path d="M11.6 11.4 8.3 10.6 10.4 8.2Z" fill="#C89B3C"/></svg>',
+    moneyBag: '<svg viewBox="0 0 24 24" width="30" height="30" fill="none"><path d="M9.4 4.8 7.7 2.3h8.6l-1.7 2.5" stroke="#8A6423" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.4 4.8c-3.6 1-6.2 4.8-6.2 9.1 0 4.9 4 8.3 8.8 8.3s8.8-3.4 8.8-8.3c0-4.3-2.6-8.1-6.2-9.1" fill="#C89B3C"/><text x="12" y="17.6" text-anchor="middle" font-size="8.6" font-weight="700" fill="#6B4A1A" font-family="Arial, Tahoma, sans-serif">$</text></svg>',
     shop: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 5 4h14l2 5.5"/><path d="M4 9.5V20h16V9.5"/><path d="M9 20v-6h6v6"/><path d="M3 9.5h18"/></svg>'
   };
 
@@ -64,6 +64,10 @@
     return '<div class="dashboard-block"><div class="dashboard-block-head"><div class="dash-section-label">آخرین ویزیت‌ها</div><a class="section-action" href="#/visits">همه ←</a></div><div class="dash-activity">' + rows + '</div></div>';
   }
 
+  function targetFabHtml() {
+    return '<button type="button" class="dash-target-fab" data-monthly-target aria-label="تنظیم هدف فروش">' + ICO.target + '</button>';
+  }
+
   function targetHtml(metrics) {
     const target = typeof getMonthlySalesTarget === 'function' ? getMonthlySalesTarget() : 0;
     const sales = Number(metrics.mtdSales) || 0;
@@ -71,19 +75,14 @@
     const capped = Math.min(100, Math.max(0, pct));
     const done = target > 0 && sales >= target;
     return (
-      '<div class="dash-target-block">' +
-        '<button type="button" class="dash-target-fab" data-monthly-target aria-label="تنظیم هدف فروش">' +
-          ICO.target +
-        '</button>' +
-        '<div class="dash-monthly-target ' + (done ? 'is-done' : '') + '">' +
-          '<div class="dmt-top">' +
-            '<span class="dmt-title">هدف فروش این ماه</span>' +
-            '<span class="dmt-growth" aria-hidden="true">' + ICO.growth + '</span>' +
-          '</div>' +
-          '<div class="dmt-row">' +
-            '<div class="dmt-progress"><div class="dmt-bar"><span style="width:' + capped + '%"></span></div></div>' +
-            '<span class="dmt-pct">' + (target > 0 ? pct + '٪' : '—') + '</span>' +
-          '</div>' +
+      '<div class="dash-monthly-target ' + (done ? 'is-done' : '') + '">' +
+        '<div class="dmt-top">' +
+          '<span class="dmt-icon-plain">' + ICO.moneyBag + '</span>' +
+          '<span class="dmt-label">هدف فروش این ماه</span>' +
+        '</div>' +
+        '<div class="dmt-row">' +
+          '<div class="dmt-progress"><div class="dmt-bar"><span style="width:' + capped + '%"></span></div></div>' +
+          '<span class="dmt-pct">' + (target > 0 ? pct + '٪' : '—') + '</span>' +
         '</div>' +
       '</div>'
     );
@@ -118,7 +117,7 @@
 
     root.innerHTML =
       '<div class="dashboard-shell">' +
-      '<h2 class="section-title">داشبورد</h2>' +
+      '<h2 class="section-title">داشبورد' + targetFabHtml() + '</h2>' +
       '<div class="dashboard-eyebrow">مرکز فرماندهی روزانه</div>' +
       targetHtml(metrics) +
       '<div class="dashboard-block"><div class="dashboard-block-head"><div class="dash-section-label">خلاصه وضعیت</div></div>' +
