@@ -5,19 +5,19 @@
 
 (function (global) {
   const ICO = {
-    invoice: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h6"/></svg>',
-    users: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
-    box: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/></svg>',
-    card: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>',
-    truck: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="4" width="13" height="12" rx="1.5"/><path d="M14.5 8H19l3.5 3.5V16h-8"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>',
-    bank: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V10l7-5 7 5v11M9 21v-6h6v6"/><path d="M4 10h16"/></svg>',
-    map: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6.5-8 12-8 12S4 16.5 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>',
-    chart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
-    gear: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21h-4v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1-2.8-2.8.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H3v-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1 2.8-2.8.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6V3h4v.1a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1 2.8 2.8-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.1v4h-.1a1.7 1.7 0 0 0-1.6.9Z"/></svg>',
-    warehouse: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V9l7-4 7 4v12"/><path d="M9 21v-6h6v6"/></svg>',
-    target: '<svg viewBox="0 0 24 24" width="28" height="28" fill="none"><defs><linearGradient id="dmtTargetGrad" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#F3D98B"/><stop offset="1" stop-color="#B3812E"/></linearGradient></defs><circle cx="10.2" cy="11.2" r="7.4" stroke="url(#dmtTargetGrad)" stroke-width="1.55"/><circle cx="10.2" cy="11.2" r="4.5" stroke="url(#dmtTargetGrad)" stroke-width="1.55"/><circle cx="10.2" cy="11.2" r="1.55" fill="url(#dmtTargetGrad)"/><path d="M21.2 3.2 12.4 9.4" stroke="url(#dmtTargetGrad)" stroke-width="1.85" stroke-linecap="round"/><path d="M21.2 3.2v3.9M21.2 3.2h-3.9" stroke="url(#dmtTargetGrad)" stroke-width="1.7" stroke-linecap="round"/><circle cx="11.6" cy="9.95" r="1.05" fill="url(#dmtTargetGrad)" opacity=".9"/></svg>',
-    moneyBag: '<svg viewBox="0 0 24 24" width="44" height="44" fill="none"><defs><linearGradient id="dmtBagGrad" x1="5" y1="2" x2="19" y2="22" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#F6E4A8"/><stop offset=".45" stop-color="#E0B04A"/><stop offset="1" stop-color="#9A6B1E"/></linearGradient><linearGradient id="dmtBagShine" x1="8" y1="6" x2="14" y2="18" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><filter id="dmtBagSh" x="-20%" y="-10%" width="140%" height="140%"><feDropShadow dx="0" dy="1.5" stdDeviation="1.2" flood-color="#5C3A0E" flood-opacity=".35"/></filter></defs><g filter="url(#dmtBagSh)"><path d="M9.1 5.2 7.6 2.8h8.8l-1.5 2.4" stroke="url(#dmtBagGrad)" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.1 5.2c-3.6 1.05-6.15 4.85-6.15 9.15 0 5.25 4.05 8.9 9.05 8.9s9.05-3.65 9.05-8.9c0-4.3-2.55-8.1-6.15-9.15" fill="url(#dmtBagGrad)"/><path d="M9.6 7.2c1.5-.55 3.3-.55 4.8 0" stroke="#7A4E17" stroke-width="1.1" stroke-linecap="round" opacity=".55"/><path d="M10.2 8.6c2.2 2.8 3.4 2.8 5.6 0" fill="url(#dmtBagShine)" opacity=".5"/><path d="M12 9.6v7.1M10.05 15.15c0 1.08.98 1.9 1.95 1.9s1.95-.72 1.95-1.8c0-1.18-.98-1.55-1.95-1.85-.97-.3-1.95-.68-1.95-1.85 0-1.02.98-1.8 1.95-1.8s1.95.68 1.95 1.8" stroke="#6B4314" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></g></svg>',
-    shop: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 5 4h14l2 5.5"/><path d="M4 9.5V20h16V9.5"/><path d="M9 20v-6h6v6"/><path d="M3 9.5h18"/></svg>'
+    invoice: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2.5H7.2A2 2 0 0 0 5.2 4.5v15a2 2 0 0 0 2 2h9.6a2 2 0 0 0 2-2V7.5L14 2.5z"/><path d="M14 2.5v5h5"/><path d="M8.5 12h7M8.5 15.5h5M8.5 8.5h3"/></svg>',
+    users: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="3.25"/><path d="M3.5 20v-.8a4.7 4.7 0 0 1 4.7-4.7h1.6A4.7 4.7 0 0 1 14.5 19.2v.8"/><path d="M16.5 4.2a3.1 3.1 0 0 1 0 5.8"/><path d="M17.6 14.6a4.1 4.1 0 0 1 2.9 3.8V20"/></svg>',
+    box: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8 3.6 7.2v9.6L12 21.2l8.4-4.4V7.2L12 2.8z"/><path d="M12 12.2 3.6 7.2M12 12.2l8.4-5M12 12.2V21.2"/></svg>',
+    card: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19"/><path d="M7 15h4"/></svg>',
+    truck: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1.8 4.5h12.4v10.5H1.8z"/><path d="M14.2 8.5H19l3.2 3.5v3H14.2"/><circle cx="6" cy="17.8" r="1.9"/><circle cx="17.5" cy="17.8" r="1.9"/></svg>',
+    bank: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M4.5 10.5 12 5l7.5 5.5"/><path d="M5 10.5V21M9 10.5V21M15 10.5V21M19 10.5V21"/><path d="M3.5 10.5h17"/></svg>',
+    map: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10.2c0 6-8 11.3-8 11.3S4 16.2 4 10.2a8 8 0 1 1 16 0z"/><circle cx="12" cy="10.2" r="2.6"/></svg>',
+    chart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V10M9.5 19V5M15 19v-7M20.5 19V8"/><path d="M3 19h18"/></svg>',
+    gear: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.4M12 18.8v2.4M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M2.8 12h2.4M18.8 12h2.4M4.9 19.1l1.7-1.7M17.4 6.6l1.7-1.7"/></svg>',
+    warehouse: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20.5h18M4.5 20.5V9.5L12 4.5l7.5 5v11"/><path d="M9 20.5v-6h6v6"/></svg>',
+    target: '<svg viewBox="0 0 48 48" width="38" height="38" fill="none"><defs><linearGradient id="dmtTargetGrad" x1="6" y1="6" x2="42" y2="42" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#F6E4A8"/><stop offset="1" stop-color="#A67A1F"/></linearGradient><filter id="dmtTSh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#6B4A10" flood-opacity=".4"/></filter></defs><g filter="url(#dmtTSh)"><circle cx="18.5" cy="27" r="13.5" stroke="url(#dmtTargetGrad)" stroke-width="2.3" fill="rgba(243,217,139,.08)"/><circle cx="18.5" cy="27" r="8.2" stroke="url(#dmtTargetGrad)" stroke-width="2.2" fill="none"/><circle cx="18.5" cy="27" r="3" fill="url(#dmtTargetGrad)"/><!-- shaft toward center --><path d="M41 7.5 L24.5 20.2" stroke="url(#dmtTargetGrad)" stroke-width="2.5" stroke-linecap="round"/><!-- arrowhead pointing into bullseye --><path d="M24.5 20.2 L29.8 19.2 L26.2 24.1 Z" fill="url(#dmtTargetGrad)"/><!-- tail feathers at outer end --><path d="M41 7.5 L41 13.2 M41 7.5 L35.3 7.5" stroke="url(#dmtTargetGrad)" stroke-width="2.1" stroke-linecap="round"/></g></svg>',
+    growth: '<svg viewBox="0 0 48 48" width="40" height="40" fill="none"><defs><linearGradient id="dmtGrowBar" x1="0" y1="40" x2="0" y2="8" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#B3812E"/><stop offset="1" stop-color="#F3D98B"/></linearGradient><linearGradient id="dmtGrowLine" x1="6" y1="36" x2="42" y2="8" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#E8C56A"/><stop offset="1" stop-color="#FFF1C2"/></linearGradient><filter id="dmtGSh" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.5" stdDeviation="1.2" flood-color="#5C3A0E" flood-opacity=".3"/></filter></defs><g filter="url(#dmtGSh)"><rect x="6" y="28" width="8" height="12" rx="2" fill="url(#dmtGrowBar)" opacity=".85"/><rect x="18" y="20" width="8" height="20" rx="2" fill="url(#dmtGrowBar)" opacity=".95"/><rect x="30" y="12" width="8" height="28" rx="2" fill="url(#dmtGrowBar)"/><path d="M8 34 L16 26 L24 28 L34 14" stroke="url(#dmtGrowLine)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M34 14 L34 20 M34 14 L28 14" stroke="url(#dmtGrowLine)" stroke-width="2.2" stroke-linecap="round"/></g></svg>',
+    shop: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.2 5.2 4h13.6L21 9.2"/><path d="M4 9.2V20h16V9.2"/><path d="M9.5 20v-6h5v6"/><path d="M3 9.2h18"/></svg>' 
   };
 
   function normalizeDigits(v) {
@@ -71,17 +71,19 @@
     const capped = Math.min(100, Math.max(0, pct));
     const done = target > 0 && sales >= target;
     return (
-      '<div class="dash-monthly-target ' + (done ? 'is-done' : '') + '">' +
-        '<div class="dmt-top">' +
-          '<span class="dmt-title">هدف فروش این ماه</span>' +
-          '<button type="button" class="dash-target-fab" data-monthly-target aria-label="تنظیم هدف فروش">' +
-            ICO.target +
-          '</button>' +
-        '</div>' +
-        '<div class="dmt-row">' +
-          '<span class="dmt-icon-plain">' + ICO.moneyBag + '</span>' +
-          '<div class="dmt-progress"><div class="dmt-bar"><span style="width:' + capped + '%"></span></div></div>' +
-          '<span class="dmt-pct">' + (target > 0 ? pct + '٪' : '—') + '</span>' +
+      '<div class="dash-target-block">' +
+        '<button type="button" class="dash-target-fab" data-monthly-target aria-label="تنظیم هدف فروش">' +
+          ICO.target +
+        '</button>' +
+        '<div class="dash-monthly-target ' + (done ? 'is-done' : '') + '">' +
+          '<div class="dmt-top">' +
+            '<span class="dmt-title">هدف فروش این ماه</span>' +
+            '<span class="dmt-growth" aria-hidden="true">' + ICO.growth + '</span>' +
+          '</div>' +
+          '<div class="dmt-row">' +
+            '<div class="dmt-progress"><div class="dmt-bar"><span style="width:' + capped + '%"></span></div></div>' +
+            '<span class="dmt-pct">' + (target > 0 ? pct + '٪' : '—') + '</span>' +
+          '</div>' +
         '</div>' +
       '</div>'
     );
@@ -117,8 +119,8 @@
     root.innerHTML =
       '<div class="dashboard-shell">' +
       '<h2 class="section-title">داشبورد</h2>' +
-      targetHtml(metrics) +
       '<div class="dashboard-eyebrow">مرکز فرماندهی روزانه</div>' +
+      targetHtml(metrics) +
       '<div class="dashboard-block"><div class="dashboard-block-head"><div class="dash-section-label">خلاصه وضعیت</div></div>' +
       '<div class="dash-kpis">' +
       '<div class="dash-kpi sales"><div class="dash-kpi-label">فروش این ماه</div><div class="dash-kpi-value sales">' + money(metrics.mtdSales) + '</div><div class="dash-kpi-sub">' + deltaHtml(metrics.salesDeltaPct) + '</div></div>' +

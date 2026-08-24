@@ -70,10 +70,10 @@
       const pct = Math.min(100, Math.round(pctRaw * 10) / 10);
       const pctLabel = Math.min(100, Math.round(pctRaw));
       const idle = count <= 0;
-      const barW = idle ? 0 : Math.min(100, pct);
-      el.innerHTML = `<div class="prospect-daily-target${idle ? ' is-idle' : ''}">
+      const barW = idle ? 0 : Math.min(100, Math.max(0, pct));
+      el.innerHTML = `<div class="prospect-daily-target${idle ? ' is-idle' : ' is-active'}">
         <span class="pdt-label">تارگت امروز</span>
-        <div class="pdt-bar-wrap"><div class="pdt-bar"><span style="width:${barW}%"></span></div></div>
+        <div class="pdt-bar-wrap"><div class="pdt-bar" role="progressbar" aria-valuenow="${count}" aria-valuemin="0" aria-valuemax="${target}"><span style="width:${barW}%"></span></div></div>
         <span class="pdt-meta">${count} / ${target}${idle ? '' : ' · ' + pctLabel + '٪'}</span>
         <button type="button" class="pdt-edit" id="set-target-btn">ویرایش</button>
       </div>`;
