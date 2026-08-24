@@ -36,7 +36,7 @@ const BOTTOM_NAV_ITEMS = [
     href: '#/dashboard',
     spaPath: '/dashboard',
     label: 'داشبورد',
-    icon: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2.8H7.2A2 2 0 0 0 5.2 4.8v14.4a2 2 0 0 0 2 2h9.6a2 2 0 0 0 2-2V7.8L14 2.8z"/><path d="M14 2.8v5h5"/><path d="M8.5 12h7M8.5 15.5h4.5"/></svg>'
+    icon: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2.75H7.25A2 2 0 0 0 5.25 4.75v14.5a2 2 0 0 0 2 2h9.5a2 2 0 0 0 2-2V7.75L14 2.75z"/><path d="M14 2.75v5h5"/><path d="M8.5 12h7M8.5 15.5h4.5"/></svg>'
   },
   {
     id: 'customers',
