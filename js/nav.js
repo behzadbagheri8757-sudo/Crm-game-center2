@@ -36,34 +36,34 @@ const BOTTOM_NAV_ITEMS = [
     href: '#/dashboard',
     spaPath: '/dashboard',
     label: 'داشبورد',
-    icon: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.8 12 3.6l8 7.2"/><path d="M6.2 9.6V20h11.6V9.6"/><path d="M9.8 20v-5.4h4.4V20"/></svg>'
+    icon: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 12 3.8l8 6.7"/><path d="M6.2 9.8V20h11.6V9.8"/><path d="M10 20v-5.2h4V20"/></svg>'
   },
   {
     id: 'customers',
     href: '#/customers',
     spaPath: '/customers',
     label: 'مشتریان',
-    icon: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7.2" r="3.15"/><path d="M3.4 19.8v-.9a4.6 4.6 0 0 1 4.6-4.6h1.5a4.6 4.6 0 0 1 4.6 4.6v.9"/><path d="M16.4 4.3a3 3 0 0 1 0 5.7"/><path d="M17.6 14.5a4 4 0 0 1 2.9 3.7v1.6"/></svg>'
+    icon: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7.2" r="3.2"/><path d="M3.5 20.2v-1.1a4.7 4.7 0 0 1 4.7-4.7h1.6a4.7 4.7 0 0 1 4.7 4.7v1.1"/><path d="M16.2 3.9a3.1 3.1 0 0 1 0 6"/><path d="M17.5 14.6a4.2 4.2 0 0 1 3 4v1.6"/></svg>'
   },
   {
     id: 'products',
     href: '#/products',
     spaPath: '/products',
     label: 'اجناس',
-    icon: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2 4 7.5v9l8 4.3 8-4.3v-9L12 3.2z"/><path d="M12 12 4 7.5M12 12l8-4.5M12 12v8.8"/></svg>'
+    icon: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2 3.8 7.5v9l8.2 4.3 8.2-4.3v-9L12 3.2z"/><path d="M12 12.5 3.8 7.5"/><path d="M12 12.5l8.2-5"/><path d="M12 12.5V21"/></svg>'
   },
   {
     id: 'invoices',
     href: '#/invoices',
     spaPath: '/invoices',
     label: 'فاکتورها',
-    icon: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2.8H7.2A2.1 2.1 0 0 0 5.1 4.9v14.2A2.1 2.1 0 0 0 7.2 21.2h9.6a2.1 2.1 0 0 0 2.1-2.1V8L14 2.8z"/><path d="M14 2.8v5.2h5.2"/><path d="M8.5 12.2h7M8.5 15.6h4.5"/></svg>'
+    icon: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2.8H7.2A2.2 2.2 0 0 0 5 5v14.2A2.2 2.2 0 0 0 7.2 21.4h9.6a2.2 2.2 0 0 0 2.2-2.2V8.2L14 2.8z"/><path d="M14 2.8v5.4h5.4"/><path d="M8.5 12.5h7"/><path d="M8.5 16h5"/></svg>'
   },
   {
     id: 'more',
     href: '#more',
     label: 'بیشتر',
-    icon: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="12" r="1.45"/><circle cx="12" cy="12" r="1.45"/><circle cx="18.5" cy="12" r="1.45"/></svg>'
+    icon: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="12" r="1.35"/><circle cx="12" cy="12" r="1.35"/><circle cx="18.5" cy="12" r="1.35"/></svg>'
   },
 ];
 
