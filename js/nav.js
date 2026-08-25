@@ -306,12 +306,48 @@ function goAppBack(e){
 }
 
 /**
+ * Shamsi/Jalali date in header — reuses ui.js helpers (todayISO, isoToJalali,
+ * SHAMSI_MONTH_NAMES, enToFaDigits). No parallel date system.
+ * Refreshed on every nav render so the label never goes stale across midnight.
+ */
+function ensureHeaderDate(){
+  const el = document.getElementById('header-date');
+  if(!el) return;
+  try{
+    const iso = (typeof todayISO === 'function') ? todayISO() : null;
+    if(!iso || typeof isoToJalali !== 'function'){
+      el.textContent = '';
+      return;
+    }
+    const j = isoToJalali(iso);
+    if(!j){ el.textContent = ''; return; }
+    const jy = j[0], jm = j[1], jd = j[2];
+    const monthName = (typeof SHAMSI_MONTH_NAMES !== 'undefined' && SHAMSI_MONTH_NAMES[jm - 1])
+      ? SHAMSI_MONTH_NAMES[jm - 1]
+      : String(jm);
+    // Weekday of the local civil day (same day as Shamsi «امروز»)
+    const FA_WEEKDAYS = ['یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه','شنبه'];
+    const now = new Date();
+    const weekday = FA_WEEKDAYS[now.getDay()] || '';
+    const dayStr = (typeof enToFaDigits === 'function') ? enToFaDigits(String(jd)) : String(jd);
+    const yearStr = (typeof enToFaDigits === 'function') ? enToFaDigits(String(jy)) : String(jy);
+    el.textContent = weekday
+      ? (weekday + '، ' + dayStr + ' ' + monthName + ' ' + yearStr)
+      : (dayStr + ' ' + monthName + ' ' + yearStr);
+  }catch(e){
+    el.textContent = '';
+  }
+}
+
+/**
  * Inject a compact Back control into <header> on internal pages.
  * Skipped on dashboard (index).
  */
 function ensureAppBackButton(activeId){
   const header = document.querySelector('header');
   if(!header) return;
+
+  ensureHeaderDate();
 
   const existing = header.querySelector('.app-back');
   const isDash = !activeId || activeId === 'dashboard' ||
