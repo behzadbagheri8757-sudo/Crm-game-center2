@@ -1696,7 +1696,7 @@ h2.section-title::after{border-color:#E4E4E0;}
 }
 /* RTL: flex-start = right side → growth then title from the right */
 .dmt-heading{
-  display:inline-flex;align-items:center;gap:10px;
+  display:inline-flex;align-items:flex-start;gap:10px;
   flex-direction:row;
   max-width:100%;
 }
@@ -1706,7 +1706,7 @@ h2.section-title::after{border-color:#E4E4E0;}
 }
 .dmt-growth{
   flex:none;display:flex;align-items:center;justify-content:center;
-  width:66px;height:74px;
+  width:96px;height:79px;
   filter:drop-shadow(0 5px 10px rgba(184,134,44,.22));
 }
 .dmt-growth svg{width:100%;height:100%;display:block;}
@@ -1888,7 +1888,7 @@ a.dash-tile:active{background:#FBF8F3;transform:scale(.96);box-shadow:0 2px 6px 
   .dash-kpi-value{font-size:.95rem;}
   .dmt-pct{font-size:1.02rem;}
   .dmt-title{font-size:.84rem;}
-  .dmt-growth{width:52px;height:58px;}
+  .dmt-growth{width:76px;height:62px;}
   .dash-target-fab{width:36px;height:36px;}
   .dash-target-fab svg{width:34px;height:34px;}
   .dash-target-fab-row{top:-26px;left:2px;}
@@ -1910,7 +1910,7 @@ a.dash-tile:active{background:#FBF8F3;transform:scale(.96);box-shadow:0 2px 6px 
   .dash-kpi-sub{display:none;}
   a.dash-tile .dash-sub{display:none;}
   a.dash-tile{min-height:76px;}
-  .dmt-growth{width:48px;height:53px;}
+  .dmt-growth{width:70px;height:57px;}
 }
 
 /* ===================== PROSPECT DAILY TARGET (compact progress strip) ===================== */
