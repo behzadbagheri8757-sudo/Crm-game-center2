@@ -72,6 +72,21 @@
     return true;
   }
 
+  /** Same period rules as invoiceInPeriod, applied to payment.date (not invoice date). */
+  function paymentInPeriod(p, period, now) {
+    if (period === 'all') return true;
+    if (period === 'today') return isSameDay(p.date, now);
+    if (period === 'month') return isSameMonth(p.date, now);
+    if (period === 'week') {
+      const d = new Date(p.date);
+      const start = startOfWeek(now);
+      const end = new Date(start);
+      end.setDate(end.getDate() + 7);
+      return d >= start && d < end;
+    }
+    return true;
+  }
+
   function periodInvoiceGrossProfit(invoices) {
     return invoices.reduce(function (sum, inv) {
       const itemsProfit = (inv.items || []).reduce(function (a, it) {
@@ -97,6 +112,19 @@
     const periodCount = invsPeriod.length;
     const periodAvg = periodCount ? periodSales / periodCount : 0;
     const periodGrossProfit = periodInvoiceGrossProfit(invsPeriod);
+
+    // دریافتی دوره: فقط cash/card/transfer — همان روش globalTotals().totalReceived
+    // ولی فیلتر روی payment.date (نه تاریخ فاکتور)
+    const periodReceived = (data.payments || [])
+      .filter(function (p) {
+        return (
+          ['cash', 'card', 'transfer'].includes(p.method) &&
+          paymentInPeriod(p, reportPeriod, now)
+        );
+      })
+      .reduce(function (s, p) {
+        return s + (p.amount || 0);
+      }, 0);
 
     let paidCount = 0,
       openCount = 0;
@@ -205,8 +233,10 @@
       ' ت</div>' +
       '<div class="report-note">همان فرمول ردیف فاکتور (قیمت − buyPrice تاریخی − تخفیف). برگشت/تخفیف تراکنشی فقط در «سود کل» لحاظ شده است.</div>' +
       '</div>' +
-      '<div class="card"><div class="label">دریافت نقد/کارت/انتقال (کل)</div><div class="value">' +
-      toman(g.totalReceived) +
+      '<div class="card"><div class="label">دریافت نقد/کارت/انتقال — ' +
+      esc(periodLabel) +
+      '</div><div class="value">' +
+      toman(periodReceived) +
       ' ت</div></div>' +
       '<div class="card"><div class="label">چک در جریان</div><div class="value accent-amber">' +
       toman(g.outstandingChecks) +
