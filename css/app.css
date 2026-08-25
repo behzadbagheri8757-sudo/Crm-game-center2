@@ -118,6 +118,14 @@ header p{
   font-weight:500;
   line-height:1.4;
 }
+header .header-date{
+  margin:4px 0 0;
+  font-size:.72rem;
+  color:rgba(255,255,255,.78);
+  font-weight:600;
+  line-height:1.35;
+  letter-spacing:.1px;
+}
 
 /* ===================== NAV (top bar only — never match .bottom-nav) ===================== */
 nav#nav{
