@@ -95,7 +95,7 @@ body{
 
 /* ===================== HEADER ===================== */
 header{
-  padding:calc(12px + var(--safe-top)) 16px 14px;
+  padding:calc(12px + var(--safe-top)) 16px 12px;
   text-align:center;
   background:var(--color-primary);
   border-bottom:1px solid rgba(255,255,255,0.08);
@@ -109,21 +109,14 @@ header h1{
   font-weight:800;
   color:#fff;
   letter-spacing:.15px;
-  line-height:1.35;
-}
-header p{
-  margin:3px 0 0;
-  font-size:.75rem;
-  color:rgba(255,255,255,.68);
-  font-weight:500;
-  line-height:1.4;
+  line-height:1.3;
 }
 header .header-date{
-  margin:4px 0 0;
+  margin:5px 0 0;
   font-size:.72rem;
   color:rgba(255,255,255,.78);
   font-weight:600;
-  line-height:1.35;
+  line-height:1.3;
   letter-spacing:.1px;
 }
 
@@ -1640,7 +1633,7 @@ body{background:#FCFCFA;color:#1F2429;}
 main{padding-top:16px;}
 header{background:#172331;color:#fff;border-bottom-color:rgba(255,255,255,.10);}
 header h1{font-size:1.12rem;letter-spacing:-.15px;}
-header p{color:rgba(255,255,255,.68);}
+header .header-date{color:rgba(255,255,255,.78);}
 h2.section-title{color:#172331;font-size:1.12rem;margin:2px 0 16px;}
 h2.section-title::after{border-color:#E4E4E0;}
 
