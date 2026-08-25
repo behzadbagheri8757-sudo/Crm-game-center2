@@ -7,7 +7,7 @@
  */
 'use strict';
 
-const CACHE_NAME = 'baqeri-shell-v17';
+const CACHE_NAME = 'baqeri-shell-v18';
 
 /** App Shell — paths relative to this SW (same directory as index.html). */
 const PRECACHE_URLS = [
@@ -26,6 +26,8 @@ const PRECACHE_URLS = [
   './js/prospect-scoring.js',
   './js/prospect-db.js',
   './js/prospect-core.js',
+  './js/game-config.js',
+  './js/game-logic.js',
   './js/sw-register.js',
   './js/router.js',
   './js/view.host.js',
@@ -46,6 +48,7 @@ const PRECACHE_URLS = [
   './js/views/evaluation.js',
   './js/views/checks.js',
   './js/views/invoice.js',
+  './js/views/game-center.js',
   './js/views/settings.js',
   './vendor/xlsx.full.min.js',
   './vendor/html2canvas.min.js',
