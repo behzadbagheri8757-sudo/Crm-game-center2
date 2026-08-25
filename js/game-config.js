@@ -48,21 +48,27 @@
     dailyQuests: [
       {
         id: 'evaluation',
-        label: 'ارزیابی Prospect',
+        label: 'ارزیابی',
         type: 'evaluation',
-        target: 15
+        target: 15,   // minimum / fallback
+        min: 15,
+        max: 25
       },
       {
         id: 'customerVisit',
         label: 'ویزیت مشتری',
         type: 'customerVisit',
-        target: 5
+        target: 5,
+        min: 5,
+        max: 10
       },
       {
         id: 'sales',
-        label: 'فروش / فاکتور',
+        label: 'فروش',
         type: 'invoice',
-        target: 3
+        target: 3,
+        min: 3,
+        max: 7
       }
     ],
 

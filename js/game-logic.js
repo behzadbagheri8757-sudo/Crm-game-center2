@@ -382,16 +382,42 @@
   /**
    * Daily quest progress derived from real counts (config targets).
    */
+  /** Deterministic day seed so same calendar day always gets same targets. */
+  function _daySeed(iso) {
+    var s = String(iso || '');
+    var h = 2166136261;
+    for (var i = 0; i < s.length; i++) {
+      h ^= s.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return h >>> 0;
+  }
+
+  function _rangedTarget(seed, min, max, salt) {
+    min = Math.max(0, Number(min) || 0);
+    max = Math.max(min, Number(max) || min);
+    if (max === min) return min;
+    var x = (seed ^ Math.imul(salt >>> 0, 2654435761)) >>> 0;
+    return min + (x % (max - min + 1));
+  }
+
+  /**
+   * Daily quest targets: random within [min,max] but stable for the day
+   * (seeded by date — reload does not change today's targets).
+   */
   function gameDeriveDailyQuests(dateISO) {
     const cfg = _cfg();
     const day = _dateOnly(dateISO) || _today();
     const counts = gameDeriveDayCounts(day);
-    const quests = (cfg.dailyQuests || []).map(function (q) {
+    const seed = _daySeed(day);
+    const quests = (cfg.dailyQuests || []).map(function (q, idx) {
       var current = 0;
       if (q.type === 'evaluation') current = counts.evaluation;
       else if (q.type === 'customerVisit') current = counts.customerVisit;
       else if (q.type === 'invoice') current = counts.invoice;
-      const target = Number(q.target) || 0;
+      var minT = q.min != null ? Number(q.min) : Number(q.target) || 0;
+      var maxT = q.max != null ? Number(q.max) : minT;
+      var target = _rangedTarget(seed, minT, maxT, idx + 1);
       return {
         id: q.id,
         label: q.label,
