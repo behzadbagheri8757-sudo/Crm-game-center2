@@ -56,6 +56,14 @@ async function createProspectShop(payload){
   await persistProspectShop(shop);
   prospectState.shops.push(shop);
   await registerProspectVisitForTarget();
+  // Game Center hook (derived only — never rolls back CRM)
+  if (typeof gameOnEvaluation === 'function') {
+    try {
+      await gameOnEvaluation(shop.id, visit.id, visit.date);
+    } catch (e) {
+      console.warn('Game hook failed:', e);
+    }
+  }
   return shop;
 }
 
@@ -77,6 +85,14 @@ async function addProspectVisit(shopId, payload){
   if((payload.tags||[]).includes('became_customer')) shop.status = 'converted';
   await persistProspectShop(shop);
   await registerProspectVisitForTarget();
+  // Game Center hook (derived only — never rolls back CRM)
+  if (typeof gameOnEvaluation === 'function') {
+    try {
+      await gameOnEvaluation(shop.id, visit.id, visit.date);
+    } catch (e) {
+      console.warn('Game hook failed:', e);
+    }
+  }
   return shop;
 }
 

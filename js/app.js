@@ -1120,6 +1120,14 @@ function openAddTransaction(cid){
           data = previousData;
           throw err;
         }
+        // Game Center hook (derived only — never rolls back CRM)
+        if (typeof gameOnPayment === 'function') {
+          try {
+            await gameOnPayment(payment.id, payment.method, payment.date);
+          } catch (e) {
+            console.warn('Game hook failed:', e);
+          }
+        }
         openCustomerDetail(cid); render(); showToast('ثبت شد');
       });
     });
@@ -1232,6 +1240,14 @@ function openAddVisit(cid){
       c.visits = c.visits || [];
       c.visits.push(visit);
       await saveData();
+      // Game Center hook (derived only — never rolls back CRM)
+      if (typeof gameOnCustomerVisit === 'function') {
+        try {
+          await gameOnCustomerVisit(cid, visit.id, visit.date);
+        } catch (e) {
+          console.warn('Game hook failed:', e);
+        }
+      }
       closeModal();
       if(typeof openCustomerDetail === 'function') openCustomerDetail(cid);
       if(typeof render === 'function') render();
@@ -1407,6 +1423,14 @@ function openInvoiceDetail(invId, cid){
       }catch(saveErr){
         data = previousData;
         throw saveErr;
+      }
+      // Game Center: reverse invoice XP if previously claimed (never affects CRM)
+      if (typeof gameOnInvoiceDeleted === 'function') {
+        try {
+          await gameOnInvoiceDeleted(invId);
+        } catch (e) {
+          console.warn('Game hook failed:', e);
+        }
       }
       openCustomerDetail(cid); render(); showToast('فاکتور حذف شد؛ موجودی و حساب مشتری اصلاح شد');
     });
@@ -1998,6 +2022,21 @@ function openInvoiceForm(cid, editInv){
         data = previousData;
         btn.disabled = false;
         return;
+      }
+      // Game Center hooks — CREATE only (edit path returns earlier). Never rolls back CRM.
+      if (typeof gameOnInvoice === 'function') {
+        try {
+          await gameOnInvoice(newInv.id, newInv.date);
+        } catch (e) {
+          console.warn('Game hook failed:', e);
+        }
+      }
+      if (typeof GameLogic !== 'undefined' && GameLogic && typeof GameLogic.maybeClaimConversions === 'function') {
+        try {
+          await GameLogic.maybeClaimConversions();
+        } catch (e) {
+          console.warn('Game hook failed:', e);
+        }
       }
       render(); showToast('فاکتور ثبت شد');
       openSheet(`

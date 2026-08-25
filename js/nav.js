@@ -75,6 +75,7 @@ const MORE_NAV_ITEMS = [
   { id: 'checks',    href: '#/checks',    label: 'چک‌ها', spaPath: '/checks' },
   { id: 'visits',    href: '#/visits',    label: 'ویزیت مشتریان', spaPath: '/visits' },
   { id: 'prospects', href: '#/prospects', label: 'ارزیابی مغازه‌ها', spaPath: '/prospects' },
+  { id: 'game',      href: '#/game',      label: 'مرکز بازی فروش', spaPath: '/game' },
   { id: 'reports',   href: '#/reports',   label: 'گزارش‌ها', spaPath: '/reports' },
   { id: 'settings',  href: '#/settings',  label: 'تنظیمات و Backup', spaPath: '/settings' },
 ];
@@ -547,6 +548,7 @@ async function bootSpaShell() {
       if (path === '/visits') return 'visits';
       if (path === '/prospects' || path === '/prospect' || path === '/prospect-routes' || path === '/evaluation') return 'prospects';
       if (path === '/checks') return 'checks';
+      if (path === '/game') return 'game';
       if (path === '/settings') return 'settings';
       return 'dashboard';
     }
@@ -580,6 +582,7 @@ async function bootSpaShell() {
     AppRouter.registerRoute('/prospect-routes', makeViewHandler(typeof ProspectRoutesView !== 'undefined' ? ProspectRoutesView : null, 'prospects'));
     AppRouter.registerRoute('/evaluation', makeViewHandler(typeof EvaluationView !== 'undefined' ? EvaluationView : null, 'prospects'));
     AppRouter.registerRoute('/checks', makeViewHandler(typeof ChecksView !== 'undefined' ? ChecksView : null, 'checks'));
+    AppRouter.registerRoute('/game', makeViewHandler(typeof GameCenterView !== 'undefined' ? GameCenterView : null, 'game'));
     AppRouter.registerRoute('/settings', makeViewHandler(typeof SettingsView !== 'undefined' ? SettingsView : null, 'settings'));
     AppRouter.start();
   } catch (e) {
