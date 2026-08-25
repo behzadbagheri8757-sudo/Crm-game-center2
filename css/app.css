@@ -2028,3 +2028,46 @@ main{
 a.dash-tile:active .dash-ico{
   transform:scale(.96);
 }
+
+
+/* ===== Sales Game Center (Phase 3+4) ===== */
+.gc-page{padding-bottom:24px;}
+.gc-header{margin-bottom:8px;}
+.gc-mode-toggle{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
+.gc-mode-toggle .chip.active{background:var(--olive,#5b7a5a);color:#fff;}
+.gc-shell{display:flex;flex-direction:column;gap:4px;}
+.gc-card{
+  background:var(--card,rgba);
+  border:1px solid var(--line,#e4e4e0);
+  border-radius:14px;
+  padding:12px 14px;
+  margin-bottom:12px;
+}
+.gc-card-title{font-weight:800;margin-bottom:10px;font-size:.95rem;}
+.gc-quest-row{margin-bottom:12px;}
+.gc-quest-name{font-weight:700;margin-bottom:4px;font-size:.9rem;}
+.gc-progress{display:flex;align-items:center;gap:10px;}
+.gc-progress-track{
+  flex:1;height:8px;border-radius:999px;background:rgba(0,0,0,.08);overflow:hidden;
+}
+.gc-progress-fill{height:100%;background:var(--olive,#5b7a5a);border-radius:999px;transition:width .2s ease;}
+.gc-progress.is-done .gc-progress-fill{background:var(--olive,#3d6b45);}
+.gc-progress-label{font-size:.8rem;min-width:4.5rem;text-align:left;color:var(--ink-soft,#666);}
+.gc-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:12px;}
+@media (max-width:420px){.gc-grid{grid-template-columns:1fr;}}
+.gc-stat{
+  background:var(--card,rgba);
+  border:1px solid var(--line,#e4e4e0);
+  border-radius:14px;
+  padding:10px 12px;
+}
+.gc-stat .label{font-size:.72rem;color:var(--ink-soft,#666);margin-bottom:4px;}
+.gc-stat .value{font-weight:800;font-size:1.05rem;}
+.gc-stat .sub{font-size:.72rem;color:var(--ink-soft,#666);margin-top:2px;}
+.gc-line{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:10px;padding:6px 0;border-bottom:1px solid rgba(0,0,0,.05);font-size:.9rem;
+}
+.gc-line:last-child{border-bottom:0;}
+.gc-ok{color:var(--olive,#3d6b45);font-weight:700;}
+.gc-hint{font-size:.78rem;color:var(--ink-soft,#666);line-height:1.5;margin:4px 0 0;}
