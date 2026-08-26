@@ -2037,54 +2037,58 @@ a.dash-tile:active .dash-ico{
   margin: 0 auto;
 }
 
-/* Section header — not a card */
-.gc-header{ margin-bottom: 18px; }
+/* Flat header: Sales Game ——— [icon] */
+.gc-header{ margin-bottom: 20px; }
 .gc-title-row{
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 8px;
-  flex-direction: row-reverse; /* title then mark on the visual start in RTL */
+  gap: 10px;
+  margin-bottom: 14px;
 }
 .gc-title{
   margin: 0;
-  font-size: 1.2rem;
+  flex: none;
+  font-size: 1.15rem;
   font-weight: 800;
   letter-spacing: .02em;
   color: var(--ink, #172331);
-  line-height: 1.25;
+  line-height: 1.2;
+}
+.gc-title-line{
+  flex: 1 1 auto;
+  height: 1px;
+  min-width: 24px;
+  background: rgba(0,0,0,.1);
+  border: 0;
 }
 .gc-title-mark{
   display: inline-flex;
-  color: #C89B3C;
+  align-items: center;
+  justify-content: center;
   flex: none;
-}
-.gc-title-rule{
-  height: 1px;
-  background: rgba(0,0,0,.08);
-  margin: 10px 0 14px;
-  border: 0;
+  color: #C89B3C;
 }
 
-/* Compact segmented control — not a big card */
+/* Full-width thin pill track */
 .gc-seg{
-  display: inline-flex;
-  gap: 4px;
+  display: flex;
+  width: 100%;
+  gap: 0;
   padding: 3px;
-  background: rgba(0,0,0,.05);
+  background: rgba(0,0,0,.055);
   border-radius: 999px;
-  max-width: 100%;
+  box-sizing: border-box;
 }
 .gc-seg-btn{
-  min-height: 36px;
-  min-width: 88px;
-  padding: 7px 18px;
+  flex: 1 1 50%;
+  min-height: 38px;
+  padding: 8px 12px;
   border: none;
   border-radius: 999px;
   background: transparent;
-  color: var(--ink-soft, #5c6670);
+  color: var(--ink-soft, #6a7380);
   font-family: inherit;
-  font-size: .88rem;
+  font-size: .9rem;
   font-weight: 700;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -2093,9 +2097,10 @@ a.dash-tile:active .dash-ico{
 .gc-seg-btn.is-active{
   background: var(--card, #fff);
   color: var(--ink, #172331);
-  box-shadow: 0 1px 2px rgba(0,0,0,.08);
+  box-shadow: 0 1px 2px rgba(0,0,0,.07);
 }
-.gc-seg-btn:not(.is-active):active{ background: rgba(0,0,0,.04); }
+.gc-seg-btn:not(.is-active){ opacity: .72; }
+.gc-seg-btn:not(.is-active):active{ background: rgba(0,0,0,.04); opacity: 1; }
 
 .gc-shell{ display: flex; flex-direction: column; }
 .gc-section{ margin-bottom: 18px; }
@@ -2117,7 +2122,6 @@ a.dash-tile:active .dash-ico{
   color: var(--ink, #172331);
 }
 
-/* Light panels */
 .gc-panel{
   background: var(--card, #fff);
   border: 1px solid var(--line, #e4e4e0);
@@ -2132,7 +2136,7 @@ a.dash-tile:active .dash-ico{
   gap: 10px;
 }
 
-/* Missions */
+/* Missions — light rows, real progress */
 .gc-missions{ display: flex; flex-direction: column; gap: 10px; }
 .gc-mission{
   background: var(--card, #fff);
@@ -2233,7 +2237,6 @@ a.dash-tile:active .dash-ico{
   background: #3d6b45;
 }
 
-/* Monthly */
 .gc-monthly-pct{
   text-align: center;
   font-size: 1.55rem;
@@ -2255,7 +2258,6 @@ a.dash-tile:active .dash-ico{
 .gc-unit{ color: var(--ink-soft, #5c6670); font-weight: 600; }
 .gc-slash{ color: var(--ink-soft, #5c6670); font-weight: 600; }
 
-/* Continuity */
 .gc-hero{
   display: flex;
   align-items: baseline;
@@ -2294,7 +2296,6 @@ a.dash-tile:active .dash-ico{
   color: #3d6b45;
 }
 
-/* XP secondary */
 .gc-xp-row{
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -2310,7 +2311,6 @@ a.dash-tile:active .dash-ico{
   line-height: 1.1;
 }
 
-/* Result KPIs */
 .gc-kpi-grid{
   display: grid;
   grid-template-columns: repeat(4, minmax(0,1fr));
