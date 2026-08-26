@@ -2066,7 +2066,7 @@ a.dash-tile:active .dash-ico{
   align-items: center;
   justify-content: center;
   flex: none;
-  color: #C89B3C;
+  color: var(--gold, #C89B3C);
 }
 
 /* Full-width thin pill track */
@@ -2112,7 +2112,7 @@ a.dash-tile:active .dash-ico{
 }
 .gc-section-ico{
   display: flex;
-  color: #C89B3C;
+  color: var(--gold, #C89B3C);
   flex: none;
 }
 .gc-section-title{
@@ -2229,7 +2229,7 @@ a.dash-tile:active .dash-ico{
   height: 100%;
   width: 0;
   border-radius: 999px;
-  background: #C89B3C;
+  background: var(--gold, #C89B3C);
   transition: width .28s ease, opacity .2s ease, background .2s ease;
 }
 .gc-mission.is-complete .gc-track-fill,
@@ -2326,6 +2326,14 @@ a.dash-tile:active .dash-ico{
   border-radius: 10px;
   background: rgba(0,0,0,.03);
 }
+.gc-kpi-lab{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: var(--ink-soft, #6f767c);
+}
+.gc-kpi-lab .gc-ico{ opacity: .8; }
 .gc-kpi-num{
   font-size: 1.15rem;
   font-weight: 800;
