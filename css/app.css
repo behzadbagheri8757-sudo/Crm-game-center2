@@ -1684,7 +1684,7 @@ h2.section-title::after{border-color:#E4E4E0;}
   display:block;position:relative;overflow:hidden;text-decoration:none;color:#fff;
   background:linear-gradient(145deg,#172331 0%,#233342 55%,#2A3A49 100%);
   border-radius:16px;
-  padding:11px 14px 12px;
+  padding:12px 14px 13px;
   margin:0;
   box-shadow:0 8px 22px rgba(23,35,49,.16);
   border:1px solid rgba(255,255,255,.06);
@@ -1693,11 +1693,11 @@ h2.section-title::after{border-color:#E4E4E0;}
 .dash-monthly-target::after{content:"";position:absolute;left:-28px;bottom:-40px;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.06) 0%,rgba(255,255,255,.025) 40%,rgba(255,255,255,0) 70%);pointer-events:none;}
 .dmt-top{
   display:flex;align-items:center;justify-content:flex-start;
-  margin-bottom:8px;position:relative;z-index:2;
+  margin-bottom:10px;position:relative;z-index:2;
 }
 /* RTL: flex-start = right side → growth then title from the right */
 .dmt-heading{
-  display:inline-flex;align-items:center;gap:8px;
+  display:inline-flex;align-items:flex-start;gap:10px;
   flex-direction:row;
   max-width:100%;
 }
@@ -2090,8 +2090,8 @@ a.dash-tile:active .dash-ico{
   align-items: center;
   justify-content: center;
   flex: none;
-  width: 28px;
-  height: 28px;
+  width: 36px;
+  height: 36px;
   color: var(--gold, #C89B3C);
   overflow: visible;
   line-height: 0;
@@ -2100,8 +2100,8 @@ a.dash-tile:active .dash-ico{
 .gc-title-mark .gc-ico,
 .gc-title-mark svg{
   display: block;
-  width: 20px;
-  height: 20px;
+  width: 28px;
+  height: 28px;
   stroke: currentColor;
   fill: none;
   flex: none;
