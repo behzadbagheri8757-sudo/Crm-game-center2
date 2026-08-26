@@ -2037,13 +2037,20 @@ a.dash-tile:active .dash-ico{
   margin: 0 auto;
 }
 
-/* Flat header: Sales Game ——— [icon] */
-.gc-header{ margin-bottom: 20px; }
+/* Line 1: Sales Game ——— [icon]  |  Line 2: compact morning/evening switch */
+.gc-header{
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
 .gc-title-row{
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 14px;
+  margin: 0;
+  min-height: 28px;
 }
 .gc-title{
   margin: 0;
@@ -2066,30 +2073,51 @@ a.dash-tile:active .dash-ico{
   align-items: center;
   justify-content: center;
   flex: none;
+  width: 28px;
+  height: 28px;
   color: var(--gold, #C89B3C);
+  overflow: visible;
+  line-height: 0;
+}
+.gc-title-mark .gc-ico,
+.gc-title-mark svg{
+  display: block;
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+  flex: none;
 }
 
-/* Full-width thin pill track */
+/* Compact segmented switch — NOT full-width card / navy bar */
 .gc-seg{
-  display: flex;
-  width: 100%;
-  gap: 0;
-  padding: 3px;
-  background: rgba(0,0,0,.055);
+  display: inline-flex;
+  align-self: flex-start;
+  width: auto;
+  max-width: 100%;
+  gap: 2px;
+  padding: 2px;
+  margin: 0;
+  background: rgba(0,0,0,.06);
+  border: 1px solid rgba(0,0,0,.06);
   border-radius: 999px;
   box-sizing: border-box;
+  box-shadow: none;
 }
 .gc-seg-btn{
-  flex: 1 1 50%;
-  min-height: 38px;
-  padding: 8px 12px;
+  flex: 0 0 auto;
+  min-width: 72px;
+  min-height: 30px;
+  height: 30px;
+  padding: 4px 14px;
   border: none;
   border-radius: 999px;
   background: transparent;
   color: var(--ink-soft, #6a7380);
   font-family: inherit;
-  font-size: .9rem;
+  font-size: .78rem;
   font-weight: 700;
+  line-height: 1;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   transition: background .15s ease, color .15s ease, box-shadow .15s ease;
@@ -2097,9 +2125,9 @@ a.dash-tile:active .dash-ico{
 .gc-seg-btn.is-active{
   background: var(--card, #fff);
   color: var(--ink, #172331);
-  box-shadow: 0 1px 2px rgba(0,0,0,.07);
+  box-shadow: 0 1px 2px rgba(0,0,0,.08);
 }
-.gc-seg-btn:not(.is-active){ opacity: .72; }
+.gc-seg-btn:not(.is-active){ opacity: .7; }
 .gc-seg-btn:not(.is-active):active{ background: rgba(0,0,0,.04); opacity: 1; }
 
 .gc-shell{ display: flex; flex-direction: column; }
