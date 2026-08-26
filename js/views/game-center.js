@@ -43,7 +43,7 @@
       '</svg>',
     /* chart-up + small spark = sales growth game */
     brandMark:
-      '<svg class="gc-ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+      '<svg class="gc-ico" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
         '<path d="M4 19h16"/>' +
         '<path d="M7 16l3.5-4.5 3 2.5L17 8"/>' +
         '<path d="M14.5 8H17v2.5"/>' +
@@ -312,12 +312,9 @@
     );
   }
 
+  /** Always open on Morning; user switches to Evening via the compact toggle. */
   function defaultMode() {
-    try {
-      return new Date().getHours() < 16 ? 'morning' : 'evening';
-    } catch (e) {
-      return 'morning';
-    }
+    return 'morning';
   }
 
   var GameCenterView = {
