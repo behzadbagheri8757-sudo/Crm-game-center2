@@ -33,53 +33,68 @@
   }
 
   var ICO = {
+    /* Unified outline set — 24 viewBox, stroke 1.75, round caps */
     brand:
-      '<svg class="gc-ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-        '<rect x="3" y="11" width="7" height="9" rx="1.2"/>' +
-        '<rect x="14" y="6" width="7" height="14" rx="1.2"/>' +
-        '<path d="M6.5 15.5v2M17.5 11v5"/>' +
+      '<svg class="gc-ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+        '<path d="M4 19V10l8-6 8 6v9"/>' +
+        '<path d="M9 19v-5h6v5"/>' +
+        '<path d="M8 10.5h8"/>' +
+        '<path d="M12 4v3"/>' +
+      '</svg>',
+    /* chart-up + small spark = sales growth game */
+    brandMark:
+      '<svg class="gc-ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+        '<path d="M4 19h16"/>' +
+        '<path d="M7 16l3.5-4.5 3 2.5L17 8"/>' +
+        '<path d="M14.5 8H17v2.5"/>' +
       '</svg>',
     evaluation:
-      '<svg class="gc-ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-        '<path d="M9 4H7.5A2.5 2.5 0 0 0 5 6.5v12A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5v-12A2.5 2.5 0 0 0 16.5 4H15"/>' +
-        '<rect x="9" y="2.5" width="6" height="3.5" rx="1"/>' +
-        '<path d="M9 11h6M9 15h4"/>' +
+      '<svg class="gc-ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+        '<path d="M9 4H8a3 3 0 0 0-3 3v11a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3h-1"/>' +
+        '<rect x="9" y="2.75" width="6" height="3.5" rx="1"/>' +
+        '<path d="M9 11h6M9 15h3.5"/>' +
       '</svg>',
     visit:
-      '<svg class="gc-ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-        '<circle cx="9" cy="8" r="3"/>' +
-        '<path d="M3.8 19.2v-.7A4.3 4.3 0 0 1 8.1 14.2h1.8a4.3 4.3 0 0 1 4.3 4.3v.7"/>' +
-        '<path d="M16.2 5.5a2.6 2.6 0 0 1 0 5"/>' +
-        '<path d="M17.4 14.3a3.6 3.6 0 0 1 2.8 3.3v1.6"/>' +
+      '<svg class="gc-ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+        '<circle cx="9" cy="8" r="3.1"/>' +
+        '<path d="M3.6 19.25v-.65A4.4 4.4 0 0 1 8 14.2h2a4.4 4.4 0 0 1 4.4 4.4v.65"/>' +
+        '<path d="M16.3 5.4a2.7 2.7 0 0 1 0 5.2"/>' +
+        '<path d="M17.5 14.25a3.7 3.7 0 0 1 2.9 3.4v1.6"/>' +
       '</svg>',
     sales:
-      '<svg class="gc-ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-        '<path d="M4 18h16"/>' +
-        '<path d="M7 15V9"/>' +
-        '<path d="M12 15V6"/>' +
-        '<path d="M17 15v-3"/>' +
+      '<svg class="gc-ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+        '<path d="M4 19h16"/>' +
+        '<path d="M7 16V10"/>' +
+        '<path d="M12 16V7"/>' +
+        '<path d="M17 16v-4"/>' +
       '</svg>',
+    /* checklist / tasks — Daily Missions */
     mission:
-      '<svg class="gc-ico" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-        '<path d="M12 3v18"/>' +
-        '<path d="M5 8h10l-1.5 3L15 14H5"/>' +
+      '<svg class="gc-ico" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+        '<path d="M9.5 6h9.5"/>' +
+        '<path d="M9.5 12h9.5"/>' +
+        '<path d="M9.5 18h9.5"/>' +
+        '<path d="M4.5 6.1l1.2 1.2L7.7 5"/>' +
+        '<path d="M4.5 12.1l1.2 1.2L7.7 11"/>' +
+        '<path d="M4.5 18.1l1.2 1.2L7.7 17"/>' +
       '</svg>',
+    /* target bullseye — Monthly Sales Target (distinct from mission) */
     monthly:
-      '<svg class="gc-ico" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+      '<svg class="gc-ico" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
         '<circle cx="12" cy="12" r="8"/>' +
-        '<circle cx="12" cy="12" r="3.2"/>' +
-        '<path d="M12 2v2.2M12 19.8V22M2 12h2.2M19.8 12H22"/>' +
+        '<circle cx="12" cy="12" r="3.25"/>' +
       '</svg>',
+    /* chain links — Continuity / streak */
     streak:
-      '<svg class="gc-ico" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-        '<path d="M8 8.5a3.2 3.2 0 0 1 0 6.4"/>' +
-        '<path d="M12 5.5a5.5 5.5 0 0 1 0 13"/>' +
-        '<path d="M16 8.5a3.2 3.2 0 0 0 0 6.4"/>' +
+      '<svg class="gc-ico" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+        '<path d="M9.5 14.5l5-5"/>' +
+        '<path d="M11.2 8.3l1.6-1.6a3.2 3.2 0 0 1 4.5 4.5l-1.6 1.6"/>' +
+        '<path d="M12.8 15.7l-1.6 1.6a3.2 3.2 0 1 1-4.5-4.5l1.6-1.6"/>' +
       '</svg>',
+    /* zap / bolt — XP progression (not star) */
     xp:
-      '<svg class="gc-ico" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-        '<path d="M5 19V9l7-5 7 5v10"/>' +
-        '<path d="M9 19v-5h6v5"/>' +
+      '<svg class="gc-ico" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+        '<path d="M13 3L6.5 13.5H12l-1 7.5L17.5 10.5H12L13 3z"/>' +
       '</svg>',
     check:
       '<svg class="gc-ico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
@@ -330,9 +345,9 @@
             '<header class="gc-header">' +
               '<div class="gc-title-row">' +
                 '<h1 class="gc-title">Sales Game</h1>' +
-                '<span class="gc-title-mark" aria-hidden="true">' + ICO.brand + '</span>' +
+                '<span class="gc-title-line" aria-hidden="true"></span>' +
+                '<span class="gc-title-mark" aria-hidden="true">' + ICO.brandMark + '</span>' +
               '</div>' +
-              '<div class="gc-title-rule" aria-hidden="true"></div>' +
               '<div class="gc-seg" role="tablist">' +
                 '<button type="button" role="tab" class="gc-seg-btn' + (mode === 'morning' ? ' is-active' : '') + '" data-gc-mode="morning" aria-selected="' + (mode === 'morning') + '">صبح</button>' +
                 '<button type="button" role="tab" class="gc-seg-btn' + (mode === 'evening' ? ' is-active' : '') + '" data-gc-mode="evening" aria-selected="' + (mode === 'evening') + '">نتیجه</button>' +
