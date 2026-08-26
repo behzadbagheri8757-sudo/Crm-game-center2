@@ -2037,13 +2037,27 @@ a.dash-tile:active .dash-ico{
   margin: 0 auto;
 }
 
-/* Line 1: Sales Game ——— [icon]  |  Line 2: compact morning/evening switch */
+/*
+ * IMPORTANT: .gc-header must NEVER inherit the global `header { background: navy }`
+ * rule. game-center.js renders it as <div class="gc-header"> (not <header>).
+ * Explicit resets below defend against any residual tag/style leakage.
+ */
 .gc-header{
-  margin-bottom: 16px;
+  margin: 0 0 16px;
+  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 10px;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  border-bottom: none !important;
+  color: inherit !important;
+  position: static !important;
+  z-index: auto !important;
+  text-align: start;
+  box-shadow: none !important;
 }
 .gc-title-row{
   display: flex;
@@ -2051,6 +2065,7 @@ a.dash-tile:active .dash-ico{
   gap: 10px;
   margin: 0;
   min-height: 28px;
+  background: transparent;
 }
 .gc-title{
   margin: 0;
@@ -2058,8 +2073,9 @@ a.dash-tile:active .dash-ico{
   font-size: 1.15rem;
   font-weight: 800;
   letter-spacing: .02em;
-  color: var(--ink, #172331);
+  color: var(--ink, #172331) !important;
   line-height: 1.2;
+  background: transparent;
 }
 .gc-title-line{
   flex: 1 1 auto;
@@ -2078,6 +2094,7 @@ a.dash-tile:active .dash-ico{
   color: var(--gold, #C89B3C);
   overflow: visible;
   line-height: 0;
+  background: transparent;
 }
 .gc-title-mark .gc-ico,
 .gc-title-mark svg{
@@ -2089,7 +2106,7 @@ a.dash-tile:active .dash-ico{
   flex: none;
 }
 
-/* Compact segmented switch — NOT full-width card / navy bar */
+/* Compact segmented switch — size to content, NOT full-width navy card */
 .gc-seg{
   display: inline-flex;
   align-self: flex-start;
