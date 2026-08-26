@@ -99,6 +99,13 @@
     check:
       '<svg class="gc-ico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
         '<path d="M5 13l4 4L19 7"/>' +
+      '</svg>',
+    /* banknote — Payment (distinct from Sale's bar-chart) */
+    payment:
+      '<svg class="gc-ico" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+        '<rect x="2.75" y="6.5" width="18.5" height="11" rx="2.2"/>' +
+        '<circle cx="12" cy="12" r="2.35"/>' +
+        '<path d="M5.5 9.3h.01M18.5 14.7h.01"/>' +
       '</svg>'
   };
 
@@ -275,10 +282,10 @@
           '<div class="gc-section-head"><h3 class="gc-section-title">نتیجه کسب‌وکار</h3></div>' +
           '<div class="gc-panel">' +
             '<div class="gc-kpi-grid">' +
-              '<div class="gc-kpi"><div class="gc-soft">ارزیابی</div><div class="gc-kpi-num" dir="ltr">' + faNum(c.evaluation || 0) + '</div></div>' +
-              '<div class="gc-kpi"><div class="gc-soft">ویزیت</div><div class="gc-kpi-num" dir="ltr">' + faNum(c.customerVisit || 0) + '</div></div>' +
-              '<div class="gc-kpi"><div class="gc-soft">فروش</div><div class="gc-kpi-num" dir="ltr">' + faNum(c.invoice || 0) + '</div></div>' +
-              '<div class="gc-kpi"><div class="gc-soft">پرداخت</div><div class="gc-kpi-num" dir="ltr">' + faNum(c.payment || 0) + '</div></div>' +
+              '<div class="gc-kpi"><div class="gc-kpi-lab">' + ICO.evaluation + '<span class="gc-soft">ارزیابی</span></div><div class="gc-kpi-num" dir="ltr">' + faNum(c.evaluation || 0) + '</div></div>' +
+              '<div class="gc-kpi"><div class="gc-kpi-lab">' + ICO.visit + '<span class="gc-soft">ویزیت</span></div><div class="gc-kpi-num" dir="ltr">' + faNum(c.customerVisit || 0) + '</div></div>' +
+              '<div class="gc-kpi"><div class="gc-kpi-lab">' + ICO.sales + '<span class="gc-soft">فروش</span></div><div class="gc-kpi-num" dir="ltr">' + faNum(c.invoice || 0) + '</div></div>' +
+              '<div class="gc-kpi"><div class="gc-kpi-lab">' + ICO.payment + '<span class="gc-soft">پرداخت</span></div><div class="gc-kpi-num" dir="ltr">' + faNum(c.payment || 0) + '</div></div>' +
             '</div>' +
             '<div class="gc-line gc-line-last">' +
               '<span class="gc-line-lab">فعالیت معتبر امروز</span>' +
