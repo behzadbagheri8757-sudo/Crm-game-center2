@@ -312,7 +312,7 @@
     );
   }
 
-  /** Always open on Morning; user switches to Evening via the compact toggle. */
+  /** Always open on Morning; user switches via compact toggle. */
   function defaultMode() {
     return 'morning';
   }
@@ -346,7 +346,8 @@
 
         root.innerHTML =
           '<div class="gc-page">' +
-            '<header class="gc-header">' +
+            /* Use div, NOT <header>: global app.css styles ALL header tags as navy app bar */
+            '<div class="gc-header">' +
               '<div class="gc-title-row">' +
                 '<h1 class="gc-title">Sales Game</h1>' +
                 '<span class="gc-title-line" aria-hidden="true"></span>' +
@@ -356,7 +357,7 @@
                 '<button type="button" role="tab" class="gc-seg-btn' + (mode === 'morning' ? ' is-active' : '') + '" data-gc-mode="morning" aria-selected="' + (mode === 'morning') + '">صبح</button>' +
                 '<button type="button" role="tab" class="gc-seg-btn' + (mode === 'evening' ? ' is-active' : '') + '" data-gc-mode="evening" aria-selected="' + (mode === 'evening') + '">نتیجه</button>' +
               '</div>' +
-            '</header>' +
+            '</div>' +
             body +
           '</div>';
 
