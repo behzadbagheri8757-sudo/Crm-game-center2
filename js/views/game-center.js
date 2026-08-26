@@ -33,80 +33,17 @@
   }
 
   var ICO = {
-    /* Unified outline set — 24 viewBox, stroke 1.75, round caps */
-    brand:
-      '<svg class="gc-ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-        '<path d="M4 19V10l8-6 8 6v9"/>' +
-        '<path d="M9 19v-5h6v5"/>' +
-        '<path d="M8 10.5h8"/>' +
-        '<path d="M12 4v3"/>' +
-      '</svg>',
-    /* chart-up + small spark = sales growth game */
-    brandMark:
-      '<svg class="gc-ico" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-        '<path d="M4 19h16"/>' +
-        '<path d="M7 16l3.5-4.5 3 2.5L17 8"/>' +
-        '<path d="M14.5 8H17v2.5"/>' +
-      '</svg>',
-    evaluation:
-      '<svg class="gc-ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-        '<path d="M9 4H8a3 3 0 0 0-3 3v11a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3h-1"/>' +
-        '<rect x="9" y="2.75" width="6" height="3.5" rx="1"/>' +
-        '<path d="M9 11h6M9 15h3.5"/>' +
-      '</svg>',
-    visit:
-      '<svg class="gc-ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-        '<circle cx="9" cy="8" r="3.1"/>' +
-        '<path d="M3.6 19.25v-.65A4.4 4.4 0 0 1 8 14.2h2a4.4 4.4 0 0 1 4.4 4.4v.65"/>' +
-        '<path d="M16.3 5.4a2.7 2.7 0 0 1 0 5.2"/>' +
-        '<path d="M17.5 14.25a3.7 3.7 0 0 1 2.9 3.4v1.6"/>' +
-      '</svg>',
-    sales:
-      '<svg class="gc-ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-        '<path d="M4 19h16"/>' +
-        '<path d="M7 16V10"/>' +
-        '<path d="M12 16V7"/>' +
-        '<path d="M17 16v-4"/>' +
-      '</svg>',
-    /* checklist / tasks — Daily Missions */
-    mission:
-      '<svg class="gc-ico" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-        '<path d="M9.5 6h9.5"/>' +
-        '<path d="M9.5 12h9.5"/>' +
-        '<path d="M9.5 18h9.5"/>' +
-        '<path d="M4.5 6.1l1.2 1.2L7.7 5"/>' +
-        '<path d="M4.5 12.1l1.2 1.2L7.7 11"/>' +
-        '<path d="M4.5 18.1l1.2 1.2L7.7 17"/>' +
-      '</svg>',
-    /* target bullseye — Monthly Sales Target (distinct from mission) */
-    monthly:
-      '<svg class="gc-ico" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-        '<circle cx="12" cy="12" r="8"/>' +
-        '<circle cx="12" cy="12" r="3.25"/>' +
-      '</svg>',
-    /* chain links — Continuity / streak */
-    streak:
-      '<svg class="gc-ico" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-        '<path d="M9.5 14.5l5-5"/>' +
-        '<path d="M11.2 8.3l1.6-1.6a3.2 3.2 0 0 1 4.5 4.5l-1.6 1.6"/>' +
-        '<path d="M12.8 15.7l-1.6 1.6a3.2 3.2 0 1 1-4.5-4.5l1.6-1.6"/>' +
-      '</svg>',
-    /* zap / bolt — XP progression (not star) */
-    xp:
-      '<svg class="gc-ico" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-        '<path d="M13 3L6.5 13.5H12l-1 7.5L17.5 10.5H12L13 3z"/>' +
-      '</svg>',
-    check:
-      '<svg class="gc-ico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-        '<path d="M5 13l4 4L19 7"/>' +
-      '</svg>',
-    /* banknote — Payment (distinct from Sale's bar-chart) */
-    payment:
-      '<svg class="gc-ico" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-        '<rect x="2.75" y="6.5" width="18.5" height="11" rx="2.2"/>' +
-        '<circle cx="12" cy="12" r="2.35"/>' +
-        '<path d="M5.5 9.3h.01M18.5 14.7h.01"/>' +
-      '</svg>'
+    brand: '<svg class="gc-ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21l8 0"/><path d="M12 17l0 4"/><path d="M7 4l10 0"/><path d="M17 4v8a5 5 0 0 1 -10 0v-8"/><path d="M5 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M19 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/></svg>',
+    brandMark: '<svg class="gc-ico" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v3m-4 -3v6m8 -6v6"/><path d="M12 18.5l-3 1.5l.5 -3.5l-2 -2l3 -.5l1.5 -3l1.5 3l3 .5l-2 2l.5 3.5z"/></svg>',
+    evaluation: '<svg class="gc-ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"/><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"/><path d="M9 14l2 2l4 -4"/></svg>',
+    visit: '<svg class="gc-ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"/></svg>',
+    sales: '<svg class="gc-ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2l-3 2"/><path d="M14 8h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5m2 0v1.5m0 -9v1.5"/></svg>',
+    mission: '<svg class="gc-ico" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 5.5l1.5 1.5l2.5 -2.5"/><path d="M3.5 11.5l1.5 1.5l2.5 -2.5"/><path d="M3.5 17.5l1.5 1.5l2.5 -2.5"/><path d="M11 6l9 0"/><path d="M11 12l9 0"/><path d="M11 18l9 0"/></svg>',
+    monthly: '<svg class="gc-ico" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/></svg>',
+    streak: '<svg class="gc-ico" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 10.941c2.333 -3.308 .167 -7.823 -1 -8.941c0 3.395 -2.235 5.299 -3.667 6.706c-1.43 1.408 -2.333 3.621 -2.333 5.588c0 3.704 3.134 6.706 7 6.706s7 -3.002 7 -6.706c0 -1.712 -1.232 -4.403 -2.333 -5.588c-2.084 3.353 -3.257 3.353 -4.667 2.235"/></svg>',
+    xp: '<svg class="gc-ico" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11"/></svg>',
+    check: '<svg class="gc-ico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5l10 -10"/></svg>',
+    payment: '<svg class="gc-ico" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/><path d="M3 8a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"/><path d="M18 12h.01"/><path d="M6 12h.01"/></svg>'
   };
 
   function missionIcon(type) {
