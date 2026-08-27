@@ -107,7 +107,6 @@
       currentStreak: 0,
       bestStreak: 0,
       monthlyTargetClaimedFor: null,
-      dailyQuestTargets: null,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     };
@@ -159,7 +158,6 @@
     if (typeof raw.bestStreak !== 'number') raw.bestStreak = 0;
     if (raw.lastActiveDate === undefined) raw.lastActiveDate = null;
     if (raw.monthlyTargetClaimedFor === undefined) raw.monthlyTargetClaimedFor = null;
-    if (raw.dailyQuestTargets === undefined) raw.dailyQuestTargets = null;
     return raw;
   }
 
@@ -384,98 +382,42 @@
   /**
    * Daily quest progress derived from real counts (config targets).
    */
-  /**
-   * True daily-random targets. The random draw happens only when a date has
-   * no persisted target set yet; after that, every render/reload returns the
-   * exact same targets for that calendar day.
-   *
-   * We deliberately do NOT derive targets from the date. That would be
-   * deterministic rather than random.
-   */
-  var _dailyTargetPromises = Object.create(null);
-
-  function _secureRandomInt(min, max) {
-    min = Math.ceil(Math.max(0, Number(min) || 0));
-    max = Math.floor(Math.max(min, Number(max) || min));
-    if (max <= min) return min;
-
-    // Rejection sampling avoids modulo bias when crypto is available.
-    if (typeof crypto !== 'undefined' && crypto && typeof crypto.getRandomValues === 'function') {
-      var range = max - min + 1;
-      var limit = Math.floor(0x100000000 / range) * range;
-      var buf = new Uint32Array(1);
-      var n;
-      do {
-        crypto.getRandomValues(buf);
-        n = buf[0];
-      } while (n >= limit);
-      return min + (n % range);
+  /** Deterministic day seed so same calendar day always gets same targets. */
+  function _daySeed(iso) {
+    var s = String(iso || '');
+    var h = 2166136261;
+    for (var i = 0; i < s.length; i++) {
+      h ^= s.charCodeAt(i);
+      h = Math.imul(h, 16777619);
     }
-
-    // Fallback for very old/limited environments. Still non-deterministic.
-    return min + Math.floor(Math.random() * (max - min + 1));
+    return h >>> 0;
   }
 
-  async function _ensureDailyQuestTargets(day) {
-    if (_dailyTargetPromises[day]) return _dailyTargetPromises[day];
-
-    _dailyTargetPromises[day] = (async function () {
-      var meta = await gameLoadMeta();
-      var stored = meta.dailyQuestTargets;
-      if (stored && stored.date === day && stored.targets && typeof stored.targets === 'object') {
-        return stored.targets;
-      }
-
-      var targets = {};
-      (_cfg().dailyQuests || []).forEach(function (q) {
-        var minT = q.min != null ? Number(q.min) : Number(q.target) || 0;
-        var maxT = q.max != null ? Number(q.max) : minT;
-        targets[q.id] = _secureRandomInt(minT, maxT);
-      });
-
-      // Persist the complete set as one object so the three missions are born
-      // together and stay fixed until the next calendar day.
-      meta.dailyQuestTargets = {
-        date: day,
-        targets: targets,
-        generatedAt: new Date().toISOString(),
-        randomSource: (typeof crypto !== 'undefined' && crypto && typeof crypto.getRandomValues === 'function')
-          ? 'crypto.getRandomValues' : 'Math.random-fallback'
-      };
-      await gameSaveMeta(meta);
-      return targets;
-    })();
-
-    try {
-      return await _dailyTargetPromises[day];
-    } finally {
-      delete _dailyTargetPromises[day];
-    }
+  function _rangedTarget(seed, min, max, salt) {
+    min = Math.max(0, Number(min) || 0);
+    max = Math.max(min, Number(max) || min);
+    if (max === min) return min;
+    var x = (seed ^ Math.imul(salt >>> 0, 2654435761)) >>> 0;
+    return min + (x % (max - min + 1));
   }
 
   /**
-   * Daily quest progress. Targets are persisted per calendar day.
-   * The function is synchronous by design for existing callers; use
-   * gameGetSnapshot/gameMaybeClaimDailyQuests, which hydrate the daily target
-   * set before deriving quests.
+   * Daily quest targets: random within [min,max] but stable for the day
+   * (seeded by date — reload does not change today's targets).
    */
-  function gameDeriveDailyQuests(dateISO, targetSet) {
+  function gameDeriveDailyQuests(dateISO) {
     const cfg = _cfg();
     const day = _dateOnly(dateISO) || _today();
     const counts = gameDeriveDayCounts(day);
-    const quests = (cfg.dailyQuests || []).map(function (q) {
+    const seed = _daySeed(day);
+    const quests = (cfg.dailyQuests || []).map(function (q, idx) {
       var current = 0;
       if (q.type === 'evaluation') current = counts.evaluation;
       else if (q.type === 'customerVisit') current = counts.customerVisit;
       else if (q.type === 'invoice') current = counts.invoice;
-
       var minT = q.min != null ? Number(q.min) : Number(q.target) || 0;
       var maxT = q.max != null ? Number(q.max) : minT;
-      var target = targetSet && targetSet[q.id] != null
-        ? Number(targetSet[q.id])
-        : minT;
-      target = Math.min(maxT, Math.max(minT, target));
-
+      var target = _rangedTarget(seed, minT, maxT, idx + 1);
       return {
         id: q.id,
         label: q.label,
@@ -487,12 +429,6 @@
     });
     const allComplete = quests.length > 0 && quests.every(function (q) { return q.complete; });
     return { date: day, quests: quests, allComplete: allComplete };
-  }
-
-  async function gameGetDailyQuests(dateISO) {
-    const day = _dateOnly(dateISO) || _today();
-    const targets = await _ensureDailyQuestTargets(day);
-    return gameDeriveDailyQuests(day, targets);
   }
 
   /**
@@ -609,7 +545,7 @@
   async function gameMaybeClaimDailyQuests(dateISO) {
     const cfg = _cfg();
     const day = _dateOnly(dateISO) || _today();
-    const derived = await gameGetDailyQuests(day);
+    const derived = gameDeriveDailyQuests(day);
     const prefixes = cfg.ledgerKeys || {};
     const results = [];
 
@@ -797,7 +733,7 @@
     const ledger = await gameLoadLedger();
     const meta = await gameLoadMeta();
     const counts = gameDeriveDayCounts(day);
-    const quests = await gameGetDailyQuests(day);
+    const quests = gameDeriveDailyQuests(day);
     const monthly = gameDeriveMonthlyTarget();
     const active = gameIsActiveDay(day);
 
@@ -846,7 +782,6 @@
     // derived
     deriveDayCounts: gameDeriveDayCounts,
     deriveDailyQuests: gameDeriveDailyQuests,
-    getDailyQuests: gameGetDailyQuests,
     deriveQualifiedConversions: gameDeriveQualifiedConversions,
     deriveMonthlyTarget: gameDeriveMonthlyTarget,
     isActiveDay: gameIsActiveDay,
