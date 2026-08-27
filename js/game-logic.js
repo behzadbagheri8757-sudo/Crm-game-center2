@@ -532,8 +532,10 @@
     var guard = 0;
     var lastActive = null;
 
-    // If today is rest day, start from previous day for streak chain
-    // (rest day neither adds nor breaks)
+    // A streak represents completed active days. If today is not active yet,
+    // do not erase yesterday's completed streak just because today's work is
+    // still in progress. Once today becomes active it is included.
+    // Friday/rest day is skipped and never breaks the chain.
     while (guard < 90) {
       guard++;
       if (_isRestDay(cursor)) {
@@ -548,7 +550,13 @@
         cursor = _prevDay(cursor);
         if (!cursor) break;
       } else {
-        // first non-rest inactive day ends the chain
+        // Today may simply be unfinished. Preserve the chain already completed
+        // through the previous calendar day; for an older missed day this ends it.
+        if (cursor === today) {
+          cursor = _prevDay(cursor);
+          if (!cursor) break;
+          continue;
+        }
         break;
       }
     }

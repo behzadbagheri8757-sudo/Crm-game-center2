@@ -2601,6 +2601,7 @@ function openSupplierDetail(sid){
 (async function init(){
   if(document.body && document.body.getAttribute('data-mode') === 'legacy-tabs'){
     await loadData();
+    if (typeof hydrateMonthlySalesTarget === 'function') await hydrateMonthlySalesTarget();
     render();
   }
 })();

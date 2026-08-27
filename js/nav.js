@@ -511,6 +511,7 @@ async function bootSpaShell() {
 
     try {
       await loadData();
+      if (typeof hydrateMonthlySalesTarget === 'function') await hydrateMonthlySalesTarget();
     } catch (loadErr) {
       console.error('bootSpaShell loadData failed', loadErr);
       await waitForCrmDataLoad();

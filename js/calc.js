@@ -695,12 +695,47 @@ function commandCenterMetrics(refDate){
 }
 
 var SALES_TARGET_KEY = 'baqeri_sales_target_v1';
+var SALES_TARGET_DB_KEY = 'salesTarget';
+var _monthlySalesTargetCache = null;
 function getMonthlySalesTarget(){
-  try { return Math.max(0, Number(localStorage.getItem(SALES_TARGET_KEY)) || 0); }
-  catch(e){ return 0; }
+  if(_monthlySalesTargetCache !== null) return Math.max(0, Number(_monthlySalesTargetCache)||0);
+  try {
+    var raw = localStorage.getItem(SALES_TARGET_KEY);
+    if(raw !== null){
+      _monthlySalesTargetCache = Math.max(0, Number(raw)||0);
+      return _monthlySalesTargetCache;
+    }
+  } catch(e) {}
+  return 0;
 }
 function setMonthlySalesTarget(n){
   const value = Math.max(0, Number(n)||0);
+  _monthlySalesTargetCache = value;
   try { localStorage.setItem(SALES_TARGET_KEY, String(value)); } catch(e) {}
+  // Secondary durable copy in IndexedDB. This is settings-only and does not
+  // participate in any financial calculation.
+  if(typeof dbPut === 'function') dbPut(SALES_TARGET_DB_KEY, value).catch(function(e){ console.warn('monthly sales target db save failed', e); });
   return value;
+}
+async function hydrateMonthlySalesTarget(){
+  if(_monthlySalesTargetCache !== null) return _monthlySalesTargetCache;
+  var local = null;
+  try {
+    var raw = localStorage.getItem(SALES_TARGET_KEY);
+    if(raw !== null) local = Math.max(0, Number(raw)||0);
+  } catch(e) {}
+  if(local !== null){ _monthlySalesTargetCache = local; return local; }
+  if(typeof dbGet === 'function'){
+    try {
+      var row = await dbGet(SALES_TARGET_DB_KEY);
+      var value = row && Object.prototype.hasOwnProperty.call(row,'value') ? row.value : row;
+      if(value !== null && value !== undefined){
+        _monthlySalesTargetCache = Math.max(0, Number(value)||0);
+        try { localStorage.setItem(SALES_TARGET_KEY, String(_monthlySalesTargetCache)); } catch(e) {}
+        return _monthlySalesTargetCache;
+      }
+    } catch(e) { console.warn('monthly sales target db load failed', e); }
+  }
+  _monthlySalesTargetCache = 0;
+  return 0;
 }
