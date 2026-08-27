@@ -103,14 +103,36 @@
     btn.addEventListener('click', function (e) {
       e.preventDefault(); e.stopPropagation();
       const current = typeof getMonthlySalesTarget === 'function' ? getMonthlySalesTarget() : 0;
-      const raw = prompt('هدف فروش ماهانه را به تومان وارد کنید:', current ? String(current) : '');
-      if (raw === null) return;
-      const normalized = normalizeDigits(raw).replace(/[,_\s]/g, '');
-      const value = Number(normalized);
-      if (!(value > 0)) { if (typeof showToast === 'function') showToast('هدف باید بیشتر از صفر باشد'); return; }
-      if (typeof setMonthlySalesTarget === 'function') setMonthlySalesTarget(value);
-      refresh();
+      openSheet(
+        '<div class="sheet-title">هدف فروش این ماه</div>' +
+        '<div class="field"><label>مبلغ هدف (تومان)</label>' +
+        '<input id="monthly-target-input" type="text" inputmode="decimal" autocomplete="off" value="' + (current ? formatAmountForInput(current) : '') + '">' +
+        '</div>' +
+        '<div style="display:flex;gap:8px;margin-top:12px;justify-content:flex-end">' +
+        '<button type="button" class="btn" id="monthly-target-cancel">انصراف</button>' +
+        '<button type="button" class="btn primary" id="monthly-target-save">ذخیره</button>' +
+        '</div>'
+      );
+      const input = document.getElementById('monthly-target-input');
+      if(input && typeof reformatAmountInputEl === 'function') reformatAmountInputEl(input);
+      if(input) input.focus();
+      const save = document.getElementById('monthly-target-save');
+      const cancel = document.getElementById('monthly-target-cancel');
+      if(cancel) cancel.addEventListener('click', closeModal);
+      if(save) save.addEventListener('click', function(){
+        const raw = input ? input.value : '';
+        const normalized = normalizeDigits(raw).replace(/[,_\s٬]/g, '');
+        const value = Number(normalized);
+        if (!(value > 0)) { if (typeof showToast === 'function') showToast('هدف باید بیشتر از صفر باشد'); return; }
+        if (typeof setMonthlySalesTarget === 'function') setMonthlySalesTarget(value);
+        closeModal();
+        refresh();
+      });
     });
+  }
+
+  function formatAmountForInput(value){
+    try { return Number(value).toLocaleString('fa-IR'); } catch(e) { return String(value || ''); }
   }
 
   async function renderInto(root, isStale) {
